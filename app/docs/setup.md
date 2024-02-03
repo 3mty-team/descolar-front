@@ -29,7 +29,7 @@ Lien : https://docs.flutter.dev/get-started/install/windows/mobile?tab=vscode
 
 - Accepter la licence Android :  `flutter doctor --android-licenses`
 
-- Vérifier si tout est ok : `flutter doctor`
+- Vérifier si tout est ok : `flutter doctor` (pas besoin de la case "Visual Studio")
 
 
 ### Linux ?
