@@ -1,5 +1,5 @@
-name: app
-description: "A new Flutter project."
+name: descolar
+description: "A social media application on mobile to connect students from the University of Paris Cité"
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
@@ -14,12 +14,13 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.13.1"
 
 flutter:
   uses-material-design: true
@@ -30,3 +31,34 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: fonts/Roboto/Roboto-Italic.ttf
+          weight: 400
+
+flutter_launcher_icons:
+  andr#oid: "launcher_icon"
+  android: true
+  ios: true
+  image_path: "assets/icons/launcher_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  # web:
+  #   generate: true
+  #   image_path: "path/to/image.png"
+  #   background_color: "#hexcode"
+  #   theme_color: "#hexcode"
+  # windows:
+  #   generate: true
+  #   image_path: "path/to/image.png"
+  #   icon_size: 48 # min:48, max:256, default: 48
+  # macos:
+  #   generate: true
+  #   image_path: "path/to/image.png"
+  
