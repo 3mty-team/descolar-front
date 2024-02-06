@@ -8,21 +8,7 @@ Le fichier `pubspec.yaml` comporte l'environnement, les dépendances et les asse
 
 Le fichier `analysis_options.yaml` comporte le linter
 
-Le dossier `components` sera pour tout les composants réutilisable (comme un bouton, un input, ...)
-
-Le dossier `controllers` sera pour les controlleurs
-
-Le dossier `entities` sera pour toutes les entitées, une représentation d'un objet, des classes
-
-Le dossier `exemples` est juste les fichiers de projet de base, je les laisses pour avoir un exemple de code
-
-Le dossier `localization` ...
-
-Le dossier `models` sera pour les appels au back-end, pour récupérer les données
-
-Le dossier `pages` sera pour toutes les pages entières (home, profil, ...)
-
-Le dossier `views` sera des views, des parties de pages (à revoir si c'est nécessaire ou trop ressemblant au dossier components)
+... (dépendra de l'architecture)
 
 
 ## Pratiques
