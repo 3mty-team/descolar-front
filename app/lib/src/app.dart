@@ -1,5 +1,6 @@
+import 'package:descolar/src/resources/app_assets.dart';
+import 'package:descolar/src/resources/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,7 +27,6 @@ class HomePage extends StatelessWidget {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   @override
   final Size preferredSize;
 
@@ -35,8 +35,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xFF8B1538),
-      title: SvgPicture.asset('assets/icons/descolar.svg'),
+      backgroundColor: AppColors.primary,
+      title: AppAssets.descolarLogoSvg,
       centerTitle: true,
     );
   }
