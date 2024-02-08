@@ -1,0 +1,1 @@
+ /home/tconstant/Documents/descolar_front/.dart_tool/flutter_gen/gen_l10n/app_localizations_fr.dart /home/tconstant/Documents/descolar_front/.dart_tool/flutter_gen/gen_l10n/app_localizations.dart:  /home/tconstant/Documents/descolar_front/l10n.yaml /home/tconstant/Documents/descolar_front/lib/src/localization/app_fr.arb

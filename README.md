@@ -1,6 +1,6 @@
-# descolar/descolar-front
+# descolar_front
 
-
+A new Flutter project.
 
 ## Getting Started
 
@@ -10,22 +10,22 @@ SSH clone URL: ssh://git@git.jetbrains.space/3mty/descolar/descolar-front.git
 
 HTTPS clone URL: https://git.jetbrains.space/3mty/descolar/descolar-front.git
 
+This project is a starting point for a Flutter application.
 
+A few resources to get you started if this is your first Flutter project:
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-## Prerequisites
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
-What things you need to install the software and how to install them.
+## Localization
 
-```
-Examples
-```
+This project generates localized messages based on arb files found in
+the `lib/src/localization` directory.
 
-## Deployment
-
-Add additional notes about how to deploy this on a production system.
-
-## Resources
-
-Add links to external resources for this project, such as CI server, bug tracker, etc.
+To support additional languages, please visit the tutorial on
+[Internationalizing Flutter
+apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
