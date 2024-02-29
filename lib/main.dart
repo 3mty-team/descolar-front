@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -9,13 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: true, // TODO : Change to false for release
+    return const MaterialApp(
+      debugShowCheckedModeBanner: true, // change to false for release
       title: 'Descolar',
-      theme: ThemeData(// TODO
-
-          ),
-      home: const Home(),
+      home: Home(),
     );
   }
 }

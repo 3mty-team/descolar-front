@@ -22,7 +22,7 @@ class TemplateLocalDataSourceImpl implements TemplateLocalDataSource {
 
     if (jsonString != null) {
       return Future.value(
-          TemplateModel.fromJson(json: json.decode(jsonString)));
+          TemplateModel.fromJson(json: json.decode(jsonString)),);
     } else {
       throw CacheException();
     }
