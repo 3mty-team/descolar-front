@@ -33,6 +33,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+build/*
 
 # Flutter repo-specific
 /bin/cache/
@@ -96,6 +97,7 @@ analysis_benchmark.json
 .pub-cache/
 .pub/
 build/
+build/*
 flutter_*.png
 linked_*.ds
 unlinked.ds
