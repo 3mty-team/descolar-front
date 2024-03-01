@@ -1,1 +1,1 @@
-String kTemplate = 'template';
+const String kTemplate = 'template';

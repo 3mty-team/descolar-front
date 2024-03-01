@@ -1,3 +1,5 @@
+import 'package:descolar_front/config/routes/routes.dart';
+import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,24 +16,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: true, // change to false for release
+      //onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
       title: 'Descolar',
-      home: Home(),
+      theme: theme(),
+      home: const Home(),
     );
   }
 }
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      // TODO : Custom Desolar appbar
+      appBar: AppBar(
+        title: const Text('Descolar'),
+      ),
+    );
   }
 }

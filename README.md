@@ -8,7 +8,7 @@ Download links:
 
 SSH clone URL: ssh://git@git.jetbrains.space/3mty/descolar/descolar-front.git
 
-HTTPS clone URL: https://git.jetbrains.space/3mty/descolar/descolar-front.git
+HTTPS clone URL: <https://git.jetbrains.space/3mty/descolar/descolar-front.git>
 
 This project is a starting point for a Flutter application.
 

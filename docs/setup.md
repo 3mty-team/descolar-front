@@ -51,3 +51,7 @@ Pour reload les dépendances (`pubspec.yaml`), faire la commande `flutter pub ge
 
 Pour voir et fix les erreurs dart automatiquement, faire la commande `dart fix --dry-run` pour preview les erreurs,
 puis faire `dart fix --apply` pour fixer les erreurs diagnostiquées
+
+## Ressources
+
+[Maquettes Figma](https://www.figma.com/file/zItehOB6OXvd2mfqGLU3Gm/Descolar-Front?type=design&node-id=25%3A2&mode=design&t=xN4HkjJXmRycDf8z-1)
