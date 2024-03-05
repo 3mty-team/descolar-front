@@ -1,4 +1,4 @@
-import 'package:descolar_front/config/routes/routes.dart';
+import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
