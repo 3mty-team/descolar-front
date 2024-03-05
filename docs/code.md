@@ -2,14 +2,26 @@
 
 ## Architecture
 
-Le projet se trouve dans le dossier `lib`, le fichier main est `main.dart` et l'application de trouve dans le sous-dossier `src` avec le fichier `app.dart`
+Le projet se trouve dans le dossier `lib`, le fichier main est `main.dart`.
 
 Le fichier `pubspec.yaml` comporte l'environnement, les dépendances et les assets
 
 Le fichier `analysis_options.yaml` comporte le linter
 
-... (dépendra de l'architecture)
+L'architecture du projet est **clean architecture**
+[Explication et exemple d'un projet en clean architecture](https://www.youtube.com/watch?v=SmJB8cy8emU)
 
+Explication...
+    core...
+    features...
+    localization...
+
+## State Management
+
+Riverpod
+[Riverpod](https://riverpod.dev/)
+[Explication du State Mangement par Flutter](https://www.youtube.com/watch?v=vU9xDLdEZtU)
+[Test et exemple Riverpod](https://zapp.run/edit/zv2060sv306?theme=dark&lazy=false&entry=lib/main.dart&file=lib/main.dart)
 
 ## Pratiques
 
@@ -17,7 +29,7 @@ Utiliser un maximum l'extension Flutter de VSCode, et ne pas écrire le code à 
 
 Faire attention au règles du linter
 
-. . . 
+. . .
 
 ## Liens
 
