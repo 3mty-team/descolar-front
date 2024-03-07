@@ -104,10 +104,6 @@ linter:
     avoid_empty_else: true
     empty_statements: true
     unnecessary_statements: true
-    always_put_control_body_on_new_line: true
-    avoid_single_cascade_in_expression_statements: true
-    prefer_expression_function_bodies: true
-    curly_braces_in_flow_control_structures: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
