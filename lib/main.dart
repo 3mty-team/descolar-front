@@ -2,6 +2,7 @@ import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:descolar_front/screens/splash_screen.dart';
 
 void main() async {
   runApp(
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       //onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
       title: 'Descolar',
       theme: theme(),
-      home: const Home(),
+      home: const SplashScreen(),
     );
   }
 }
