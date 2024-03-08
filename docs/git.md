@@ -10,7 +10,7 @@ Pour chaque fiche Jira, créer une branche **partant du main** avec ce format po
 avec *<n° ticket>* étant le numéro du ticket qui correspond à la branche, et *<nom-fiche>* étant le nom de la fiche espacé par des tirets ( - )
 
 Une fois la branche créee, **la push directement sur le remote** :
-`git push`
+`git push -u origin <branch name>`
 
 ## Commits 
 
