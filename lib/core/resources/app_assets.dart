@@ -6,6 +6,6 @@ class AppAssets {
   static const imgPath = '$basePath/images';
 
   static final descolarLogoSvg = SvgPicture.asset('$iconPath/descolar.svg');
-  static final descolarAppBarTemplate = SvgPicture.asset('$imgPath/descolar-appbar-template.svg');
   static final backIcon = SvgPicture.asset('$iconPath/back-icon.svg');
+  static final settingsIcon = SvgPicture.asset('$iconPath/settings-icon.svg');
 }

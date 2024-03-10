@@ -6,10 +6,12 @@ import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
-  static Route onGenerateRoutes(RouteSettings settings) {
+  static Route? onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return _materialRoute(const Home());
+      case 'settings':
+        return null; //Must be modified when the configuration page is created
 
       default:
         return _materialRoute(const Home());
