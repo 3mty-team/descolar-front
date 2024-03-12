@@ -7,11 +7,5 @@ class AppAssets {
   static const imgPath = '$basePath/images';
 
   static final descolarLogoSvg = SvgPicture.asset('$iconPath/descolar.svg');
-  static final splashScreenLogo = Container(
-    height: 100,
-    width: 100,
-    color: Colors.transparent,
-    child:  SvgPicture.asset('$iconPath/descolar.svg'),
-  );
   
 }
