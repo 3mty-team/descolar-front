@@ -2,6 +2,7 @@
   /!\ MAYBE USELESS WITH PROVIDERS /!\ 
 */
 
+import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
 import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,11 @@ class AppRoutes {
     switch (settings.name) {
       case '/home':
         return _materialRoute(const Home());
+      case '/home':
+        return _materialRoute(const Home());
+
+      case '/signup':
+        return _materialRoute(const SignupPage());
 
       default:
         return _materialRoute(const Home());

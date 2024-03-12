@@ -1,7 +1,5 @@
-import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
                       width: _logoSize,
                       color: Colors.transparent,
                       child:SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
-                      );
+                    );
 
   @override
   void initState() {
@@ -32,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(
         const Duration(seconds: 5,), 
         () {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/signup');
         }
     );
   }
