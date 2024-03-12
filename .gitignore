@@ -54,6 +54,7 @@ build/*
 /packages/flutter/coverage/
 version
 analysis_benchmark.json
+pupspec.lock
 
 # Symbolication related
 *.symbols
