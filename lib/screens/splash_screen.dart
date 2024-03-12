@@ -1,4 +1,5 @@
 import 'package:descolar_front/config/routes/app_routes.dart';
+import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(
         const Duration(
-          seconds: 2,
+          seconds: 5,
         ), () {
       Navigator.of(context)
           .pushReplacement(AppRoutes.materialRoute(const Home()));
@@ -39,8 +40,15 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext contet) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
         decoration: const BoxDecoration(
           color: AppColors.primary,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppAssets.splashScreenLogo,
+          ],
         ),
       ),
     );
