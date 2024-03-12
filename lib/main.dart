@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true, // change to false for release
-      //onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
+      onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
       title: 'Descolar',
-      theme: theme(),
+      theme: AppTheme.theme(),
       home: const SplashScreen(),
     );
   }
