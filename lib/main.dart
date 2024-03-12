@@ -1,5 +1,5 @@
 import 'package:descolar_front/config/themes/app_themes.dart';
-import 'package:descolar_front/features/template/presentation/widgets/widgets.dart';
+import 'package:descolar_front/core/components/appBars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,6 +31,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: DescolarWidgets.descolarAppBar(context));
+    return Scaffold(appBar: AppBars.iconAppBar(context));
   }
 }
