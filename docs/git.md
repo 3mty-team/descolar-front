@@ -6,7 +6,7 @@ Pour créer une branche, **le faire directement en local** avec les commandes gi
 `git checkout main`
 `git branch <branch-name>`
 
-Pour chaque fiche Jira, créer une branche **partant du main** avec ce format pour le nom : "**DF-<n° ticket>--<nom-fiche>**" 
+Pour chaque fiche Jira, créer une branche **partant du main** avec ce format pour le nom : "**DF-<n° ticket>-<nom-fiche>**" 
 avec *<n° ticket>* étant le numéro du ticket qui correspond à la branche, et *<nom-fiche>* étant le nom de la fiche espacé par des tirets ( - )
 
 Une fois la branche créee, **la push directement sur le remote** :
