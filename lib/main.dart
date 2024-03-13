@@ -1,5 +1,5 @@
 import 'package:descolar_front/config/themes/app_themes.dart';
-import 'package:descolar_front/core/components/appBars.dart';
+import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
