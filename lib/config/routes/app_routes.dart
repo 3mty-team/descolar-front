@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case '/home':
         return materialRoute(const Home());
 
       default:
