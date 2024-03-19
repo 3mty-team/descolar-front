@@ -49,7 +49,7 @@ class _DateInputState extends State<DateInput> {
             border: const OutlineInputBorder(),
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            icon: const Icon(Icons.calendar_today),
+            suffixIcon: const Icon(Icons.calendar_today),
           ),
           readOnly: true,
           onTap: () async {
