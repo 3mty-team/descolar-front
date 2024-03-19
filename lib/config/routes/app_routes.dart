@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
-        return materialRoute(const Home());
+      case '/home':
+        return _materialRoute(const Home());
 
       default:
-        return materialRoute(const Home());
+        return _materialRoute(const Home());
     }
   }
 
-  static Route<dynamic> materialRoute(Widget view) {
+  static Route<dynamic> _materialRoute(Widget view) {
     return MaterialPageRoute(builder: (_) => view);
   }
 }

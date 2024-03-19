@@ -1,5 +1,5 @@
-import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
+import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
@@ -32,11 +32,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // TODO : Custom Desolar appbar
-      appBar: AppBar(
-        title: const Text('Descolar'),
-      ),
-    );
+    return Scaffold(appBar: AppBars.iconAppBar(context));
   }
 }

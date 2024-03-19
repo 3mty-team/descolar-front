@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppAssets {
@@ -7,5 +6,6 @@ class AppAssets {
   static const imgPath = '$basePath/images';
 
   static final descolarLogoSvg = SvgPicture.asset('$iconPath/descolar.svg');
-  
+  static final backIcon = SvgPicture.asset('$iconPath/back-icon.svg');
+  static final settingsIcon = SvgPicture.asset('$iconPath/settings-icon.svg');
 }
