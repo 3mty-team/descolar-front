@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
@@ -9,8 +10,9 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: BottomAppBar(
+    return Scaffold(
+      appBar: AppBars.blankAppBar(),
+      bottomNavigationBar: const BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
         child: Row(
@@ -26,7 +28,7 @@ class SignupPage extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(
+      body: const Center(
         child: FractionallySizedBox(
           widthFactor: 0.8,
           child: Column(
