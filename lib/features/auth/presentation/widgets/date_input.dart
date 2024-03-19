@@ -1,5 +1,6 @@
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DateInput extends StatefulWidget {
   final String label;
@@ -22,6 +23,8 @@ class DateInput extends StatefulWidget {
 }
 
 class _DateInputState extends State<DateInput> {
+  final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,11 +41,32 @@ class _DateInputState extends State<DateInput> {
               ),
           ],
         ),
-        InputDatePickerFormField(
-          firstDate: DateTime(DateTime.now().year - 120),
-          lastDate: DateTime.now(),
-          fieldLabelText: '',
-          fieldHintText: 'jj/mm/yyyy',
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            helperText: widget.help,
+            border: const OutlineInputBorder(),
+            isDense: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            icon: const Icon(Icons.calendar_today),
+          ),
+          readOnly: true,
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(DateTime.now().year - 100),
+                lastDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+            );
+
+            if (pickedDate != null) {
+              String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+              setState(() {
+                controller.text = formattedDate;
+              });
+            }
+          },
         ),
       ],
     );

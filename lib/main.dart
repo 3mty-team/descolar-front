@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
 
+import 'config/routes/app_routes.dart';
+
 void main() async {
   runApp(
     const ProviderScope(
