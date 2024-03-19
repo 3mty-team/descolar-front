@@ -11,8 +11,6 @@ class AppRoutes {
     switch (settings.name) {
       case '/home':
         return _materialRoute(const Home());
-      case '/home':
-        return _materialRoute(const Home());
 
       case '/signup':
         return _materialRoute(const SignupPage());

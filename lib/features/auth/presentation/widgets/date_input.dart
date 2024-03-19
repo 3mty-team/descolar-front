@@ -24,7 +24,6 @@ class DateInput extends StatefulWidget {
 
 class _DateInputState extends State<DateInput> {
   final controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
