@@ -22,6 +22,8 @@ class PasswordInput extends StatefulWidget {
 }
 
 class _PasswordInputState extends State<PasswordInput> {
+  var _passwordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,12 +41,23 @@ class _PasswordInputState extends State<PasswordInput> {
           ],
         ),
         TextFormField(
+          obscureText: !_passwordVisible,
           decoration: InputDecoration(
             hintText: widget.hint,
             helperText: widget.help,
             border: const OutlineInputBorder(),
             isDense: true, 
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            suffixIcon: IconButton(
+              icon: Icon(
+               _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
           ),
         ),
       ],
