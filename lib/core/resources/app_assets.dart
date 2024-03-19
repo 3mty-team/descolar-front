@@ -12,5 +12,5 @@ class AppAssets {
   static final newPostIcon = SvgPicture.asset('$iconPath/new_post_icon.svg');
   static final profilIcon = SvgPicture.asset('$iconPath/profil_icon.svg');
   static final searchIcon = SvgPicture.asset('$iconPath/search_icon.svg');
-  
+  static const backgroundNav = AssetImage('$imgPath/BG.png');
 }
