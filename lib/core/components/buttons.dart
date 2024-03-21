@@ -4,18 +4,26 @@ import '../resources/app_colors.dart';
 
 class PrimaryTextButton extends StatelessWidget {
   final String text;
+  final Function onTap;
+  final bool isActive;
 
   const PrimaryTextButton({
     super.key,
     required this.text,
+    required this.onTap,
+    this.isActive = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () => {
+        if (this.isActive) {
+          onTap(),
+        },
+      },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AppColors.primary),
+        backgroundColor: this.isActive ? MaterialStateProperty.all(AppColors.primary) : MaterialStateProperty.all(AppColors.gray),
       ),
       child: Text(text,
         style: const TextStyle(

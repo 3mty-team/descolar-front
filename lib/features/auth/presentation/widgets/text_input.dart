@@ -7,6 +7,8 @@ class TextInput extends StatefulWidget {
   final String? help;
   final bool required;
 
+  // TODO : handle errors (red border and error msg (in help?))
+
   const TextInput({
     super.key,
     required this.label,
