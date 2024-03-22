@@ -61,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
     ).hasMatch(value);
     if (!isEmailValid) {
       setState(
-        () => emailErrorMsg = 'Veuillez email académique n\'est pas valide',
+        () => emailErrorMsg = 'Votre email académique n\'est pas valide',
       );
       return false;
     }
@@ -149,7 +149,7 @@ class _SignupPageState extends State<SignupPage> {
     if (!isPasswordValid) {
       setState(
         () => passwordErrorMsg =
-            'Votre mot de passe doit faire minimum 8 caractères, avec une minuscule, une majuscule, 1 chiffre et 1 caratère spéciale',
+            'Votre mot de passe doit faire au minimum 8 caractères avec une minuscule, une majuscule, un chiffre et un caratère spécial',
       );
       return false;
     }
@@ -171,7 +171,7 @@ class _SignupPageState extends State<SignupPage> {
     if (value != passwordController.text) {
       setState(
         () => confirmPasswordErrorMsg =
-            'Vos mot de passes ne sont pas identiques',
+            'Vos mots de passe ne sont pas identiques',
       );
       return false;
     }
