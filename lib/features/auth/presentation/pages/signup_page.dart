@@ -17,104 +17,102 @@ class _SignupPageState extends State<SignupPage> {
   int currentStep = 0;
 
   List<Step> getSteps() => [
-    Step(
-      title: const Text('Coordonnées'),
-      isActive: currentStep >= 0,
-      content: const Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Sign Up',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: AppColors.primary,
-                ),
+        Step(
+          title: const Text('Coordonnées'),
+          isActive: currentStep >= 0,
+          content: const Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Inscription',
+                    style: TextStyle(
+                      fontSize: 32,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  TextInput(
+                    label: 'Email universitaire',
+                    hint: 'prenom.nom@u-paris.fr',
+                    help: 'Votre mail associé à l\'Université Paris Cité',
+                    required: true,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextInput(
+                    label: 'Nom',
+                    required: true,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextInput(
+                    label: 'Prénom',
+                    required: true,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  DateInput(
+                    label: 'Date de naissance',
+                    required: true,
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 32,
-              ),
-
-              TextInput(
-                label: 'Email universitaire',
-                hint: 'prenom.nom@u-paris.fr',
-                help: 'Votre mail associé à l\'Université Paris Cité',
-                required: true,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextInput(
-                label: 'Nom',
-                required: true,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextInput(
-                label: 'Prénom',
-                required: true,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              DateInput(
-                label: 'Date de naissance',
-                required: true,
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    ),
-    Step(
-      title: const Text('Profil'),
-      isActive: currentStep >= 1,
-      content: const Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Sign Up',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: AppColors.primary,
-                ),
+        Step(
+          title: const Text('Profil'),
+          isActive: currentStep >= 1,
+          content: const Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Inscription',
+                    style: TextStyle(
+                      fontSize: 32,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  TextInput(
+                    label: 'Pseudonyme',
+                    required: true,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  PasswordInput(
+                    label: 'Mot de passe',
+                    required: true,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  PasswordInput(
+                    label: 'Confirmation du mot de passe',
+                    required: true,
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 32,
-              ),
-
-              TextInput(
-                label: 'Pseudonyme',
-                required: true,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              PasswordInput(
-                label: 'Mot de passe',
-                required: true,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              PasswordInput(
-                label: 'Confirmation du mot de passe',
-                required: true,
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    ),
-  ];
+      ];
 
   bool isLastStep() => currentStep == getSteps().length - 1;
 
@@ -128,31 +126,38 @@ class _SignupPageState extends State<SignupPage> {
         child: Row(
           children: [
             Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: PrimaryTextButton(
-                  text: 'Précédant',
-                  isActive: currentStep > 0,
-                  onTap: () {
-                      setState(() => currentStep--);
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: PrimaryTextButton(
-                  text: isLastStep() ? 'Confirmer' : 'Suivant',
-                  onTap: () {
-                    // TODO : check if form is valid
-                    if (isLastStep()) {
-                      // create user
-                    } else {
-                      setState(() => currentStep++);
-                    }
-                  },
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: PrimaryTextButton(
+                      text: 'Précédent',
+                      isActive: currentStep > 0,
+                      onTap: () {
+                        setState(() => currentStep--);
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: PrimaryTextButton(
+                      text: isLastStep() ? 'Confirmer' : 'Suivant',
+                      onTap: () {
+                        // TODO : check if form is valid
+                        if (isLastStep()) {
+                          // create user
+                        } else {
+                          setState(() => currentStep++);
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -160,11 +165,10 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Theme(
         data: ThemeData(
-          primaryColor: AppColors.primary,
-          colorScheme: const ColorScheme.light(
-            primary: AppColors.primary,
-          )
-        ),
+            primaryColor: AppColors.primary,
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primary,
+            )),
         child: Stepper(
           controlsBuilder: (context, controller) => const SizedBox.shrink(),
           type: StepperType.horizontal,
