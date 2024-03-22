@@ -16,8 +16,6 @@ class DateInput extends StatefulWidget {
     this.required = false,
   });
 
-
-
   @override
   State<DateInput> createState() => _DateInputState();
 }
@@ -31,9 +29,12 @@ class _DateInputState extends State<DateInput> {
         Row(
           children: [
             Text(widget.label),
-            const SizedBox(width: 4,),
-            if (widget.required) 
-              const Text('*',
+            const SizedBox(
+              width: 4,
+            ),
+            if (widget.required)
+              const Text(
+                '*',
                 style: TextStyle(
                   color: AppColors.primary,
                 ),
@@ -47,20 +48,24 @@ class _DateInputState extends State<DateInput> {
             helperText: widget.help,
             border: const OutlineInputBorder(),
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: const Icon(Icons.calendar_today),
           ),
           readOnly: true,
           onTap: () async {
             DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(DateTime.now().year - 100),
-                lastDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+              context: context,
+              locale: const Locale('fr'),
+              initialDate: DateTime.now(),
+              firstDate: DateTime(DateTime.now().year - 100),
+              lastDate: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day),
             );
 
             if (pickedDate != null) {
-              String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+              String formattedDate =
+                  DateFormat('dd/MM/yyyy').format(pickedDate);
               setState(() {
                 controller.text = formattedDate;
               });
