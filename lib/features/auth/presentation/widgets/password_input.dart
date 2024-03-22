@@ -6,6 +6,8 @@ class PasswordInput extends StatefulWidget {
   final String? hint;
   final String? help;
   final bool required;
+  final String? errorText;
+  final TextEditingController? controller;
 
   const PasswordInput({
     super.key,
@@ -13,9 +15,9 @@ class PasswordInput extends StatefulWidget {
     this.hint,
     this.help,
     this.required = false,
+    this.errorText,
+    this.controller,
   });
-
-
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -31,9 +33,12 @@ class _PasswordInputState extends State<PasswordInput> {
         Row(
           children: [
             Text(widget.label),
-            const SizedBox(width: 4,),
-            if (widget.required) 
-              const Text('*',
+            const SizedBox(
+              width: 4,
+            ),
+            if (widget.required)
+              const Text(
+                '*',
                 style: TextStyle(
                   color: AppColors.primary,
                 ),
@@ -41,16 +46,21 @@ class _PasswordInputState extends State<PasswordInput> {
           ],
         ),
         TextFormField(
+          controller: widget.controller,
+          enableInteractiveSelection: false,
+          keyboardType: TextInputType.text,
           obscureText: !_passwordVisible,
           decoration: InputDecoration(
             hintText: widget.hint,
             helperText: widget.help,
+            errorText: widget.errorText,
             border: const OutlineInputBorder(),
-            isDense: true, 
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            isDense: true,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: IconButton(
               icon: Icon(
-               _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
               ),
               onPressed: () {
                 setState(() {

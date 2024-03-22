@@ -6,6 +6,9 @@ class TextInput extends StatefulWidget {
   final String? hint;
   final String? help;
   final bool required;
+  final String? errorText;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
 
   // TODO : handle errors (red border and error msg (in help?))
 
@@ -15,9 +18,10 @@ class TextInput extends StatefulWidget {
     this.hint,
     this.help,
     this.required = false,
+    this.errorText,
+    this.controller,
+    this.keyboardType,
   });
-
-
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -31,9 +35,12 @@ class _TextInputState extends State<TextInput> {
         Row(
           children: [
             Text(widget.label),
-            const SizedBox(width: 4,),
-            if (widget.required) 
-              const Text('*',
+            const SizedBox(
+              width: 4,
+            ),
+            if (widget.required)
+              const Text(
+                '*',
                 style: TextStyle(
                   color: AppColors.primary,
                 ),
@@ -41,12 +48,16 @@ class _TextInputState extends State<TextInput> {
           ],
         ),
         TextFormField(
+          controller: widget.controller,
+          keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             hintText: widget.hint,
             helperText: widget.help,
             border: const OutlineInputBorder(),
-            isDense: true, 
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            errorText: widget.errorText,
+            isDense: true,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           ),
         ),
       ],

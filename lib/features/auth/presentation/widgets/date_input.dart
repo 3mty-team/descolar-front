@@ -7,6 +7,8 @@ class DateInput extends StatefulWidget {
   final String? hint;
   final String? help;
   final bool required;
+  final String? errorText;
+  final TextEditingController controller;
 
   const DateInput({
     super.key,
@@ -14,6 +16,8 @@ class DateInput extends StatefulWidget {
     this.hint,
     this.help,
     this.required = false,
+    this.errorText,
+    required this.controller,
   });
 
   @override
@@ -21,7 +25,6 @@ class DateInput extends StatefulWidget {
 }
 
 class _DateInputState extends State<DateInput> {
-  final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,10 +45,11 @@ class _DateInputState extends State<DateInput> {
           ],
         ),
         TextFormField(
-          controller: controller,
+          controller: widget.controller,
           decoration: InputDecoration(
             hintText: widget.hint,
             helperText: widget.help,
+            errorText: widget.errorText,
             border: const OutlineInputBorder(),
             isDense: true,
             contentPadding:
@@ -59,15 +63,18 @@ class _DateInputState extends State<DateInput> {
               locale: const Locale('fr'),
               initialDate: DateTime.now(),
               firstDate: DateTime(DateTime.now().year - 100),
-              lastDate: DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day),
+              lastDate: DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+              ),
             );
 
             if (pickedDate != null) {
               String formattedDate =
                   DateFormat('dd/MM/yyyy').format(pickedDate);
               setState(() {
-                controller.text = formattedDate;
+                widget.controller.text = formattedDate;
               });
             }
           },
