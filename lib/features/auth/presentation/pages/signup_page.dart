@@ -50,6 +50,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   bool _validateEmail(String value) {
+    value = value.trim();
     if (value.isEmpty) {
       setState(
         () => emailErrorMsg = 'Veuillez renseigner votre email académique',
@@ -72,9 +73,19 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   bool _validateLastname(String value) {
+    value = value.trim();
     if (value.isEmpty) {
       setState(
         () => lastnameErrorMsg = 'Veuillez renseigner votre nom',
+      );
+      return false;
+    }
+    final bool isLastnameValid = RegExp(
+      r'^[a-zA-ZÀ-Ÿ- ]*$',
+    ).hasMatch(value);
+    if (!isLastnameValid) {
+      setState(
+            () => lastnameErrorMsg = 'Le nom n\'est pas valide',
       );
       return false;
     }
@@ -85,9 +96,19 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   bool _validateFirstname(String value) {
+    value = value.trim();
     if (value.isEmpty) {
       setState(
         () => firstnameErrorMsg = 'Veuillez renseigner votre prénom',
+      );
+      return false;
+    }
+    final bool isFirstnameValid = RegExp(
+      r'^[a-zA-ZÀ-Ÿ- ]*$',
+    ).hasMatch(value);
+    if (!isFirstnameValid) {
+      setState(
+            () => firstnameErrorMsg = 'Le prénom n\'est pas valide',
       );
       return false;
     }
@@ -98,6 +119,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   bool _validateDate(String value) {
+    value = value.trim();
     if (value.isEmpty) {
       setState(
         () => dateErrorMsg = 'Veuillez renseigner votre date',
@@ -123,9 +145,19 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   bool _validateUsername(String value) {
+    value = value.trim();
     if (value.isEmpty) {
       setState(
         () => usernameErrorMsg = 'Veuillez renseigner votre pseudonyme',
+      );
+      return false;
+    }
+    final bool isUsernameValid = RegExp(
+      r'^[a-zA-Z0-9-_]+$',
+    ).hasMatch(value);
+    if (!isUsernameValid) {
+      setState(
+            () => usernameErrorMsg = 'Le pseudonyme n\'est pas valide',
       );
       return false;
     }
@@ -144,12 +176,12 @@ class _SignupPageState extends State<SignupPage> {
     }
 
     final bool isPasswordValid = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+      r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{7,255}$',
     ).hasMatch(value);
     if (!isPasswordValid) {
       setState(
         () => passwordErrorMsg =
-            'Votre mot de passe doit faire au minimum 8 caractères avec une minuscule, une majuscule, un chiffre et un caratère spécial',
+            'Votre mot de passe doit faire au minimum 7 caractères avec au moins une majuscule et un chiffre.',
       );
       return false;
     }
@@ -219,6 +251,7 @@ class _SignupPageState extends State<SignupPage> {
                     required: true,
                     controller: lastnameController,
                     errorText: lastnameErrorMsg,
+                    maxLength: 50,
                   ),
                   const SizedBox(
                     height: 16,
@@ -228,6 +261,7 @@ class _SignupPageState extends State<SignupPage> {
                     required: true,
                     controller: firstnameController,
                     errorText: firstnameErrorMsg,
+                    maxLength: 100,
                   ),
                   const SizedBox(
                     height: 16,
@@ -268,6 +302,7 @@ class _SignupPageState extends State<SignupPage> {
                     required: true,
                     controller: usernameController,
                     errorText: usernameErrorMsg,
+                    maxLength: 20,
                   ),
                   const SizedBox(
                     height: 16,
@@ -275,6 +310,7 @@ class _SignupPageState extends State<SignupPage> {
                   PasswordInput(
                     label: 'Mot de passe',
                     required: true,
+                    maxLength: 255,
                     controller: passwordController,
                     errorText: passwordErrorMsg,
                   ),
@@ -284,6 +320,7 @@ class _SignupPageState extends State<SignupPage> {
                   PasswordInput(
                     label: 'Confirmation du mot de passe',
                     required: true,
+                    maxLength: 255,
                     controller: confirmPasswordController,
                     errorText: confirmPasswordErrorMsg,
                   ),

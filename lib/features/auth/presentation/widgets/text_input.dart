@@ -9,8 +9,7 @@ class TextInput extends StatefulWidget {
   final String? errorText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
-
-  // TODO : handle errors (red border and error msg (in help?))
+  final int? maxLength;
 
   const TextInput({
     super.key,
@@ -21,6 +20,7 @@ class TextInput extends StatefulWidget {
     this.errorText,
     this.controller,
     this.keyboardType,
+    this.maxLength,
   });
 
   @override
@@ -49,6 +49,7 @@ class _TextInputState extends State<TextInput> {
         ),
         TextFormField(
           controller: widget.controller,
+          maxLength: widget.maxLength,
           keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             hintText: widget.hint,

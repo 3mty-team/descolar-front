@@ -8,6 +8,7 @@ class PasswordInput extends StatefulWidget {
   final bool required;
   final String? errorText;
   final TextEditingController? controller;
+  final int? maxLength;
 
   const PasswordInput({
     super.key,
@@ -17,6 +18,7 @@ class PasswordInput extends StatefulWidget {
     this.required = false,
     this.errorText,
     this.controller,
+    this.maxLength,
   });
 
   @override
@@ -47,6 +49,7 @@ class _PasswordInputState extends State<PasswordInput> {
         ),
         TextFormField(
           controller: widget.controller,
+          maxLength: widget.maxLength,
           enableInteractiveSelection: false,
           keyboardType: TextInputType.text,
           obscureText: !_passwordVisible,
