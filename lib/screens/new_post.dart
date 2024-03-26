@@ -18,41 +18,56 @@ class NewPost extends StatelessWidget {
           },
         ),
       ),
-      body: Row(
-        children: <Widget>[
-          AppAssets.addImageIcon,
-          const Flexible(
-            child: TextField(
-              maxLines: null,
-              maxLength: 400,
-              decoration: InputDecoration(
-                hintText: 'Une chose à partager ?',
-                counter: Offstage(),
+      body: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              const SizedBox(width: 10),
+              AppAssets.addImageIcon,
+              const SizedBox(width: 20),
+              const Flexible(
+                child: TextField(
+                  maxLines: null,
+                  maxLength: 400,
+                  decoration: InputDecoration(
+                    hintText: 'Une chose à partager ?',
+                    counter: Offstage(),
+                  ),
+                ),
               ),
+            ],
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  onPressed: addImage,
+                  icon: AppAssets.addImageIcon,
+                ),
+                const Spacer(),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.white,
+                    backgroundColor: AppColors.primary,
+                  ),
+                  onPressed: processPost,
+                  child: const Text('Poster'),
+                ),
+              ],
             ),
           ),
         ],
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: AppAssets.addImageIcon,
-            ),
-            const Spacer(),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.white,
-                backgroundColor: AppColors.primary,
-              ),
-              onPressed: () {},
-              child: const Text('Poster'),
-            ),
-          ],
-        ),
-      ),
     );
+  }
+
+  void processPost() {
+    //TODO : Post function
+  }
+
+  void addImage() {
+    //TODO : Image adding function
   }
 }
