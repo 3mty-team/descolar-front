@@ -1,7 +1,5 @@
-import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,16 +11,15 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   static const double _logoSize = 150;
 
   static var logo = Container(
-                      height: _logoSize,
-                      width: _logoSize,
-                      color: Colors.transparent,
-                      child:SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
-                      );
+    height: _logoSize,
+    width: _logoSize,
+    color: Colors.transparent,
+    child: SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
+  );
 
   @override
   void initState() {
@@ -30,13 +27,12 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(
-        const Duration(seconds: 5,), 
-        () {
-          Navigator.pushReplacementNamed(context, '/home');
-        }
-    );
+        const Duration(
+          seconds: 5,
+        ), () {
+      Navigator.pushReplacementNamed(context, '/home');
+    });
   }
-
 
   @override
   void dispose() {
@@ -59,9 +55,9 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TweenAnimationBuilder(
-              tween: Tween<double>(begin: 0, end: 1), 
-              duration: const Duration(seconds: 2), 
-              builder: (BuildContext context, double value, Widget? child) { 
+              tween: Tween<double>(begin: 0, end: 1),
+              duration: const Duration(seconds: 2),
+              builder: (BuildContext context, double value, Widget? child) {
                 return Opacity(opacity: value, child: child);
               },
               child: logo,

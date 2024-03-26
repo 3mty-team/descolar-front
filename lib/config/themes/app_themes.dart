@@ -5,6 +5,5 @@ ThemeData theme() {
   return ThemeData(
     fontFamily: 'Roboto',
     scaffoldBackgroundColor: AppColors.white,
-    //colorScheme: ColorScheme(),
   );
 }
