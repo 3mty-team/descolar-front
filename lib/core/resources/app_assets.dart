@@ -6,6 +6,8 @@ class AppAssets {
   static const imgPath = '$basePath/images';
 
   static final descolarLogoSvg = SvgPicture.asset('$iconPath/descolar.svg');
+  static final sampleProfilIcon = SvgPicture.asset('$imgPath/sample_profil_icon.svg');
+
   static final homeIcon = SvgPicture.asset('$iconPath/home_icon.svg');
   static final messageIcon = SvgPicture.asset('$iconPath/message_icon.svg');
   static final newPostIcon = SvgPicture.asset('$iconPath/new_post_icon.svg');
@@ -14,4 +16,5 @@ class AppAssets {
   static final backgroundNav = SvgPicture.asset('$imgPath/backgroundNavBar.svg');
   static final settingsIcon = SvgPicture.asset('$iconPath/settings-icon.svg');
   static final backIcon = SvgPicture.asset('$iconPath/back-icon.svg');
+  static final closeIcon = SvgPicture.asset('$iconPath/close_icon.svg');
 }

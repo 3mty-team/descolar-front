@@ -1,4 +1,5 @@
 import 'package:descolar_front/main.dart';
+import 'package:descolar_front/screens/new_post.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -9,7 +10,7 @@ class AppRoutes {
       case '/search':
         return _materialRoute(const Home());
       case '/newPost':
-        return _materialRoute(const Home());
+        return _materialRoute(const NewPost());
       case '/myProfil':
         return _materialRoute(const Home());
       case '/messages':
