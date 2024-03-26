@@ -127,8 +127,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 16,
                 ),
-                const CheckboxInput(
-                    title: Text('Se souvenir de moi'),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CheckboxInput(
+                        title: Text('Se souvenir de moi'),
+                    ),
+                  ],
                 ),
               ],
             ),
