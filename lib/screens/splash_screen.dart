@@ -15,11 +15,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   static const double _logoSize = 150;
 
   static var logo = Container(
-    height: _logoSize,
-    width: _logoSize,
-    color: Colors.transparent,
-    child: SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
-  );
+                      height: _logoSize,
+                      width: _logoSize,
+                      color: Colors.transparent,
+                      child:SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
+                    );
 
   @override
   void initState() {
@@ -27,11 +27,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(
-        const Duration(
-          seconds: 5,
-        ), () {
-      Navigator.pushReplacementNamed(context, '/home');
-    });
+        const Duration(seconds: 5,), 
+        () {
+          // TODO : if remember me, go to home, else go to login
+          Navigator.pushReplacementNamed(context, '/login');
+        }
+    );
   }
 
   @override
