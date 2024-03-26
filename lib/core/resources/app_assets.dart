@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppAssets {
@@ -13,4 +12,6 @@ class AppAssets {
   static final profilIcon = SvgPicture.asset('$iconPath/profil_icon.svg');
   static final searchIcon = SvgPicture.asset('$iconPath/search_icon.svg');
   static final backgroundNav = SvgPicture.asset('$imgPath/backgroundNavBar.svg');
+  static final settingsIcon = SvgPicture.asset('$iconPath/settings-icon.svg');
+  static final backIcon = SvgPicture.asset('$iconPath/back-icon.svg');
 }

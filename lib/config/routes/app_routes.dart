@@ -1,14 +1,9 @@
-/* 
-  /!\ MAYBE USELESS WITH PROVIDERS /!\ 
-*/
-
 import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      //TODO : Replace with true screens when created
       case '/home':
         return _materialRoute(const Home());
       case '/search':
