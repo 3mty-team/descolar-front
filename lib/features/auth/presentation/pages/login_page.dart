@@ -3,6 +3,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,12 +31,13 @@ class _LoginPageState extends State<LoginPage> {
     value = value.trim();
     if (value.isEmpty) {
       setState(
-            () => loginErrorMsg = 'Veuillez renseigner votre email ou votre pseudonyme',
+        () => loginErrorMsg =
+            'Veuillez renseigner votre email ou votre pseudonyme',
       );
       return false;
     }
     setState(
-          () => loginErrorMsg = null,
+      () => loginErrorMsg = null,
     );
     return true;
   }
@@ -44,12 +46,12 @@ class _LoginPageState extends State<LoginPage> {
     value = value.trim();
     if (value.isEmpty) {
       setState(
-            () => passwordErrorMsg = 'Veuillez renseigner votre mot de passe',
+        () => passwordErrorMsg = 'Veuillez renseigner votre mot de passe',
       );
       return false;
     }
     setState(
-          () => passwordErrorMsg = null,
+      () => passwordErrorMsg = null,
     );
     return true;
   }
@@ -124,17 +126,34 @@ class _LoginPageState extends State<LoginPage> {
                   errorText: passwordErrorMsg,
                   maxLength: 255,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CheckboxInput(
-                        title: Text('Se souvenir de moi'),
+                      title: Text('Se souvenir de moi'),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Pas de compte ? ',
+                        style: TextStyle(color: AppColors.gray),
+                      ),
+                      TextSpan(
+                        text: 'Créer un compte',
+                        style: const TextStyle(color: Colors.blue),
+                        recognizer: TapGestureRecognizer()..onTap = () {
+                          Navigator.pushReplacementNamed(context, '/signup');
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

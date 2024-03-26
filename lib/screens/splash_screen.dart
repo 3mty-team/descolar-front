@@ -30,7 +30,8 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(
         const Duration(seconds: 5,), 
         () {
-          Navigator.pushReplacementNamed(context, '/signup');
+          // TODO : if remember me, go to home, else go to login
+          Navigator.pushReplacementNamed(context, '/login');
         }
     );
   }

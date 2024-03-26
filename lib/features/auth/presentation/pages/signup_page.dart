@@ -254,18 +254,12 @@ class _SignupPageState extends State<SignupPage> {
                     errorText: lastnameErrorMsg,
                     maxLength: 50,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   TextInput(
                     label: 'Prénom',
                     required: true,
                     controller: firstnameController,
                     errorText: firstnameErrorMsg,
                     maxLength: 100,
-                  ),
-                  const SizedBox(
-                    height: 16,
                   ),
                   DateInput(
                     label: 'Date de naissance',
@@ -305,18 +299,12 @@ class _SignupPageState extends State<SignupPage> {
                     errorText: usernameErrorMsg,
                     maxLength: 20,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   PasswordInput(
                     label: 'Mot de passe',
                     required: true,
                     maxLength: 255,
                     controller: passwordController,
                     errorText: passwordErrorMsg,
-                  ),
-                  const SizedBox(
-                    height: 16,
                   ),
                   PasswordInput(
                     label: 'Confirmation du mot de passe',
