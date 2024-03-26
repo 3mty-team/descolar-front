@@ -1,9 +1,11 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -84,7 +86,7 @@ class _SignupPageState extends State<SignupPage> {
     ).hasMatch(value);
     if (!isLastnameValid) {
       setState(
-            () => lastnameErrorMsg = 'Le nom n\'est pas valide',
+        () => lastnameErrorMsg = 'Le nom n\'est pas valide',
       );
       return false;
     }
@@ -107,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
     ).hasMatch(value);
     if (!isFirstnameValid) {
       setState(
-            () => firstnameErrorMsg = 'Le prénom n\'est pas valide',
+        () => firstnameErrorMsg = 'Le prénom n\'est pas valide',
       );
       return false;
     }
@@ -156,7 +158,7 @@ class _SignupPageState extends State<SignupPage> {
     ).hasMatch(value);
     if (!isUsernameValid) {
       setState(
-            () => usernameErrorMsg = 'Le pseudonyme n\'est pas valide',
+        () => usernameErrorMsg = 'Le pseudonyme n\'est pas valide',
       );
       return false;
     }
@@ -322,6 +324,35 @@ class _SignupPageState extends State<SignupPage> {
                     maxLength: 255,
                     controller: confirmPasswordController,
                     errorText: confirmPasswordErrorMsg,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CheckboxInput(
+                    required: true,
+                    title: Flexible(
+                      child: RichText(
+                        text:  TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'En cochant cette case, je déclare avoir pris connaissance des ',
+                              style: TextStyle(color: AppColors.gray, fontSize: 12),
+                            ),
+                            TextSpan(
+                              text: 'conditions générales d\'utilisation ',
+                              style: const TextStyle(color: Colors.blue, fontSize: 12),
+                              recognizer: TapGestureRecognizer()..onTap = ()  {
+                                print('CGU');
+                              },
+                            ),
+                            const TextSpan(
+                              text: 'de l\'application et de les accepter',
+                              style: TextStyle(color: AppColors.gray, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

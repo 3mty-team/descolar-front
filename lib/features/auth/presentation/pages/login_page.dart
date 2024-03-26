@@ -1,5 +1,6 @@
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,13 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      body: Center(
+      body: Theme(
+        data: ThemeData(
+          primaryColor: AppColors.primary,
+          colorScheme: const ColorScheme.light(
+            primary: AppColors.primary,
+          ),
+        ),
         child: Center(
           child: FractionallySizedBox(
             widthFactor: 0.8,
@@ -116,6 +123,12 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                   errorText: passwordErrorMsg,
                   maxLength: 255,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const CheckboxInput(
+                    title: Text('Se souvenir de moi'),
                 ),
               ],
             ),
