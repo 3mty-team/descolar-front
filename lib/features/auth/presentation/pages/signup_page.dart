@@ -1,5 +1,4 @@
 import 'package:age_calculator/age_calculator.dart';
-import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
@@ -336,7 +335,6 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars.blankAppBar(),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
@@ -365,10 +363,9 @@ class _SignupPageState extends State<SignupPage> {
                     child: PrimaryTextButton(
                       text: _isLastStep() ? 'Confirmer' : 'Suivant',
                       onTap: () {
-                        // TODO : check if form is valid
                         if (_validateForm()) {
                           if (_isLastStep()) {
-                            // create user
+                            // TODO : create user
                           } else {
                             setState(() => currentStep++);
                           }
