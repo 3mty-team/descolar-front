@@ -1,10 +1,13 @@
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
+import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/account_link.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,50 +17,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController loginController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  String? loginErrorMsg;
-  String? passwordErrorMsg;
-
-  bool _validateForm() {
-    bool isValid = true;
-    isValid = _validateLogin(loginController.text) && isValid;
-    isValid = _validatePassword(passwordController.text) && isValid;
-    return isValid;
-  }
-
-  bool _validateLogin(String value) {
-    value = value.trim();
-    if (value.isEmpty) {
-      setState(
-        () => loginErrorMsg =
-            'Veuillez renseigner votre email ou votre pseudonyme',
-      );
-      return false;
-    }
-    setState(
-      () => loginErrorMsg = null,
-    );
-    return true;
-  }
-
-  bool _validatePassword(String value) {
-    value = value.trim();
-    if (value.isEmpty) {
-      setState(
-        () => passwordErrorMsg = 'Veuillez renseigner votre mot de passe',
-      );
-      return false;
-    }
-    setState(
-      () => passwordErrorMsg = null,
-    );
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
+    LoginProvider provider = Provider.of<LoginProvider>(context);
+    Map<LoginInputName, TextEditingController> controllers = provider.controllers;
+    Map<LoginInputName, String?> errors = provider.errors;
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
@@ -74,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: PrimaryTextButton(
                       text: 'Se connecter',
                       onTap: () {
-                        if (_validateForm()) {
+                        if (provider.validateForm()) {
                           // TODO : connect
                         }
                       },
@@ -112,8 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextInput(
                   label: 'Email ou pseudonyme',
-                  controller: loginController,
-                  errorText: loginErrorMsg,
+                  controller: controllers[LoginInputName.login],
+                  errorText: errors[LoginInputName.login],
                   required: true,
                 ),
                 const SizedBox(
@@ -122,38 +87,21 @@ class _LoginPageState extends State<LoginPage> {
                 PasswordInput(
                   label: 'Mot de passe',
                   required: true,
-                  controller: passwordController,
-                  errorText: passwordErrorMsg,
+                  controller: controllers[LoginInputName.password],
+                  errorText: errors[LoginInputName.password],
                   maxLength: 255,
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CheckboxInput(
-                      title: Text('Se souvenir de moi'),
-                    ),
-                  ],
+                const CheckboxInput(
+                  title: Text('Se souvenir de moi'),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Pas de compte ? ',
-                        style: TextStyle(color: AppColors.gray),
-                      ),
-                      TextSpan(
-                        text: 'Créer un compte',
-                        style: const TextStyle(color: Colors.blue),
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                          Navigator.pushReplacementNamed(context, '/signup');
-                        },
-                      ),
-                    ],
-                  ),
+                AccountLink(
+                  route: '/signup',
+                  text: 'Pas de compte ? ',
+                  linkText: 'Créer un compte',
+                  action: Provider.of<SignupProvider>(context, listen: false).reset,
                 ),
               ],
             ),

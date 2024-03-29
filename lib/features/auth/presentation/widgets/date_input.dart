@@ -8,7 +8,7 @@ class DateInput extends StatefulWidget {
   final String? help;
   final bool required;
   final String? errorText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   const DateInput({
     super.key,
@@ -74,7 +74,7 @@ class _DateInputState extends State<DateInput> {
               String formattedDate =
                   DateFormat('dd/MM/yyyy').format(pickedDate);
               setState(() {
-                widget.controller.text = formattedDate;
+                widget.controller!.text = formattedDate;
               });
             }
           },
