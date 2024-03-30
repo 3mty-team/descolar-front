@@ -34,6 +34,7 @@ migrate_working_dir/
 .pub/
 /build/
 build/*
+pubspec.lock
 
 # Flutter repo-specific
 /bin/cache/
