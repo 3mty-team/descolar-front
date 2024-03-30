@@ -1,5 +1,17 @@
+import 'package:data_connection_checker_tv/data_connection_checker.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/errors/failure.dart';
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/core/utils/date_converter.dart';
+import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/auth/business/usecases/create_user.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
+import 'package:descolar_front/features/auth/data/repositories/user_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:age_calculator/age_calculator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum SignupInputName {
   email,
@@ -251,7 +263,7 @@ class SignupProvider extends ChangeNotifier {
       return false;
     }
 
-    if (value != controllers['password']!.text) {
+    if (value != controllers[SignupInputName.password]!.text) {
       changeError(
         SignupInputName.confirmpassword,
         'Vos mots de passe ne sont pas identiques',
@@ -260,5 +272,39 @@ class SignupProvider extends ChangeNotifier {
     }
     removeError(SignupInputName.confirmpassword);
     return true;
+  }
+
+  void createUser() async {
+    UserRepositoryImpl repository = UserRepositoryImpl(
+      remoteDataSource: UserRemoteDataSourceImpl(dio: Dio()),
+      localDataSource: UserLocalDataSourceImpl(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      ),
+      networkInfo: NetworkInfoImpl(DataConnectionChecker()),
+    );
+
+    final failureOrUser = await CreateUser(userRepository: repository).call(
+      params: UserParams(
+        email: controllers[SignupInputName.email]!.text,
+        lastname: controllers[SignupInputName.lastname]!.text,
+        firstname: controllers[SignupInputName.firstname]!.text,
+        dateOfBirth: controllers[SignupInputName.date]!.text,
+        username: controllers[SignupInputName.username]!.text,
+        password: controllers[SignupInputName.password]!.text,
+      ),
+    );
+
+    // failureOrUser.fold(
+    //       (Failure newFailure) {
+    //     user = null;
+    //     failure = newFailure;
+    //     notifyListeners();
+    //   },
+    //       (UserEntity user) {
+    //     user = newTemplate;
+    //     failure = null;
+    //     notifyListeners();
+    //   },
+    // );
   }
 }

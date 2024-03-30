@@ -216,7 +216,7 @@ class _SignupPageState extends State<SignupPage> {
                       onTap: () {
                         if (provider.validateForm()) {
                           if (_isLastStep()) {
-                            // TODO : create user
+                            provider.createUser();
                           } else {
                             provider.nextStep();
                           }

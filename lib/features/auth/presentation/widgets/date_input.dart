@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -52,8 +53,7 @@ class _DateInputState extends State<DateInput> {
             errorText: widget.errorText,
             border: const OutlineInputBorder(),
             isDense: true,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: const Icon(Icons.calendar_today),
           ),
           readOnly: true,
@@ -71,8 +71,7 @@ class _DateInputState extends State<DateInput> {
             );
 
             if (pickedDate != null) {
-              String formattedDate =
-                  DateFormat('dd/MM/yyyy').format(pickedDate);
+              String formattedDate = datetimeToFrenchFormat(pickedDate);
               setState(() {
                 widget.controller!.text = formattedDate;
               });

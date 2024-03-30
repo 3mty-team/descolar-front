@@ -11,7 +11,7 @@ class GetUser {
   GetUser({required this.userRepository});
 
   Future<Either<Failure, UserEntity>> call({
-    required UserParams params,
+    required UserLoginParams params,
   }) async {
     return await userRepository.getUser(params: params);
   }

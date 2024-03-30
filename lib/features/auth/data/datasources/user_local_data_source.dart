@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../models/user_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/auth/data/models/user_model.dart';
+
+// TODO : "remember me"
 
 abstract class UserLocalDataSource {
   Future<void> cacheUser({required UserModel? templateToCache});

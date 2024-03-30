@@ -1,31 +1,56 @@
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:dio/dio.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/params/params.dart';
-import '../models/template_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
-abstract class TemplateRemoteDataSource {
-  Future<TemplateModel> getTemplate({required TemplateParams templateParams});
+abstract class UserRemoteDataSource {
+  Future<UserModel> getUser({required UserLoginParams params});
+
+  Future<UserModel> createUser({required UserParams params});
 }
 
-class TemplateRemoteDataSourceImpl implements TemplateRemoteDataSource {
+class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final Dio dio;
 
-  TemplateRemoteDataSourceImpl({required this.dio});
+  UserRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<TemplateModel> getTemplate({
-    required TemplateParams templateParams,
+  Future<UserModel> createUser({
+    required UserParams params,
   }) async {
+    final response = await dio.post(
+      '$baseDescolarApi/auth/register',
+      data: FormData.fromMap({
+        'mail': params.email,
+        'lastname': params.lastname,
+        'firstname': params.firstname,
+        'dateofbirth': params.dateOfBirth,
+        'username': params.username,
+        'password': params.password,
+        'formation_id': '1',
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(json: response.data['user']);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<UserModel> getUser({required UserLoginParams params}) async {
     final response = await dio.get(
-      '${baseDescolarApi}/',
+      '$baseDescolarApi/config/login',
       queryParameters: {
-        'api_key': 'if needed',
+        'username': params.username,
+        'password': params.password,
       },
     );
 
     if (response.statusCode == 200) {
-      return TemplateModel.fromJson(json: response.data);
+      return UserModel.fromJson(json: response.data);
     } else {
       throw ServerException();
     }
