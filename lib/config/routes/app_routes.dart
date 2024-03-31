@@ -4,6 +4,7 @@
 
 import 'package:descolar_front/features/auth/presentation/pages/login_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
+import 'package:descolar_front/features/auth/presentation/pages/user_created_success.dart';
 
 import 'package:descolar_front/main.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class AppRoutes {
         return _materialRoute(const SignupPage());
       case '/login':
         return _materialRoute(const LoginPage());
+      case '/user-created-success':
+        return _materialRoute(const UserCreatedSuccessPage());
 
       default:
         return _materialRoute(const Home());

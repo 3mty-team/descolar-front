@@ -8,6 +8,7 @@ import 'package:descolar_front/features/auth/business/usecases/create_user.dart'
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:descolar_front/features/auth/data/repositories/user_repository_impl.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/checkbox_cgu_input.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:age_calculator/age_calculator.dart';
@@ -21,11 +22,12 @@ enum SignupInputName {
   username,
   password,
   confirmpassword,
+  cgu,
 }
 
 class SignupProvider extends ChangeNotifier {
   int currentStep = 0;
-
+  bool? checkboxCGU = false;
   Map<SignupInputName, TextEditingController> controllers = {
     SignupInputName.email: TextEditingController(),
     SignupInputName.lastname: TextEditingController(),
@@ -35,7 +37,6 @@ class SignupProvider extends ChangeNotifier {
     SignupInputName.password: TextEditingController(),
     SignupInputName.confirmpassword: TextEditingController(),
   };
-
   Map<SignupInputName, String?> errors = {
     SignupInputName.email: null,
     SignupInputName.lastname: null,
@@ -44,11 +45,12 @@ class SignupProvider extends ChangeNotifier {
     SignupInputName.username: null,
     SignupInputName.password: null,
     SignupInputName.confirmpassword: null,
+    SignupInputName.cgu: null,
   };
 
   void reset() {
     currentStep = 0;
-
+    checkboxCGU = false;
     controllers = {
       SignupInputName.email: TextEditingController(),
       SignupInputName.lastname: TextEditingController(),
@@ -57,8 +59,8 @@ class SignupProvider extends ChangeNotifier {
       SignupInputName.username: TextEditingController(),
       SignupInputName.password: TextEditingController(),
       SignupInputName.confirmpassword: TextEditingController(),
+      SignupInputName.cgu: TextEditingController(),
     };
-
     errors = {
       SignupInputName.email: null,
       SignupInputName.lastname: null,
@@ -67,8 +69,8 @@ class SignupProvider extends ChangeNotifier {
       SignupInputName.username: null,
       SignupInputName.password: null,
       SignupInputName.confirmpassword: null,
+      SignupInputName.cgu: null,
     };
-
     notifyListeners();
   }
 
@@ -109,6 +111,7 @@ class SignupProvider extends ChangeNotifier {
       isValid = _validateUsername() && isValid;
       isValid = _validatePassword() && isValid;
       isValid = _validateConfirmPassword() && isValid;
+      isValid = _validateCGU() && isValid;
     }
     return isValid;
   }
@@ -274,7 +277,20 @@ class SignupProvider extends ChangeNotifier {
     return true;
   }
 
-  void createUser() async {
+  bool _validateCGU() {
+    bool? value = checkboxCGU;
+    if (value == false) {
+      changeError(
+        SignupInputName.cgu,
+        'Veuillez accepter les conditions générales d\'utilisation',
+      );
+      return false;
+    }
+    removeError(SignupInputName.cgu);
+    return true;
+  }
+
+  void createUser(BuildContext context) async {
     UserRepositoryImpl repository = UserRepositoryImpl(
       remoteDataSource: UserRemoteDataSourceImpl(dio: Dio()),
       localDataSource: UserLocalDataSourceImpl(
@@ -294,17 +310,26 @@ class SignupProvider extends ChangeNotifier {
       ),
     );
 
-    // failureOrUser.fold(
-    //       (Failure newFailure) {
-    //     user = null;
-    //     failure = newFailure;
-    //     notifyListeners();
-    //   },
-    //       (UserEntity user) {
-    //     user = newTemplate;
-    //     failure = null;
-    //     notifyListeners();
-    //   },
-    // );
+    failureOrUser.fold(
+      (Failure failure) {
+        if (failure is AlreadyExistsFailure) {
+          changeError(
+            SignupInputName.username,
+            'Ce pseudonyme existe déjà',
+          );
+          changeError(
+            SignupInputName.email,
+            'Cet email est déjà utilisé',
+          );
+          changeStep(0);
+        }
+        notifyListeners();
+      },
+      (UserEntity user) {
+        // Go to success page
+        Navigator.pushReplacementNamed(context, '/user-created-success');
+        notifyListeners();
+      },
+    );
   }
 }

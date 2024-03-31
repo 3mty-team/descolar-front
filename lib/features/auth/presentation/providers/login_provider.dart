@@ -3,26 +3,27 @@ import 'package:flutter/material.dart';
 enum LoginInputName { login, password }
 
 class LoginProvider extends ChangeNotifier {
+  bool? checkboxRememberMe = false;
   Map<LoginInputName, TextEditingController> controllers = {
     LoginInputName.login: TextEditingController(),
     LoginInputName.password: TextEditingController(),
   };
-
   Map<LoginInputName, String?> errors = {
     LoginInputName.login: null,
     LoginInputName.password: null,
   };
 
   void reset() {
+    checkboxRememberMe = false;
     controllers = {
       LoginInputName.login: TextEditingController(),
       LoginInputName.password: TextEditingController(),
     };
-
     errors = {
       LoginInputName.login: null,
       LoginInputName.password: null,
     };
+    notifyListeners();
   }
 
   void changeError(LoginInputName name, String? message) {

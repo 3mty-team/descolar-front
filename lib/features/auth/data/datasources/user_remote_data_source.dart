@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/constants/constants.dart';
+import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/params/params.dart';
@@ -25,16 +26,26 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         'mail': params.email,
         'lastname': params.lastname,
         'firstname': params.firstname,
-        'dateofbirth': params.dateOfBirth,
+        'dateofbirth': datetimeToFormattedString('MM/dd/yyyy', frenchFormatToDatetime(params.dateOfBirth)),
         'username': params.username,
         'password': params.password,
         'formation_id': '1',
       }),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) => status! < 500 ,
+      )
     );
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
-    } else {
+    }
+    else if (response.statusCode == 400) {
+      print(response);
+      print(response.data['message']);
+      throw AlreadyExistsException();
+    }
+    else {
       throw ServerException();
     }
   }

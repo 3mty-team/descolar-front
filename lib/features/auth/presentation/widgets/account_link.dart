@@ -30,7 +30,7 @@ class AccountLink extends StatelessWidget {
             style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                action!();
+                action?.call();
                 Navigator.pushReplacementNamed(context, route);
               },
           ),

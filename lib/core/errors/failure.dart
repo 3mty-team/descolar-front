@@ -12,3 +12,7 @@ class CacheFailure extends Failure {
   CacheFailure({required String errorMessage})
       : super(errorMessage: errorMessage);
 }
+
+class AlreadyExistsFailure extends Failure {
+  AlreadyExistsFailure({required super.errorMessage});
+}

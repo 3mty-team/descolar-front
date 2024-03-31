@@ -40,7 +40,11 @@ class UserRepositoryImpl implements UserRepository {
       try {
         UserModel userModel = await remoteDataSource.createUser(params: params);
         return Right(userModel);
-      } on ServerException {
+      }
+      on AlreadyExistsException {
+        return Left(AlreadyExistsFailure(errorMessage: 'User already exists'));
+      }
+      on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }
     } else {

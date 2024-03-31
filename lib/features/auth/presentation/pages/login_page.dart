@@ -3,7 +3,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/account_link.dart';
-import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/checkbox_remember_me_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
 import 'package:flutter/material.dart';
@@ -91,8 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                   errorText: errors[LoginInputName.password],
                   maxLength: 255,
                 ),
-                const CheckboxInput(
-                  title: Text('Se souvenir de moi'),
+                CheckboxRememberMeInput(
+                  provider: provider,
+                  title: const Text('Se souvenir de moi'),
                 ),
                 const SizedBox(
                   height: 16,

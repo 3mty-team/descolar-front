@@ -3,7 +3,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/account_link.dart';
-import 'package:descolar_front/features/auth/presentation/widgets/checkbox_input.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/checkbox_cgu_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
@@ -131,7 +131,9 @@ class _SignupPageState extends State<SignupPage> {
                 const SizedBox(
                   height: 16,
                 ),
-                CheckboxInput(
+                CheckboxCGUInput(
+                  provider: provider,
+                  errorText: provider.errors[SignupInputName.cgu],
                   required: true,
                   title: Flexible(
                     child: RichText(
@@ -216,7 +218,7 @@ class _SignupPageState extends State<SignupPage> {
                       onTap: () {
                         if (provider.validateForm()) {
                           if (_isLastStep()) {
-                            provider.createUser();
+                            provider.createUser(context);
                           } else {
                             provider.nextStep();
                           }

@@ -1,7 +1,11 @@
 import 'package:intl/intl.dart';
 
+String datetimeToFormattedString(String format, DateTime date) {
+  return DateFormat(format).format(date);
+}
+
 String datetimeToFrenchFormat(DateTime date) {
-  return DateFormat('dd/MM/yyyy').format(date);
+  return datetimeToFormattedString('dd/MM/yyyy', date);
 }
 
 DateTime formattedStringToDatetime(String format, String date) {
