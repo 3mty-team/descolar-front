@@ -1,3 +1,4 @@
+import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
@@ -233,12 +234,7 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
       body: Theme(
-        data: ThemeData(
-          primaryColor: AppColors.primary,
-          colorScheme: const ColorScheme.light(
-            primary: AppColors.primary,
-          ),
-        ),
+        data: AppTheme.theme(),
         child: Stepper(
           controlsBuilder: (context, controller) => const SizedBox.shrink(),
           type: StepperType.horizontal,

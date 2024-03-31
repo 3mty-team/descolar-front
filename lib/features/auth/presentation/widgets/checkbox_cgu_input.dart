@@ -37,7 +37,7 @@ class _CheckboxCGUInputState extends State<CheckboxCGUInput> {
                 ),
               Checkbox(
                 value: widget.provider.checkboxCGU,
-                side: MaterialStateBorderSide.resolveWith((states) =>  BorderSide(width: 1, color: widget.provider.errors[SignupInputName.cgu] != null ? Colors.redAccent : AppColors.black)),
+                side: MaterialStateBorderSide.resolveWith((states) =>  BorderSide(width: 1, color: widget.provider.errors[SignupInputName.cgu] != null ? AppColors.error : AppColors.black)),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
@@ -54,7 +54,7 @@ class _CheckboxCGUInputState extends State<CheckboxCGUInput> {
           Text(
             widget.errorText?? '',
             style: const TextStyle(
-              color: Colors.redAccent,
+              color: AppColors.error,
               fontSize: 12,
             ),
           ),

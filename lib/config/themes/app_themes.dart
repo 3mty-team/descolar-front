@@ -6,14 +6,15 @@ class AppTheme {
     return ThemeData(
       fontFamily: 'Roboto',
       scaffoldBackgroundColor: AppColors.white,
-
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        error: AppColors.error,
+      ),
       textTheme: const TextTheme(
         bodyMedium: TextStyle(
           color: AppColors.black,
         ),
       ),
-      
-      //colorScheme: ColorScheme(),
     );
   }
 }
