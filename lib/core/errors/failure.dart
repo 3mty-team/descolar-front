@@ -16,3 +16,7 @@ class CacheFailure extends Failure {
 class AlreadyExistsFailure extends Failure {
   AlreadyExistsFailure({required super.errorMessage});
 }
+
+class NotExistsFailure extends Failure {
+  NotExistsFailure({required super.errorMessage});
+}

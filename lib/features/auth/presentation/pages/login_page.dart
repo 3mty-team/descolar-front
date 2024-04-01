@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                       text: 'Se connecter',
                       onTap: () {
                         if (provider.validateForm()) {
-                          // TODO : connect
+                          provider.connect(context);
                         }
                       },
                     ),

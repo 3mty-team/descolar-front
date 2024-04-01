@@ -20,48 +20,49 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserModel> createUser({
     required UserParams params,
   }) async {
-    final response = await dio.post(
-      '$baseDescolarApi/auth/register',
-      data: FormData.fromMap({
-        'mail': params.email,
-        'lastname': params.lastname,
-        'firstname': params.firstname,
-        'dateofbirth': datetimeToFormattedString('MM/dd/yyyy', frenchFormatToDatetime(params.dateOfBirth)),
-        'username': params.username,
-        'password': params.password,
-        'formation_id': '1',
-      }),
-      options: Options(
-        followRedirects: false,
-        validateStatus: (status) => status! < 500 ,
-      )
-    );
+    final response = await dio.post('$baseDescolarApi/auth/register',
+        data: FormData.fromMap({
+          'mail': params.email,
+          'lastname': params.lastname,
+          'firstname': params.firstname,
+          'dateofbirth': datetimeToFormattedString('MM/dd/yyyy', frenchFormatToDatetime(params.dateOfBirth)),
+          'username': params.username,
+          'password': params.password,
+          'formation_id': '1',
+        }),
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => status! < 500,
+        ));
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
-    }
-    else if (response.statusCode == 400) {
+    } else if (response.statusCode == 400) {
       print(response);
       print(response.data['message']);
       throw AlreadyExistsException();
-    }
-    else {
+    } else {
       throw ServerException();
     }
   }
 
   @override
   Future<UserModel> getUser({required UserLoginParams params}) async {
-    final response = await dio.get(
+    final response = await dio.post(
       '$baseDescolarApi/config/login',
-      queryParameters: {
-        'username': params.username,
-        'password': params.password,
-      },
+      data: FormData.fromMap(
+        {
+          'username': params.username,
+          'password': params.password,
+        },
+      ),
     );
 
     if (response.statusCode == 200) {
-      return UserModel.fromJson(json: response.data);
+      if (response.data['error'] != null) {
+        throw NotExistsException();
+      }
+      return UserModel.fromJson(json: response.data['user']);
     } else {
       throw ServerException();
     }
