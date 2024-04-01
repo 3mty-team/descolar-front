@@ -4,6 +4,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/account_link.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/cgu_text.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/checkbox_cgu_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
@@ -81,7 +82,9 @@ class _SignupPageState extends State<SignupPage> {
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider.of<LoginProvider>(context, listen: false).reset,
+                  action: Provider
+                      .of<LoginProvider>(context, listen: false)
+                      .reset,
                 ),
               ],
             ),
@@ -152,7 +155,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                print('CGU');
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CGUText(),));
                               },
                           ),
                           const TextSpan(
@@ -171,7 +174,9 @@ class _SignupPageState extends State<SignupPage> {
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider.of<LoginProvider>(context, listen: false).reset,
+                  action: Provider
+                      .of<LoginProvider>(context, listen: false)
+                      .reset,
                 ),
               ],
             ),
