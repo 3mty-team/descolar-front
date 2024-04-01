@@ -52,10 +52,12 @@ class _TextInputState extends State<TextInput> {
           maxLength: widget.maxLength,
           keyboardType: widget.keyboardType,
           decoration: InputDecoration(
+            counter: const Offstage(),
             hintText: widget.hint,
             helperText: widget.help,
             border: const OutlineInputBorder(),
             errorText: widget.errorText,
+            errorMaxLines: 2,
             isDense: true,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

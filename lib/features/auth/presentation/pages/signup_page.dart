@@ -62,12 +62,18 @@ class _SignupPageState extends State<SignupPage> {
                   errorText: provider.errors[SignupInputName.lastname],
                   maxLength: 50,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
                 TextInput(
                   label: 'Prénom',
                   required: true,
                   controller: provider.controllers[SignupInputName.firstname],
                   errorText: provider.errors[SignupInputName.firstname],
                   maxLength: 100,
+                ),
+                const SizedBox(
+                  height: 16,
                 ),
                 DateInput(
                   label: 'Date de naissance',
@@ -118,12 +124,18 @@ class _SignupPageState extends State<SignupPage> {
                   errorText: provider.errors[SignupInputName.username],
                   maxLength: 20,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
                 PasswordInput(
                   label: 'Mot de passe',
                   required: true,
                   maxLength: 255,
                   controller: provider.controllers[SignupInputName.password],
                   errorText: provider.errors[SignupInputName.password],
+                ),
+                const SizedBox(
+                  height: 16,
                 ),
                 PasswordInput(
                   label: 'Confirmation du mot de passe',

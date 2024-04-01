@@ -54,9 +54,11 @@ class _PasswordInputState extends State<PasswordInput> {
           keyboardType: TextInputType.text,
           obscureText: !_passwordVisible,
           decoration: InputDecoration(
+            counter: const Offstage(),
             hintText: widget.hint,
             helperText: widget.help,
             errorText: widget.errorText,
+            errorMaxLines: 3,
             border: const OutlineInputBorder(),
             isDense: true,
             contentPadding:

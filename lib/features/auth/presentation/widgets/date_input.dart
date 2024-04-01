@@ -51,6 +51,8 @@ class _DateInputState extends State<DateInput> {
             hintText: widget.hint,
             helperText: widget.help,
             errorText: widget.errorText,
+            counter: const Offstage(),
+            errorMaxLines: 3,
             border: const OutlineInputBorder(),
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

@@ -91,6 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                   errorText: errors[LoginInputName.password],
                   maxLength: 255,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
                 CheckboxRememberMeInput(
                   provider: provider,
                   title: const Text('Se souvenir de moi'),
