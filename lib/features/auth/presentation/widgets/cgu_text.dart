@@ -9,7 +9,7 @@ class CGUText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-      appBar: AppBars.iconAppBar(context),
+      appBar: AppBars.backAppBar(context),
       body: SfPdfViewer.asset('assets/documents/CGU.pdf'),
     );
   }

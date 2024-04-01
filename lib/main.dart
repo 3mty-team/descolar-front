@@ -1,5 +1,6 @@
 import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
+import 'package:descolar_front/core/components/navigation_bar.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignupProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true, // change to false for release
-        onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
+        debugShowCheckedModeBanner: true,
+        // change to false for release
+        onGenerateRoute: AppRoutes.onGenerateRoutes,
+        // /!\ MAYBE USELESS WITH PROVIDERS /!\
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
         ],
@@ -47,6 +50,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBars.iconAppBar(context));
+    return Scaffold(
+      appBar: AppBars.homeAppBar(context),
+      bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
+    );
   }
 }

@@ -18,14 +18,22 @@ class AppBars {
     );
   }
 
-  static AppBar iconAppBar(BuildContext context) {
-    final isHomePage = ModalRoute.of(context)?.settings.name == '/home';
-    final leadingIcon = isHomePage ? AppAssets.settingsIcon : AppAssets.backIcon;
+  static AppBar homeAppBar(BuildContext context) {
     return blankAppBar(
       leading: IconButton(
-        icon: leadingIcon,
+        icon: AppAssets.settingsIcon,
         onPressed: () {
-          isHomePage ? null : Navigator.pop(context); //Replace "null" by navigate to settings page when created
+        },
+      ),
+    );
+  }
+
+  static AppBar backAppBar(BuildContext context) {
+    return blankAppBar(
+      leading: IconButton(
+        icon: AppAssets.backIcon,
+        onPressed: () {
+          Navigator.pop(context); //Replace "null" by navigate to settings page when created
         },
       ),
     );
