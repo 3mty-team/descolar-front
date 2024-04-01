@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/documents/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -106,8 +107,7 @@ flutter:
 
   
 flutter_launcher_icons:
-  andr#oid: "launcher_icon"
-  android: true
+  android: "launcher_icon"
   ios: true
   image_path: "assets/icons/launcher_icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
