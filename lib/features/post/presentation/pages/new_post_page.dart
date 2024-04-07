@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,9 +17,7 @@ class NewPost extends StatefulWidget {
 class _NewPostState extends State<NewPost> {
   final List<XFile> _selectedImages = [];
   static const MAX_POST_IMAGES = 4;
-  static const MAX_POST_CHARACTERS = 400;
   static const IMAGES_SIZE = 150.0;
-  static const DEFAULT_USER_ICON = Icon(Icons.account_circle_rounded, size: 40);
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +32,8 @@ class _NewPostState extends State<NewPost> {
       ),
       body: Column(
         children: [
-
           //User image and post field
-          const Row(
-            children: <Widget>[
-              Flexible(
-                child: TextField(
-                  maxLines: null,
-                  maxLength: MAX_POST_CHARACTERS,
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(right: 10, left: 5),
-                      child: DEFAULT_USER_ICON,
-                    ),
-                    hintText: 'Quoi de neuf ?',
-                    counter: Offstage(),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          const PostInput(),
 
           //Imported images space
           Padding(
