@@ -3,14 +3,13 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppBars {
-  static AppBar blankAppBar ({Widget? leading}) {
+  static AppBar blankAppBar({Widget? leading}) {
     return AppBar(
       toolbarHeight: 70,
       backgroundColor: AppColors.primary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.elliptical(900, 50),
-
         ),
       ),
       leading: leading,
@@ -23,8 +22,7 @@ class AppBars {
     return blankAppBar(
       leading: IconButton(
         icon: AppAssets.settingsIcon,
-        onPressed: () {
-        },
+        onPressed: () {},
       ),
     );
   }
@@ -34,8 +32,20 @@ class AppBars {
       leading: IconButton(
         icon: AppAssets.backIcon,
         onPressed: () {
-          Navigator.pop(context); //Replace "null" by navigate to settings page when created
+          Navigator.pop(
+              context); //Replace "null" by navigate to settings page when created
         },
+      ),
+    );
+  }
+
+  static AppBar newPostAppBar(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 70,
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        icon: const Icon(Icons.close),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
