@@ -1,11 +1,13 @@
-// ignore_for_file: constant_identifier_names
-
 import 'dart:io';
+import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/core/components/buttons.dart';
+import 'package:descolar_front/features/post/presentation/providers/new_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class NewPost extends StatefulWidget {
   const NewPost({Key? key}) : super(key: key);
@@ -15,46 +17,42 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
-  final List<XFile> _selectedImages = [];
-  static const MAX_POST_IMAGES = 4;
-  static const IMAGES_SIZE = 150.0;
+  static const imagesSize = 150.0;
 
   @override
   Widget build(BuildContext context) {
+    NewPostProvider provider = Provider.of<NewPostProvider>(context);
+    List<XFile> selectedImages = provider.selectedImages;
+    int maxPostImages = provider.maxPostImages;
+
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 70,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: AppBars.newPostAppBar(context),
       body: Column(
         children: [
-          //User image and post field
-          const PostInput(),
-
-          //Imported images space
+          const PostInput(
+            hint: 'Quoi de neuf ?',
+            maxPostCharacters: 400,
+            userIcon: Icon(Icons.account_circle_rounded, size: 40),
+          ),
           Padding(
             padding: const EdgeInsets.all(5),
             child: Wrap(
               spacing: 5,
               runSpacing: 5,
-              children: _selectedImages.map((image) {
+              children: selectedImages.map((image) {
                 return Stack(
                   children: [
                     Image.file(
                       File(image.path),
                       fit: BoxFit.cover,
-                      height: IMAGES_SIZE,
-                      width: IMAGES_SIZE,
+                      height: imagesSize,
+                      width: imagesSize,
                     ),
                     Positioned(
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            _selectedImages.remove(image);
+                            selectedImages.remove(image);
                           });
                         },
                         child: const Icon(
@@ -68,26 +66,20 @@ class _NewPostState extends State<NewPost> {
               }).toList(),
             ),
           ),
-          Text('Images importées : ${_selectedImages.length}/$MAX_POST_IMAGES'),
+          Text('Images importées : ${selectedImages.length}/$maxPostImages'),
           const Spacer(),
-
-          //Add image and post buttons
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
                 IconButton(
-                  onPressed: _pickImageFromGallery,
+                  onPressed: provider.pickImageFromGallery,
                   icon: AppAssets.addImageIcon,
                 ),
                 const Spacer(),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.white,
-                    backgroundColor: AppColors.primary,
-                  ),
-                  onPressed: processPost,
-                  child: const Text('Poster'),
+                PrimaryTextButton(
+                  text: 'Poster',
+                  onTap: provider.processPost,
                 ),
               ],
             ),
@@ -96,17 +88,4 @@ class _NewPostState extends State<NewPost> {
       ),
     );
   }
-
-  Future<void> _pickImageFromGallery() async {
-    final List<XFile> selection = await ImagePicker().pickMultiImage();
-
-    if (_selectedImages.length < MAX_POST_IMAGES) {
-      _selectedImages.addAll(selection);
-      setState(() {});
-    }
-  }
-}
-
-void processPost() {
-  //TODO : Fonction de publication
 }

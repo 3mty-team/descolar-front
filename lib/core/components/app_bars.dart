@@ -36,8 +36,20 @@ class AppBars {
       leading: IconButton(
         icon: AppAssets.backIcon,
         onPressed: () {
-          Navigator.pop(context); //Replace "null" by navigate to settings page when created
+          Navigator.pop(
+              context); //Replace "null" by navigate to settings page when created
         },
+      ),
+    );
+  }
+
+  static AppBar newPostAppBar(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 70,
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        icon: const Icon(Icons.close),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }

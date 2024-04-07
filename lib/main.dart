@@ -7,6 +7,7 @@ import 'package:descolar_front/features/auth/business/repositories/user_reposito
 import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
+import 'package:descolar_front/features/post/presentation/providers/new_post_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => SignupProvider()),
+        ChangeNotifierProvider(create: (context) => NewPostProvider()),
       ],
       child: MaterialApp(
         // change to false for release
