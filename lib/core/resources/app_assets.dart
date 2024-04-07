@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppAssets {
@@ -18,4 +17,7 @@ class AppAssets {
   static final backIcon = SvgPicture.asset('$iconPath/back-icon.svg');
   static final closeIcon = SvgPicture.asset('$iconPath/close_icon.svg');
   static final addImageIcon = SvgPicture.asset('$iconPath/add_image_icon.svg');
+  static final commentIcon = SvgPicture.asset('$iconPath/comment_icon.svg');
+  static final likeIcon = SvgPicture.asset('$iconPath/like_icon.svg');
+  static final shareIcon = SvgPicture.asset('$iconPath/share_icon.svg');
 }

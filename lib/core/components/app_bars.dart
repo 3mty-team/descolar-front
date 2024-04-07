@@ -10,6 +10,7 @@ class AppBars {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.elliptical(900, 50),
+
         ),
       ),
       leading: leading,
