@@ -1,7 +1,9 @@
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
