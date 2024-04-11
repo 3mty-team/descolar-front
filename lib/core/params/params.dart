@@ -9,6 +9,7 @@ class UserParams {
   final String dateOfBirth;
   final String username;
   final String password;
+
   const UserParams({
     required this.email,
     required this.lastname,
@@ -22,6 +23,7 @@ class UserParams {
 class UserLoginParams {
   final String username;
   final String password;
+
   const UserLoginParams({
     required this.username,
     required this.password,
