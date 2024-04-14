@@ -1,3 +1,6 @@
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:image_picker/image_picker.dart';
+
 class NoParams {}
 
 class TemplateParams {}
@@ -27,5 +30,23 @@ class UserLoginParams {
   const UserLoginParams({
     required this.username,
     required this.password,
+  });
+}
+
+class CreatePostParams {
+  final String userId;
+  final String content;
+  final String location;
+  final DateTime postDate;
+  final PostEntity? repostedPost;
+  final List<XFile>? medias;
+
+  const CreatePostParams({
+    required this.userId,
+    required this.content,
+    required this.location,
+    required this.postDate,
+    this.repostedPost,
+    this.medias,
   });
 }
