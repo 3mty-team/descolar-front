@@ -21,16 +21,16 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, UserModel>> getUser({required UserLoginParams params}) async {
+  Future<Either<Failure, UserModel>> getUser({
+    required UserLoginParams params,
+  }) async {
     if (await networkInfo.isConnected!) {
       try {
         UserModel userModel = await remoteDataSource.getUser(params: params);
         return Right(userModel);
-      }
-      on NotExistsException {
+      } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'Account does not exists'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }
     } else {
@@ -39,16 +39,16 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> createUser({required UserParams params}) async {
+  Future<Either<Failure, UserModel>> createUser({
+    required UserParams params,
+  }) async {
     if (await networkInfo.isConnected!) {
       try {
         UserModel userModel = await remoteDataSource.createUser(params: params);
         return Right(userModel);
-      }
-      on AlreadyExistsException {
+      } on AlreadyExistsException {
         return Left(AlreadyExistsFailure(errorMessage: 'User already exists'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }
     } else {

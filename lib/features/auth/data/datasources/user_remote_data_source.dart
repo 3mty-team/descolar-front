@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/constants/constants.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
@@ -25,7 +26,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           'mail': params.email,
           'lastname': params.lastname,
           'firstname': params.firstname,
-          'dateofbirth': datetimeToFormattedString('MM/dd/yyyy', frenchFormatToDatetime(params.dateOfBirth)),
+          'dateofbirth': datetimeToFormattedString(
+            'MM/dd/yyyy',
+            frenchFormatToDatetime(params.dateOfBirth),
+          ),
           'username': params.username,
           'password': params.password,
           'formation_id': '1',
@@ -38,8 +42,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
     } else if (response.statusCode == 400) {
-      print(response);
-      print(response.data['message']);
       throw AlreadyExistsException();
     } else {
       throw ServerException();
@@ -57,12 +59,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         },
       ),
     );
-
     if (response.statusCode == 200) {
       if (response.data['error'] != null) {
         throw NotExistsException();
       }
-      return UserModel.fromJson(json: response.data['user']);
+      final userData = response.data['user'];
+      final tokenResponse =
+          await dio.get('$baseDescolarApi/authentication/' + userData['uuid']);
+      UserInfo.token = tokenResponse.data['token'];
+      return UserModel.fromJson(json: userData);
     } else {
       throw ServerException();
     }

@@ -8,10 +8,16 @@ import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 abstract class UserLocalDataSource {
   Future<void> cacheUser({required UserModel? templateToCache});
+
+  Future<void> cacheToken({required String token});
+
   Future<UserModel> getLastUser();
+
+  Future<String?> getActiveToken();
 }
 
-const cachedUser = 'CACHED_TEMPLATE';
+const cachedUser = 'CACHED_USER';
+const cachedToken = 'CACHED_TOKEN';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -21,10 +27,20 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<UserModel> getLastUser() {
     final jsonString = sharedPreferences.getString(cachedUser);
-
     if (jsonString != null) {
       return Future.value(
-          UserModel.fromJson(json: json.decode(jsonString)),);
+        UserModel.fromJson(json: json.decode(jsonString)),
+      );
+    } else {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<String?> getActiveToken() async {
+    final token = sharedPreferences.getString(cachedToken);
+    if (token != null) {
+      return token;
     } else {
       throw CacheException();
     }
@@ -42,5 +58,10 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     } else {
       throw CacheException();
     }
+  }
+
+  @override
+  Future<void> cacheToken({required String token}) async {
+    sharedPreferences.setString(cachedToken, token);
   }
 }

@@ -1,9 +1,22 @@
+import 'package:dart_ipify/dart_ipify.dart';
+import 'package:data_connection_checker_tv/data_connection_checker.dart';
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/business/usecases/create_post.dart';
+import 'package:descolar_front/features/post/data/datasources/post_remote_data_source.dart';
+import 'package:descolar_front/features/post/data/repositories/post_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../core/connection/network_info.dart';
+import '../../../../core/errors/failure.dart';
 
 class NewPostProvider extends ChangeNotifier {
   List<XFile> selectedImages = [];
   final int maxPostImages = 4;
+  TextEditingController controller = TextEditingController();
 
   Future<void> pickImageFromGallery() async {
     final List<XFile> selection = await ImagePicker().pickMultiImage();
@@ -14,7 +27,28 @@ class NewPostProvider extends ChangeNotifier {
     }
   }
 
-  void processPost() {
-    //TODO : Fonction de publication
+  void processPost(BuildContext context) async {
+    PostRepositoryImpl repository = PostRepositoryImpl(
+      remoteDataSource: PostRemoteDataSourceImpl(dio: Dio()),
+      networkInfo: NetworkInfoImpl(DataConnectionChecker()),
+    );
+
+    final failureOrUser = await CreatePost(postRepository: repository).call(
+      params: CreatePostParams(
+        content: controller.text,
+        location: await Ipify.ipv4(),
+        postDate: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      ),
+    );
+
+    failureOrUser.fold(
+      (Failure failure) {
+        notifyListeners();
+      },
+      (PostEntity post) {
+        Navigator.pushReplacementNamed(context, '/home');
+        notifyListeners();
+      },
+    );
   }
 }
