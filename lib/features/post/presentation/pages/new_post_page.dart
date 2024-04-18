@@ -22,6 +22,7 @@ class _NewPostState extends State<NewPost> {
   @override
   Widget build(BuildContext context) {
     NewPostProvider provider = Provider.of<NewPostProvider>(context);
+    TextEditingController controller = provider.controller;
     List<XFile> selectedImages = provider.selectedImages;
     int maxPostImages = provider.maxPostImages;
 
@@ -29,10 +30,11 @@ class _NewPostState extends State<NewPost> {
       appBar: AppBars.newPostAppBar(context),
       body: Column(
         children: [
-          const PostInput(
+          PostInput(
+            controller: controller,
             hint: 'Quoi de neuf ?',
             maxPostCharacters: 400,
-            userIcon: Icon(Icons.account_circle_rounded, size: 40),
+            userIcon: const Icon(Icons.account_circle_rounded, size: 40),
           ),
           Padding(
             padding: const EdgeInsets.all(5),
@@ -79,7 +81,9 @@ class _NewPostState extends State<NewPost> {
                 const Spacer(),
                 PrimaryTextButton(
                   text: 'Poster',
-                  onTap: provider.processPost,
+                  onTap: () {
+                    provider.processPost(context);
+                  },
                 ),
               ],
             ),

@@ -36,7 +36,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> getUser({required UserLoginParams params}) async {
+  Future<Either<Failure, UserModel>> getUser({
+    required UserLoginParams params,
+  }) async {
     if (await networkInfo.isConnected!) {
       try {
         UserModel? user = await remoteDataSource.getUser(params: params);

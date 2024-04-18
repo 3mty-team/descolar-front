@@ -37,15 +37,13 @@ class UserLoginParams {
 }
 
 class CreatePostParams {
-  final String userId;
   final String content;
   final String location;
-  final DateTime postDate;
+  final int postDate;
   final PostEntity? repostedPost;
   final List<XFile>? medias;
 
   const CreatePostParams({
-    required this.userId,
     required this.content,
     required this.location,
     required this.postDate,

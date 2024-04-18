@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/constants/constants.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:dio/dio.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class UserRemoteDataSource {
   Future<String> getToken({required String uuid});
   Future<UserModel> getUser({required UserLoginParams params});
+
   Future<UserModel> createUser({required UserParams params});
 }
 
@@ -42,7 +44,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           'mail': params.email,
           'lastname': params.lastname,
           'firstname': params.firstname,
-          'dateofbirth': datetimeToFormattedString('MM/dd/yyyy', frenchFormatToDatetime(params.dateOfBirth)),
+          'dateofbirth': datetimeToFormattedString(
+            'MM/dd/yyyy',
+            frenchFormatToDatetime(params.dateOfBirth),
+          ),
           'username': params.username,
           'password': params.password,
           'formation_id': '1',
@@ -73,7 +78,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         },
       ),
     );
-
     if (response.statusCode == 200) {
       if (response.data['error'] != null) {
         throw NotExistsException();
