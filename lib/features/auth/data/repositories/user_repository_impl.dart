@@ -8,6 +8,7 @@ import 'package:descolar_front/features/auth/business/repositories/user_reposito
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
+import 'package:dio/dio.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
@@ -21,16 +22,25 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
+  Future<Either<Failure, UserModel?>> getRememberUser() async {
+    try {
+      UserModel? user = localDataSource.getRememberUser();
+      return Right(user);
+    } on CacheException {
+      return Left(CacheFailure(errorMessage: 'Cache error'));
+    }
+  }
+
+  @override
   Future<Either<Failure, UserModel>> getUser({required UserLoginParams params}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserModel userModel = await remoteDataSource.getUser(params: params);
-        return Right(userModel);
-      }
-      on NotExistsException {
+        UserModel? user;
+        user = await remoteDataSource.getUser(params: params);
+        return Right(user);
+      } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'Account does not exists'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }
     } else {
@@ -44,11 +54,9 @@ class UserRepositoryImpl implements UserRepository {
       try {
         UserModel userModel = await remoteDataSource.createUser(params: params);
         return Right(userModel);
-      }
-      on AlreadyExistsException {
+      } on AlreadyExistsException {
         return Left(AlreadyExistsFailure(errorMessage: 'User already exists'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }
     } else {

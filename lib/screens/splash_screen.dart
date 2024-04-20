@@ -1,8 +1,19 @@
+import 'package:data_connection_checker_tv/data_connection_checker.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
+import 'package:descolar_front/features/auth/business/usecases/get_remember_user.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
+import 'package:descolar_front/features/auth/data/models/user_model.dart';
+import 'package:descolar_front/features/auth/data/repositories/user_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,11 +26,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   static const double _logoSize = 150;
 
   static var logo = Container(
-                      height: _logoSize,
-                      width: _logoSize,
-                      color: Colors.transparent,
-                      child:SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
-                    );
+    height: _logoSize,
+    width: _logoSize,
+    color: Colors.transparent,
+    child: SvgPicture.asset('${AppAssets.iconPath}/descolar.svg'),
+  );
 
   @override
   void initState() {
@@ -27,12 +38,27 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(
-        const Duration(seconds: 5,), 
-        () {
-          // TODO : if remember me, go to home, else go to login
-          Navigator.pushReplacementNamed(context, '/login');
-        }
-    );
+        const Duration(
+          seconds: 3,
+        ), () async {
+      // TODO : if remember me, go to home, else go to login
+      UserRepository userRepository = await UserRepository.getUserRepository();
+      final failureOrUser = await GetRememberUser(userRepository: userRepository).call();
+      failureOrUser.fold(
+        (Failure failure) {
+          if (failure is CacheFailure) {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        },
+        (UserEntity? user) {
+          if (user != null) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        },
+      );
+    });
   }
 
   @override

@@ -1,9 +1,11 @@
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserModel> getUser({required UserLoginParams params});
@@ -62,7 +64,14 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (response.data['error'] != null) {
         throw NotExistsException();
       }
-      return UserModel.fromJson(json: response.data['user']);
+      UserModel user = UserModel.fromJson(json: response.data);
+      if (params.remember! == true) {
+        final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
+          sharedPreferences: await SharedPreferences.getInstance(),
+        );
+        local.cacheUser(user: user);
+      }
+      return user;
     } else {
       throw ServerException();
     }

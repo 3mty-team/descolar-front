@@ -3,6 +3,7 @@ import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/get_user.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
@@ -82,18 +83,13 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void connect(BuildContext context) async {
-    UserRepositoryImpl repository = UserRepositoryImpl(
-      remoteDataSource: UserRemoteDataSourceImpl(dio: Dio()),
-      localDataSource: UserLocalDataSourceImpl(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      ),
-      networkInfo: NetworkInfoImpl(DataConnectionChecker()),
-    );
+    UserRepository repository = await UserRepository.getUserRepository();
 
     final failureOrUser = await GetUser(userRepository: repository).call(
       params: UserLoginParams(
         username: controllers[LoginInputName.login]!.text,
         password: controllers[LoginInputName.password]!.text,
+        remember: checkboxRememberMe,
       ),
     );
 

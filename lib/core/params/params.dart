@@ -22,8 +22,11 @@ class UserParams {
 class UserLoginParams {
   final String username;
   final String password;
+  final bool? remember;
+
   const UserLoginParams({
     required this.username,
     required this.password,
+    this.remember = false,
   });
 }
