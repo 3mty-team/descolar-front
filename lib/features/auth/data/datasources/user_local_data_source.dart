@@ -36,15 +36,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<void> cacheRememberUser({required UserModel? user}) async {
     if (user != null) {
+      // User remember cache
       sharedPreferences.setString(
         cachedRememberUser,
         json.encode(
           user.toJson(),
         ),
       );
-      print(sharedPreferences.getString(cachedUser));
-      print(sharedPreferences.getString(cachedRememberUser));
-      print(sharedPreferences.getString(cachedUserToken));
     } else {
       throw CacheException();
     }
@@ -62,9 +60,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       );
       // Token cache
       sharedPreferences.setString(cachedUserToken, await remote.getToken(uuid: user.uuid));
-      print(sharedPreferences.getString(cachedUser));
-      print(sharedPreferences.getString(cachedRememberUser));
-      print(sharedPreferences.getString(cachedUserToken));
     } else {
       throw CacheException();
     }
