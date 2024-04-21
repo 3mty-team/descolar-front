@@ -6,7 +6,7 @@ String datetimeToFormattedString(String format, DateTime date) {
 
 String postDateToFrenchFormat(String date) {
   DateTime dateTime = DateTime.parse(date);
-  DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm');
+  DateFormat dateFormat = DateFormat('dd MMM. yyyy');
   return dateFormat.format(dateTime);
 }
 

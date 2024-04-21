@@ -18,9 +18,7 @@ abstract class PostRemoteDataSource {
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   final Dio dio;
-
   PostRemoteDataSourceImpl({required this.dio});
-
   Options _getRequestOptions() {
     return Options(
       headers: {
