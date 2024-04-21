@@ -2,15 +2,16 @@ import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
+import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
+import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'config/routes/app_routes.dart';
 
 void main() async {
   runApp(
@@ -29,10 +30,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignupProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true,
         // change to false for release
-        onGenerateRoute: AppRoutes.onGenerateRoutes,
+        debugShowCheckedModeBanner: true,
         // /!\ MAYBE USELESS WITH PROVIDERS /!\
+        onGenerateRoute: AppRoutes.onGenerateRoutes,
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
         ],
@@ -52,9 +53,49 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
+      ),
+    );
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.edgeToEdge,
+    );
+
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
+
     return Scaffold(
-      appBar: AppBars.homeAppBar(context),
+      key: _key,
+      appBar: AppBars.homeAppBar(context, _key),
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+              ),
+              child: Text('Paramètres'),
+            ),
+            ListTile(
+              title: const Text(
+                'Se déconnecter',
+                style: TextStyle(
+                  color: AppColors.error,
+                ),
+              ),
+              onTap: () async {
+                print('\nSigning out\n');
+                UserRepository repository = await UserRepository.getUserRepository();
+                SignOut(userRepository: repository).call();
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.initState();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [],
+      overlays: [SystemUiOverlay.top],
     );
 
     Future.delayed(
@@ -64,15 +64,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
+      ),
+    );
     SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
+      SystemUiMode.edgeToEdge,
     );
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext contet) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,

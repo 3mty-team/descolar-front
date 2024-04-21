@@ -89,17 +89,10 @@ pupspec.lock
 .packages.generated
 
 # Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
 **/generated_plugin_registrant.dart
 .packages
 .pub-preload-cache/
-.pub-cache/
-.pub/
 build/
-build/*
 flutter_*.png
 linked_*.ds
 unlinked.ds
@@ -133,7 +126,6 @@ unlinked_spec.ds
 **/ios/**/profile
 **/ios/**/xcuserdata
 **/ios/.generated/
-**/ios/Flutter/.last_build_id
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/Flutter.podspec

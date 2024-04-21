@@ -9,8 +9,12 @@ import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 abstract class UserLocalDataSource {
   Future<void> cacheUser({required UserModel? user});
-  Future<void> cacheRememberUser({required UserModel? user});
+
+  void cacheRememberUser({required UserModel? user});
+
   UserModel? getRememberUser();
+
+  UserModel? signOut();
 }
 
 const cachedUser = 'CACHED_USER';
@@ -34,7 +38,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> cacheRememberUser({required UserModel? user}) async {
+  void cacheRememberUser({required UserModel? user}) {
     if (user != null) {
       // User remember cache
       sharedPreferences.setString(
@@ -63,5 +67,22 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     } else {
       throw CacheException();
     }
+  }
+
+  @override
+  UserModel? signOut() {
+    UserModel? user = UserModel.fromJson(
+      json: json.decode(
+        sharedPreferences.getString(cachedUser)!,
+      ),
+    );
+    try {
+      sharedPreferences.remove(cachedUser);
+      sharedPreferences.remove(cachedRememberUser);
+      sharedPreferences.remove(cachedUserToken);
+    } on Exception {
+      throw CacheException();
+    }
+    return user;
   }
 }

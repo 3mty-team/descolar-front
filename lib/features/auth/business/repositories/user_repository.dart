@@ -33,5 +33,6 @@ abstract class UserRepository {
     required UserParams params,
   });
 
+  Either<Failure, UserEntity?> signOut();
 
 }

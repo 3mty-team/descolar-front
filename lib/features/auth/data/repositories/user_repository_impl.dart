@@ -8,7 +8,6 @@ import 'package:descolar_front/features/auth/business/repositories/user_reposito
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
-import 'package:dio/dio.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
@@ -23,11 +22,16 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, UserModel?>> getRememberUser() async {
-    try {
-      UserModel? user = localDataSource.getRememberUser();
-      return Right(user);
-    } on CacheException {
-      return Left(CacheFailure(errorMessage: 'Cache error'));
+    if (await networkInfo.isConnected!) {
+      try {
+        UserModel? user = localDataSource.getRememberUser();
+        await localDataSource.cacheUser(user: user);
+        return Right(user);
+      } on CacheException {
+        return Left(CacheFailure(errorMessage: 'Cache error'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
     }
   }
 
@@ -63,28 +67,15 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-// @override
-// Future<Either<Failure, UserModel>> getUser({
-//   required UserParams templateParams,
-// }) async {
-//   if (await networkInfo.isConnected!) {
-//     try {
-//       UserModel remoteUser =
-//           await remoteDataSource.getUser(templateParams: templateParams);
-//
-//       localDataSource.cacheUser(templateToCache: remoteUser);
-//
-//       return Right(remoteUser);
-//     } on ServerException {
-//       return Left(ServerFailure(errorMessage: 'This is a server exception'));
-//     }
-//   } else {
-//     try {
-//       UserModel localUser = await localDataSource.getLastUser();
-//       return Right(localUser);
-//     } on CacheException {
-//       return Left(CacheFailure(errorMessage: 'This is a cache exception'));
-//     }
-//   }
-// }
+  @override
+  Either<Failure, UserModel?> signOut() {
+    try {
+      UserModel? user = localDataSource.signOut();
+      return Right(user);
+    } on CacheException {
+      return Left(CacheFailure(errorMessage: 'Cache error'));
+    }
+  }
+
+
 }

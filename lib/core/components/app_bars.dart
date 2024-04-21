@@ -3,7 +3,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppBars {
-  static AppBar blankAppBar ({Widget? leading}) {
+  static AppBar blankAppBar({Widget? leading}) {
     return AppBar(
       toolbarHeight: 70,
       backgroundColor: AppColors.primary,
@@ -15,14 +15,16 @@ class AppBars {
       leading: leading,
       title: AppAssets.descolarLogoSvg,
       centerTitle: true,
+      iconTheme: const IconThemeData(color: AppColors.white),
     );
   }
 
-  static AppBar homeAppBar(BuildContext context) {
+  static AppBar homeAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
     return blankAppBar(
       leading: IconButton(
         icon: AppAssets.settingsIcon,
         onPressed: () {
+          key.currentState!.openDrawer();
         },
       ),
     );
