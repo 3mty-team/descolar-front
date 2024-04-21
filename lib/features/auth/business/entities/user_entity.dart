@@ -1,4 +1,5 @@
 class UserEntity {
+  final String uuid;
   final String email;
   final String lastname;
   final String firstname;
@@ -7,6 +8,7 @@ class UserEntity {
   final String password;
 
   const UserEntity({
+    required this.uuid,
     required this.email,
     required this.lastname,
     required this.firstname,

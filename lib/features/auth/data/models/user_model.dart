@@ -4,6 +4,7 @@ import 'package:descolar_front/features/auth/business/entities/user_entity.dart'
 
 class UserModel extends UserEntity {
   const UserModel({
+    required String uuid,
     required String email,
     required String lastname,
     required String firstname,
@@ -11,6 +12,7 @@ class UserModel extends UserEntity {
     required String username,
     required String password,
   }) : super(
+          uuid: uuid,
           email: email,
           lastname: lastname,
           firstname: firstname,
@@ -21,6 +23,7 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromJson({required Map<String, dynamic> json}) {
     return UserModel(
+      uuid: json['uuid'],
       email: json['mail'],
       lastname: json['lastname'],
       firstname: json['firstname'],
@@ -32,6 +35,7 @@ class UserModel extends UserEntity {
 
   Map<String, dynamic> toJson() {
     return {
+      'uuid': uuid,
       'mail': email,
       'lastname': lastname,
       'firstname': firstname,

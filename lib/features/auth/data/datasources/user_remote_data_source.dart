@@ -1,13 +1,15 @@
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserRemoteDataSource {
+  Future<String> getToken({required String uuid});
   Future<UserModel> getUser({required UserLoginParams params});
-
   Future<UserModel> createUser({required UserParams params});
 }
 
@@ -15,6 +17,21 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final Dio dio;
 
   UserRemoteDataSourceImpl({required this.dio});
+
+  @override
+  Future<String> getToken({
+    required String uuid,
+}) async {
+    final response = await dio.get('$baseDescolarApi/authentication/$uuid');
+    if (response.statusCode == 200) {
+      return response.data['token'];
+    }
+    if (response.statusCode == 404) {
+      throw NotExistsException();
+    } else {
+      throw ServerException();
+    }
+  }
 
   @override
   Future<UserModel> createUser({
@@ -37,9 +54,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
-    } else if (response.statusCode == 400) {
-      print(response);
-      print(response.data['message']);
+    }
+    if (response.statusCode == 400) {
       throw AlreadyExistsException();
     } else {
       throw ServerException();
@@ -62,7 +78,17 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (response.data['error'] != null) {
         throw NotExistsException();
       }
-      return UserModel.fromJson(json: response.data['user']);
+      UserModel user = UserModel.fromJson(json: response.data);
+      final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+      // User cache
+      local.cacheUser(user: user);
+      // Remember me
+      if (params.remember! == true) {
+        local.cacheRememberUser(user: user);
+      }
+      return user;
     } else {
       throw ServerException();
     }

@@ -1,44 +1,65 @@
 import 'dart:convert';
 
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
-// TODO : "remember me"
-
 abstract class UserLocalDataSource {
-  Future<void> cacheUser({required UserModel? templateToCache});
-  Future<UserModel> getLastUser();
+  Future<void> cacheUser({required UserModel? user});
+  Future<void> cacheRememberUser({required UserModel? user});
+  UserModel? getRememberUser();
 }
 
-const cachedUser = 'CACHED_TEMPLATE';
+const cachedUser = 'CACHED_USER';
+const cachedRememberUser = 'CACHED_REMEMBER_USER';
+const cachedUserToken = 'CACHED_USER_TOKEN';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   final SharedPreferences sharedPreferences;
+  final UserRemoteDataSourceImpl remote = UserRemoteDataSourceImpl(dio: Dio());
 
   UserLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<UserModel> getLastUser() {
-    final jsonString = sharedPreferences.getString(cachedUser);
-
+  UserModel? getRememberUser() {
+    final jsonString = sharedPreferences.getString(cachedRememberUser);
     if (jsonString != null) {
-      return Future.value(
-          UserModel.fromJson(json: json.decode(jsonString)),);
+      final data = json.decode(jsonString);
+      return UserModel.fromJson(json: data);
+    }
+    return null;
+  }
+
+  @override
+  Future<void> cacheRememberUser({required UserModel? user}) async {
+    if (user != null) {
+      // User remember cache
+      sharedPreferences.setString(
+        cachedRememberUser,
+        json.encode(
+          user.toJson(),
+        ),
+      );
     } else {
       throw CacheException();
     }
   }
 
   @override
-  Future<void> cacheUser({required UserModel? templateToCache}) async {
-    if (templateToCache != null) {
+  Future<void> cacheUser({required UserModel? user}) async {
+    if (user != null) {
+      // User cache
       sharedPreferences.setString(
         cachedUser,
         json.encode(
-          templateToCache.toJson(),
+          user.toJson(),
         ),
       );
+      // Token cache
+      sharedPreferences.setString(cachedUserToken, await remote.getToken(uuid: user.uuid));
     } else {
       throw CacheException();
     }
