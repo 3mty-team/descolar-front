@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config/routes/app_routes.dart';
 
@@ -26,8 +27,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignupProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true, // change to false for release
-        onGenerateRoute: AppRoutes.onGenerateRoutes, // /!\ MAYBE USELESS WITH PROVIDERS /!\
+        debugShowCheckedModeBanner: true,
+        // change to false for release
+        onGenerateRoute: AppRoutes.onGenerateRoutes,
+        // /!\ MAYBE USELESS WITH PROVIDERS /!\
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
         ],
@@ -47,6 +50,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBars.iconAppBar(context));
+    return Scaffold(
+      appBar: AppBars.iconAppBar(context),
+    );
   }
 }

@@ -35,8 +35,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Failure, UserModel>> getUser({required UserLoginParams params}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserModel? user;
-        user = await remoteDataSource.getUser(params: params);
+        UserModel? user = await remoteDataSource.getUser(params: params);
         return Right(user);
       } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'Account does not exists'));

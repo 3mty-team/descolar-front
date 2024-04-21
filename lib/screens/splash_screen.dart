@@ -38,27 +38,32 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(
-        const Duration(
-          seconds: 3,
-        ), () async {
-      // TODO : if remember me, go to home, else go to login
-      UserRepository userRepository = await UserRepository.getUserRepository();
-      final failureOrUser = await GetRememberUser(userRepository: userRepository).call();
-      failureOrUser.fold(
-        (Failure failure) {
-          if (failure is CacheFailure) {
-            Navigator.pushReplacementNamed(context, '/login');
-          }
-        },
-        (UserEntity? user) {
-          if (user != null) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else {
-            Navigator.pushReplacementNamed(context, '/login');
-          }
-        },
-      );
-    });
+      const Duration(
+        seconds: 3,
+      ),
+      () async {
+        // Remember me
+        UserRepository userRepository = await UserRepository.getUserRepository();
+        final failureOrUser = await GetRememberUser(userRepository: userRepository).call();
+        failureOrUser.fold(
+          (Failure failure) {
+            if (failure is CacheFailure) {
+              Navigator.pushReplacementNamed(context, '/login');
+            }
+          },
+          (UserEntity? user) {
+            // If remember user in cache, go home
+            if (user != null) {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+            // else go login
+            else {
+              Navigator.pushReplacementNamed(context, '/login');
+            }
+          },
+        );
+      },
+    );
   }
 
   @override
