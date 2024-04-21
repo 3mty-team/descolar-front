@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
@@ -47,7 +48,18 @@ class _PostItemState extends State<PostItem> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const Spacer(),
-                        const Icon(Icons.more_horiz, size: 20),
+                        Text(postDateToFrenchFormat(widget.post.postDate)),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          onPressed: () {},
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          // override default min size of 48px
+                          style: const ButtonStyle(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.more_horiz, size: 20),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -62,16 +74,18 @@ class _PostItemState extends State<PostItem> {
                         IconButton(
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(), // override default min size of 48px
+                          constraints: const BoxConstraints(),
+                          // override default min size of 48px
                           style: const ButtonStyle(
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          icon: AppAssets.likeIcon,
+                          icon: AppAssets.shareIcon,
                         ),
                         IconButton(
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(), // override default min size of 48px
+                          constraints: const BoxConstraints(),
+                          // override default min size of 48px
                           style: const ButtonStyle(
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
@@ -80,17 +94,18 @@ class _PostItemState extends State<PostItem> {
                         IconButton(
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(), // override default min size of 48px
+                          constraints: const BoxConstraints(),
+                          // override default min size of 48px
                           style: const ButtonStyle(
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          icon: AppAssets.shareIcon,
+                          icon: AppAssets.likeIcon,
                         ),
                       ],
                     ),
                     const SizedBox(height: 7),
                     Text(
-                      "${widget.post.comments} réponses - ${widget.post.likes} J'aimes",
+                      "${widget.post.comments} réponse - ${widget.post.likes} j'aime",
                       style: const TextStyle(
                         color: AppColors.lightGray,
                         fontSize: 15,
