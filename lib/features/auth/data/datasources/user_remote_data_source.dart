@@ -63,7 +63,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (response.data['error'] != null) {
         throw NotExistsException();
       }
-      final userData = response.data['user'];
+      final userData = response.data;
       final tokenResponse =
           await dio.get('$baseDescolarApi/authentication/' + userData['uuid']);
       UserInfo.token = tokenResponse.data['token'];

@@ -33,7 +33,7 @@ class NewPostProvider extends ChangeNotifier {
       networkInfo: NetworkInfoImpl(DataConnectionChecker()),
     );
 
-    final failureOrUser = await CreatePost(postRepository: repository).call(
+    final failureOrPost = await CreatePost(postRepository: repository).call(
       params: CreatePostParams(
         content: controller.text,
         location: await Ipify.ipv4(),
@@ -41,7 +41,7 @@ class NewPostProvider extends ChangeNotifier {
       ),
     );
 
-    failureOrUser.fold(
+    failureOrPost.fold(
       (Failure failure) {
         notifyListeners();
       },

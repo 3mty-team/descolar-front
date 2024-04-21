@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/params/params.dart';
 
@@ -20,7 +21,7 @@ abstract class PostRepository {
     required int postID,
   });
 
-  Future<Either<Failure, List<PostEntity>>> getAllPostInRange({
+  Future<Either<Failure, List<PostModel>>> getAllPostInRange({
     required int range,
   });
 

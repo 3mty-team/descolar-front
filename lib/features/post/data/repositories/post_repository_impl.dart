@@ -41,11 +41,19 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<PostEntity>>> getAllPostInRange({
+  Future<Either<Failure, List<PostModel>>> getAllPostInRange({
     required int range,
-  }) {
-    // TODO: implement getAllPostInRange
-    throw UnimplementedError();
+  }) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        List<PostModel> posts = await remoteDataSource.getAllPostInRange(range: range);
+        return Right(posts);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
   @override
