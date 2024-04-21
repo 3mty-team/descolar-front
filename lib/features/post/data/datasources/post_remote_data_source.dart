@@ -9,12 +9,27 @@ abstract class PostRemoteDataSource {
   Future<PostModel> createPost({required CreatePostParams params});
 
   Future<List<PostModel>> getAllPostInRange({required int range});
+
+  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
+    required int range,
+    required String userUUID,
+  });
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   final Dio dio;
 
   PostRemoteDataSourceImpl({required this.dio});
+
+  Options _getRequestOptions() {
+    return Options(
+      headers: {
+        'Authorization': 'Bearer ${UserInfo.token}',
+      },
+      followRedirects: false,
+      validateStatus: (status) => status! < 500,
+    );
+  }
 
   @override
   Future<PostModel> createPost({required CreatePostParams params}) async {
@@ -26,13 +41,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
         'send_timestamp': params.postDate,
         'medias': '[]',
       }),
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer ${UserInfo.token}',
-        },
-        followRedirects: false,
-        validateStatus: (status) => status! < 500,
-      ),
+      options: _getRequestOptions(),
     );
     return PostModel.fromJson(json: response.data);
   }
@@ -41,13 +50,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   Future<List<PostModel>> getAllPostInRange({required int range}) async {
     final response = await dio.get(
       '$baseDescolarApi/post/message/$range',
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer ${UserInfo.token}',
-        },
-        followRedirects: false,
-        validateStatus: (status) => status! < 500,
-      ),
+      options: _getRequestOptions(),
     );
     response.data.forEach((post) {
       PostModel receivedPost = PostModel.fromJson(json: post);
@@ -57,5 +60,25 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     });
     CachedPost.feed.sort((a, b) => a.postId.compareTo(b.postId));
     return CachedPost.feed;
+  }
+
+  @override
+  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
+    required int range,
+    required String userUUID,
+  }) async {
+    final response = await dio.get(
+      '$baseDescolarApi/post/message/$userUUID/$range',
+      options: _getRequestOptions(),
+    );
+    CachedPost.userPostList.clear();
+    response.data.forEach((post) {
+      PostModel receivedPost = PostModel.fromJson(json: post);
+      if (!CachedPost.postAlreadyInUserList(receivedPost)) {
+        CachedPost.userPostList.add(PostModel.fromJson(json: post));
+      }
+    });
+    CachedPost.userPostList.sort((a, b) => a.postId.compareTo(b.postId));
+    return CachedPost.userPostList;
   }
 }

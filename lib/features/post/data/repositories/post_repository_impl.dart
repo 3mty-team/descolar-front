@@ -46,7 +46,8 @@ class PostRepositoryImpl implements PostRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        List<PostModel> posts = await remoteDataSource.getAllPostInRange(range: range);
+        List<PostModel> posts =
+            await remoteDataSource.getAllPostInRange(range: range);
         return Right(posts);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
@@ -69,9 +70,18 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, List<PostEntity>>> getAllPostInRangeWithUserUUID({
     required int range,
     required String userUUID,
-  }) {
-    // TODO: implement getAllPostInRangeWithUserUUID
-    throw UnimplementedError();
+  }) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        List<PostModel> posts = await remoteDataSource
+            .getAllPostInRangeWithUserUUID(range: range, userUUID: userUUID);
+        return Right(posts);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
   @override
