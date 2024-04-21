@@ -7,12 +7,16 @@ class PostModel extends PostEntity {
     required String username,
     required String content,
     required String postDate,
+    required int likes,
+    required int comments,
   }) : super(
           postId: postId,
           userId: userId,
           username: username,
           content: content,
           postDate: postDate,
+          likes: likes,
+          comments: comments,
         );
 
   factory PostModel.fromJson({required Map<String, dynamic> json}) {
@@ -24,6 +28,8 @@ class PostModel extends PostEntity {
       username: user['username'],
       content: json['content'],
       postDate: date['date'],
+      likes: json['likes'],
+      comments: json['comments'],
     );
   }
 }

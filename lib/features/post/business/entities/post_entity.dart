@@ -1,12 +1,11 @@
-import 'package:image_picker/image_picker.dart';
-
 class PostEntity {
   final int postId;
   final String userId;
   final String content;
   final String username;
   final String postDate;
-  final List<XFile>? medias;
+  final int likes;
+  final int comments;
 
   const PostEntity({
     required this.postId,
@@ -14,6 +13,7 @@ class PostEntity {
     required this.content,
     required this.username,
     required this.postDate,
-    this.medias,
+    required this.likes,
+    required this.comments,
   });
 }
