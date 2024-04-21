@@ -1,22 +1,14 @@
 import 'package:descolar_front/core/resources/app_assets.dart';
+import 'package:descolar_front/core/utils/date_converter.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:flutter/material.dart';
 
 class PostItem extends StatefulWidget {
-  final Text username;
-  final Text text;
-  final Icon profilPicture;
-  final PostItem? quote;
-  final int likes;
-  final int responses;
+  final PostModel post;
 
   const PostItem({
     super.key,
-    required this.username,
-    required this.likes,
-    required this.responses,
-    required this.profilPicture,
-    required this.text,
-    this.quote,
+    required this.post,
   });
 
   @override
@@ -31,25 +23,25 @@ class _PostItemState extends State<PostItem> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
+          const Column(
             children: [
-              widget.profilPicture,
+              Icon(Icons.account_circle_rounded, size: 40),
             ],
           ),
           const SizedBox(width: 5),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
                   children: [
-                    widget.username,
+                    Text(widget.post.username),
                     const Spacer(),
                     const Icon(Icons.more_horiz, size: 20),
                   ],
                 ),
                 const SizedBox(height: 4),
-                widget.text,
+                Text(widget.post.content),
                 const SizedBox(height: 7),
                 Wrap(
                   spacing: 20,
@@ -60,7 +52,8 @@ class _PostItemState extends State<PostItem> {
                   ],
                 ),
                 const SizedBox(height: 7),
-                Text("${widget.responses} réponses - ${widget.likes} J'aime"),
+                const Text("${34} réponse(s) - ${3} J'aime(s)"),
+                Text(postDateToFrenchFormat(widget.post.postDate)),
               ],
             ),
           ),

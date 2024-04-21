@@ -1,38 +1,29 @@
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PostModel extends PostEntity {
   const PostModel({
     required int postId,
     required String userId,
+    required String username,
     required String content,
-    required int postDate,
-    List<XFile>? medias,
+    required String postDate,
   }) : super(
           postId: postId,
           userId: userId,
+          username: username,
           content: content,
           postDate: postDate,
-          medias: medias,
         );
 
   factory PostModel.fromJson({required Map<String, dynamic> json}) {
+    Map<String, dynamic> user = json['user'];
+    Map<String, dynamic> date = json['date'];
     return PostModel(
       postId: json['id'],
-      userId: json['user'],
+      userId: user['uuid'],
+      username: user['username'],
       content: json['content'],
-      postDate: json['timestamp'],
-      medias: json['medias'],
+      postDate: date['date'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': postId,
-      'user': userId,
-      'content': content,
-      'date': postDate.toString(),
-      'medias': medias,
-    };
   }
 }
