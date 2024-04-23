@@ -6,6 +6,7 @@ class PostEntity {
   final DateTime postDate;
   final int likes;
   final int comments;
+  final bool isLiked;
 
   const PostEntity({
     required this.postId,
@@ -15,5 +16,6 @@ class PostEntity {
     required this.postDate,
     required this.likes,
     required this.comments,
+    required this.isLiked,
   });
 }

@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/post/presentation/pages/new_comment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
+  bool isLiked = false;
+
   @override
   Widget build(BuildContext context) {
     ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
@@ -105,7 +108,9 @@ class _PostItemState extends State<PostItem> {
                           icon: AppAssets.shareIcon,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => NewComment(post: widget.post)));
+                          },
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           // override default min size of 48px
@@ -115,14 +120,18 @@ class _PostItemState extends State<PostItem> {
                           icon: AppAssets.commentIcon,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          icon: !isLiked ? AppAssets.likeIcon : AppAssets.likedIcon,
+                          onPressed: () {
+                            setState(() {
+                              isLiked = !isLiked;
+                            });
+                          },
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           // override default min size of 48px
                           style: const ButtonStyle(
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          icon: AppAssets.likeIcon,
                         ),
                       ],
                     ),

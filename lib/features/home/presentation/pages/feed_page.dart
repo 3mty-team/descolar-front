@@ -4,6 +4,7 @@ import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/post/presentation/providers/get_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

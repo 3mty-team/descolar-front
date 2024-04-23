@@ -31,4 +31,23 @@ class ActionPostProvider extends ChangeNotifier {
       },
     );
   }
+
+  void commentPost(BuildContext context, PostModel post) async {
+    PostRepositoryImpl repository = PostRepositoryImpl(
+      remoteDataSource: PostRemoteDataSourceImpl(dio: Dio()),
+      networkInfo: NetworkInfoImpl(DataConnectionChecker()),
+      localDataSource: PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance()),
+    );
+
+    final failureOrPost = await DeletePost(postRepository: repository).call(post: post);
+
+    failureOrPost.fold(
+          (Failure failure) {
+        notifyListeners();
+      },
+          (bool response) {
+        notifyListeners();
+      },
+    );
+  }
 }

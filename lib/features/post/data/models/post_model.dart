@@ -10,6 +10,7 @@ class PostModel extends PostEntity {
     required DateTime postDate,
     required int likes,
     required int comments,
+    required bool isLiked,
   }) : super(
           postId: postId,
           userId: userId,
@@ -18,6 +19,7 @@ class PostModel extends PostEntity {
           postDate: postDate,
           likes: likes,
           comments: comments,
+          isLiked: isLiked,
         );
 
   factory PostModel.fromJson({required Map<String, dynamic> json}) {
@@ -31,6 +33,7 @@ class PostModel extends PostEntity {
       postDate: stringToDatetime(date['date']),
       likes: json['likes'],
       comments: json['comments'],
+      isLiked: json['content'] == null, //TODO: Check liked post of current user
     );
   }
 

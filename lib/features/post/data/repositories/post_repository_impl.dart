@@ -7,8 +7,7 @@ import 'package:descolar_front/features/post/business/entities/post_entity.dart'
 import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
 import 'package:descolar_front/features/post/data/datasources/post_remote_data_source.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
-
-import '../../business/repositories/post_repository.dart';
+import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final PostRemoteDataSource remoteDataSource;
