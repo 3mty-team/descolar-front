@@ -88,6 +88,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       );
       // User cache
       local.cacheUser(user: user);
+      UserInfo.token = local.sharedPreferences.getString('CACHED_USER_TOKEN')!;
       // Remember me
       if (params.remember! == true) {
         local.cacheRememberUser(user: user);

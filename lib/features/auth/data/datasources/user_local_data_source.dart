@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';

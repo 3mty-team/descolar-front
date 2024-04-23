@@ -47,6 +47,7 @@ class NewPostProvider extends ChangeNotifier {
       },
       (PostEntity post) {
         Navigator.pushReplacementNamed(context, '/home');
+        controller.clear();
         notifyListeners();
       },
     );
