@@ -4,6 +4,7 @@ import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
 import 'package:descolar_front/features/post/data/datasources/post_remote_data_source.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 
@@ -11,10 +12,12 @@ import '../../business/repositories/post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final PostRemoteDataSource remoteDataSource;
+  final PostLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   PostRepositoryImpl({
     required this.remoteDataSource,
+    required this.localDataSource,
     required this.networkInfo,
   });
 

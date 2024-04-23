@@ -3,12 +3,14 @@ import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/business/usecases/create_post.dart';
+import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
 import 'package:descolar_front/features/post/data/datasources/post_remote_data_source.dart';
 import 'package:descolar_front/features/post/data/repositories/post_repository_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/connection/network_info.dart';
 import '../../../../core/errors/failure.dart';
@@ -31,6 +33,7 @@ class NewPostProvider extends ChangeNotifier {
     PostRepositoryImpl repository = PostRepositoryImpl(
       remoteDataSource: PostRemoteDataSourceImpl(dio: Dio()),
       networkInfo: NetworkInfoImpl(DataConnectionChecker()),
+      localDataSource: PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance()),
     );
 
     final failureOrPost = await CreatePost(postRepository: repository).call(

@@ -48,7 +48,7 @@ class _PostItemState extends State<PostItem> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const Spacer(),
-                        Text(postDateToFrenchFormat(widget.post.postDate)),
+                        Text (datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
                         const SizedBox(width: 10),
                         IconButton(
                           onPressed: () {},

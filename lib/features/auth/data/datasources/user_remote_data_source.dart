@@ -1,5 +1,4 @@
 import 'package:descolar_front/core/constants/constants.dart';
-import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:dio/dio.dart';
@@ -10,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserRemoteDataSource {
   Future<String> getToken({required String uuid});
+
   Future<UserModel> getUser({required UserLoginParams params});
 
   Future<UserModel> createUser({required UserParams params});
@@ -23,7 +23,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<String> getToken({
     required String uuid,
-}) async {
+  }) async {
     final response = await dio.get('$baseDescolarApi/authentication/$uuid');
     if (response.statusCode == 200) {
       return response.data['token'];
@@ -39,23 +39,25 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserModel> createUser({
     required UserParams params,
   }) async {
-    final response = await dio.post('$baseDescolarApi/auth/register',
-        data: FormData.fromMap({
-          'mail': params.email,
-          'lastname': params.lastname,
-          'firstname': params.firstname,
-          'dateofbirth': datetimeToFormattedString(
-            'MM/dd/yyyy',
-            frenchFormatToDatetime(params.dateOfBirth),
-          ),
-          'username': params.username,
-          'password': params.password,
-          'formation_id': '1',
-        }),
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) => status! < 500,
-        ));
+    final response = await dio.post(
+      '$baseDescolarApi/auth/register',
+      data: FormData.fromMap({
+        'mail': params.email,
+        'lastname': params.lastname,
+        'firstname': params.firstname,
+        'dateofbirth': datetimeToFormattedString(
+          'MM/dd/yyyy',
+          frenchFormatToDatetime(params.dateOfBirth),
+        ),
+        'username': params.username,
+        'password': params.password,
+        'formation_id': '1',
+      }),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) => status! < 500,
+      ),
+    );
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
@@ -88,7 +90,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       );
       // User cache
       local.cacheUser(user: user);
-      UserInfo.token = local.sharedPreferences.getString('CACHED_USER_TOKEN')!;
       // Remember me
       if (params.remember! == true) {
         local.cacheRememberUser(user: user);

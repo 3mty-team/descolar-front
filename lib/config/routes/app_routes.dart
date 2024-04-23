@@ -5,11 +5,9 @@
 import 'package:descolar_front/features/auth/presentation/pages/login_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/user_created_success.dart';
-
+import 'package:descolar_front/features/home/presentation/pages/feed_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
 import 'package:flutter/material.dart';
-
-import '../../features/home/presentation/pages/feed_page.dart';
 
 class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {

@@ -1,4 +1,4 @@
-import '../../features/post/data/models/post_model.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class CachedPost {
   static List<PostModel> feed = [];

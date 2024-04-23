@@ -1,5 +1,4 @@
 import 'package:descolar_front/core/utils/date_converter.dart';
-
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 
 class UserModel extends UserEntity {

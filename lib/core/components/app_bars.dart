@@ -43,7 +43,7 @@ class AppBars {
     );
   }
 
-  static AppBar newPostAppBar(BuildContext context) {
+  static AppBar closeIconAppBar(BuildContext context) {
     return AppBar(
       toolbarHeight: 70,
       backgroundColor: Colors.transparent,

@@ -3,7 +3,7 @@ class PostEntity {
   final String userId;
   final String content;
   final String username;
-  final String postDate;
+  final DateTime postDate;
   final int likes;
   final int comments;
 
