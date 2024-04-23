@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/core/errors/failure.dart';
@@ -17,8 +18,8 @@ abstract class PostRepository {
     required int postID,
   });
 
-  Future<Either<Failure, PostEntity>> deletePost({
-    required int postID,
+  Future<Either<Failure, bool>> deletePost({
+    required PostModel post,
   });
 
   Future<Either<Failure, List<PostModel>>> getAllPostInRange({

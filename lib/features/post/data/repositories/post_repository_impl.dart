@@ -38,9 +38,16 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, PostEntity>> deletePost({required int postID}) {
-    // TODO: implement deletePost
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> deletePost({required PostModel post}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        return Right(await remoteDataSource.deletePost(post: post));
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
   @override
@@ -49,8 +56,7 @@ class PostRepositoryImpl implements PostRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        List<PostModel> posts =
-            await remoteDataSource.getAllPostInRange(range: range);
+        List<PostModel> posts = await remoteDataSource.getAllPostInRange(range: range);
         return Right(posts);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
@@ -76,8 +82,7 @@ class PostRepositoryImpl implements PostRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        List<PostModel> posts = await remoteDataSource
-            .getAllPostInRangeWithUserUUID(range: range, userUUID: userUUID);
+        List<PostModel> posts = await remoteDataSource.getAllPostInRangeWithUserUUID(range: range, userUUID: userUUID);
         return Right(posts);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));

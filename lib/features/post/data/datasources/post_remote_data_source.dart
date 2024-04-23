@@ -11,6 +11,8 @@ import 'package:descolar_front/core/params/params.dart';
 abstract class PostRemoteDataSource {
   Future<PostModel> createPost({required CreatePostParams params});
 
+  Future<bool> deletePost({required PostModel post});
+
   Future<List<PostModel>> getAllPostInRange({required int range});
 
   Future<List<PostModel>> getAllPostInRangeWithUserUUID({
@@ -47,6 +49,21 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       options: _getRequestOptions(),
     );
     return PostModel.fromJson(json: response.data);
+  }
+
+  @override
+  Future<bool> deletePost({required PostModel post}) async {
+    int postID = post.postId;
+    final response = await dio.delete(
+      '$baseDescolarApi/post/$postID',
+      data: FormData.fromMap({
+        'post_id': postID,
+      }),
+      options: _getRequestOptions(),
+    );
+    final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+    local.removeFromFeed(post: post);
+    return response.data['id'] != null;
   }
 
   @override

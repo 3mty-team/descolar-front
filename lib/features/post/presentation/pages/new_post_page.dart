@@ -1,13 +1,14 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/features/post/presentation/providers/new_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class NewPost extends StatefulWidget {
   const NewPost({Key? key}) : super(key: key);

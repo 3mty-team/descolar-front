@@ -1,5 +1,8 @@
-import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:descolar_front/core/utils/date_converter.dart';
+import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
@@ -19,6 +22,7 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
+    ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(right: 15, left: 5, bottom: 20),
       child: Stack(
@@ -48,17 +52,36 @@ class _PostItemState extends State<PostItem> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const Spacer(),
-                        Text (datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
+                        Text(datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
                         const SizedBox(width: 10),
-                        IconButton(
-                          onPressed: () {},
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                          // override default min size of 48px
-                          style: const ButtonStyle(
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        PopupMenuButton(
+                          color: AppColors.white,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: const Icon(Icons.more_horiz, size: 20),
                           ),
-                          icon: const Icon(Icons.more_horiz, size: 20),
+                          onSelected: (value) {
+                            if (value == 'deletePost') {
+                              provider.deletePost(context, widget.post);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                            const PopupMenuItem(
+                              value: 'deletePost',
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5),
+                                    child: Icon(Icons.delete),
+                                  ),
+                                  Text(
+                                    'Supprimer',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

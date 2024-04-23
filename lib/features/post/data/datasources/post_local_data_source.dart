@@ -10,6 +10,8 @@ abstract class PostLocalDataSource {
   Future<void> addToFeed({required PostModel? post});
 
   Future<void> addToUserPostList({required PostModel? post});
+
+  Future<void> removeFromFeed({required PostModel? post});
 }
 
 class PostLocalDataSourceImpl implements PostLocalDataSource {
@@ -23,6 +25,17 @@ class PostLocalDataSourceImpl implements PostLocalDataSource {
     if (post != null) {
       if (!CachedPost.postAlreadyInFeed(post)) {
         CachedPost.feed.add(post);
+      }
+    } else {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> removeFromFeed({required PostModel? post}) async {
+    if (post != null) {
+      if (CachedPost.postAlreadyInFeed(post)) {
+        CachedPost.feed.remove(post);
       }
     } else {
       throw CacheException();
