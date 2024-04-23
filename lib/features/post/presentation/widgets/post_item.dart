@@ -1,7 +1,8 @@
-import 'package:descolar_front/features/post/presentation/pages/new_comment_page.dart';
+import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/post/presentation/pages/new_comment_page.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
@@ -98,7 +99,9 @@ class _PostItemState extends State<PostItem> {
                       spacing: 15,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => NewQuote(post: widget.post)));
+                          },
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           // override default min size of 48px

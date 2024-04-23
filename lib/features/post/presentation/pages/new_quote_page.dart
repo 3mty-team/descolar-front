@@ -1,26 +1,26 @@
-import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
-import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 
-class NewComment extends StatefulWidget {
+class NewQuote extends StatefulWidget {
   final PostModel post;
 
-  const NewComment({
+  const NewQuote({
     super.key,
     required this.post,
   });
 
   @override
-  State<StatefulWidget> createState() => _NewCommentState();
+  State<StatefulWidget> createState() => _NewQuoteState();
 }
 
-class _NewCommentState extends State<NewComment> {
+class _NewQuoteState extends State<NewQuote> {
   @override
   Widget build(BuildContext context) {
     ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
@@ -29,9 +29,8 @@ class _NewCommentState extends State<NewComment> {
       appBar: AppBars.closeIconAppBar(context),
       body: Column(
         children: [
-          PostItem(post: widget.post),
           const PostInput(
-            hint: 'Que souhaitez-vous répondre ?',
+            hint: 'Message de votre citation...',
             maxPostCharacters: 400,
             userIcon: Icon(Icons.account_circle_rounded, size: 40),
           ),
@@ -42,13 +41,14 @@ class _NewCommentState extends State<NewComment> {
               runSpacing: 5,
             ),
           ),
+          PostItem(post: widget.post),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
                 const Spacer(),
                 PrimaryTextButton(
-                  text: 'Publier la réponse',
+                  text: 'Republier le post',
                   onTap: () {},
                 ),
               ],
