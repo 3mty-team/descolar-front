@@ -1,4 +1,5 @@
 import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
+import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -93,6 +94,11 @@ class _PostItemState extends State<PostItem> {
                     Text(
                       widget.post.content,
                       style: const TextStyle(fontSize: 16),
+                    ),
+                    Visibility(
+                      visible: widget.post.repostedPost != null,
+                      child:
+                      widget.post.repostedPost != null ? QuotedPostItem(quotedPost: widget.post.repostedPost) : const SizedBox(),
                     ),
                     const SizedBox(height: 7),
                     Wrap(

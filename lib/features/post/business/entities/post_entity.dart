@@ -1,3 +1,5 @@
+import 'package:descolar_front/features/post/data/models/post_model.dart';
+
 class PostEntity {
   final int postId;
   final String userId;
@@ -6,7 +8,7 @@ class PostEntity {
   final DateTime postDate;
   final int likes;
   final int comments;
-  final bool isLiked;
+  final PostModel? repostedPost;
 
   const PostEntity({
     required this.postId,
@@ -16,6 +18,6 @@ class PostEntity {
     required this.postDate,
     required this.likes,
     required this.comments,
-    required this.isLiked,
+    this.repostedPost,
   });
 }
