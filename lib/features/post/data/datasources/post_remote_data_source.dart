@@ -13,8 +13,6 @@ abstract class PostRemoteDataSource {
 
   Future<bool> deletePost({required PostModel post});
 
-  Future<PostModel> getPostByID({required int postID});
-
   Future<List<PostModel>> getAllPostInRange({required int range});
 
   Future<List<PostModel>> getAllPostInRangeWithUserUUID({
@@ -69,15 +67,6 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }
 
   @override
-  Future<PostModel> getPostByID({required int postID}) async {
-    final response = await dio.get(
-      '$baseDescolarApi/post/$postID',
-      options: _getRequestOptions(),
-    );
-    return PostModel.fromJson(json: response.data);
-  }
-
-  @override
   Future<List<PostModel>> getAllPostInRange({required int range}) async {
     final response = await dio.get(
       '$baseDescolarApi/post/message/$range',
@@ -85,8 +74,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     );
     final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
     response.data.forEach((post) async {
-      int? repostID = post['repost_id'];
-      PostModel? repostedPost = repostID == null ? null : await getPostByID(postID: repostID);
+      PostModel? repostedPost = post['repostedPost'] == null ? null : PostModel.fromJson(json: post['repostedPost']);
       local.addToFeed(post: PostModel.fromJson(json: post, repostedPost: repostedPost));
     });
     CachedPost.feed.sort((a, b) => a.postId.compareTo(b.postId));
