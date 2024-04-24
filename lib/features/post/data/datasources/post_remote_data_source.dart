@@ -11,6 +11,8 @@ import 'package:descolar_front/core/params/params.dart';
 abstract class PostRemoteDataSource {
   Future<PostModel> createPost({required CreatePostParams params});
 
+  Future<PostModel> repostPost({required CreatePostParams params, required int postID});
+
   Future<bool> deletePost({required PostModel post});
 
   Future<List<PostModel>> getAllPostInRange({required int range});
@@ -41,6 +43,22 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     final response = await dio.post(
       '$baseDescolarApi/post',
       data: FormData.fromMap({
+        'content': params.content,
+        'location': params.location,
+        'send_timestamp': params.postDate,
+        'medias': '[]',
+      }),
+      options: _getRequestOptions(),
+    );
+    return PostModel.fromJson(json: response.data);
+  }
+
+  @override
+  Future<PostModel> repostPost({required CreatePostParams params, required int postID}) async {
+    final response = await dio.post(
+      '$baseDescolarApi/repost',
+      data: FormData.fromMap({
+        'post_id': postID,
         'content': params.content,
         'location': params.location,
         'send_timestamp': params.postDate,

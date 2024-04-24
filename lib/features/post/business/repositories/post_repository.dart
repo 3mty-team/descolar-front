@@ -6,15 +6,12 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/params/params.dart';
 
 abstract class PostRepository {
-  Future<Either<Failure, PostEntity>> getPostByID({
-    required int postID,
-  });
-
   Future<Either<Failure, PostEntity>> createPost({
     required CreatePostParams params,
   });
 
   Future<Either<Failure, PostEntity>> repostPost({
+    required CreatePostParams params,
     required int postID,
   });
 

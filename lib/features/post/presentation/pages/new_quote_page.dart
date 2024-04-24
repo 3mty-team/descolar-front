@@ -24,15 +24,17 @@ class _NewQuoteState extends State<NewQuote> {
   @override
   Widget build(BuildContext context) {
     ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
+    TextEditingController controller = provider.controller;
 
     return Scaffold(
       appBar: AppBars.closeIconAppBar(context),
       body: Column(
         children: [
-          const PostInput(
+          PostInput(
+            controller: controller,
             hint: 'Message de votre citation...',
             maxPostCharacters: 400,
-            userIcon: Icon(Icons.account_circle_rounded, size: 40),
+            userIcon: const Icon(Icons.account_circle_rounded, size: 40),
           ),
           const Padding(
             padding: EdgeInsets.all(5),
@@ -49,7 +51,9 @@ class _NewQuoteState extends State<NewQuote> {
                 const Spacer(),
                 PrimaryTextButton(
                   text: 'Republier le post',
-                  onTap: () {},
+                  onTap: () {
+                    provider.repostPost(context, widget.post.postId);
+                  },
                 ),
               ],
             ),

@@ -37,6 +37,20 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, PostEntity>> repostPost({required CreatePostParams params, required int postID}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        PostModel post = await remoteDataSource.repostPost(params: params, postID: postID);
+        return Right(post);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> deletePost({required PostModel post}) async {
     if (await networkInfo.isConnected!) {
       try {
@@ -89,17 +103,5 @@ class PostRepositoryImpl implements PostRepository {
     } else {
       return Left(ServerFailure(errorMessage: 'No connection'));
     }
-  }
-
-  @override
-  Future<Either<Failure, PostEntity>> getPostByID({required int postID}) {
-    // TODO: implement getPostByID
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, PostEntity>> repostPost({required int postID}) {
-    // TODO: implement repostPost
-    throw UnimplementedError();
   }
 }
