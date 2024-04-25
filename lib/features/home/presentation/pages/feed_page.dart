@@ -31,6 +31,7 @@ class _HomePageState extends State<Home> {
     );
     final GlobalKey<ScaffoldState> key = GlobalKey();
     GetPostProvider provider = Provider.of<GetPostProvider>(context);
+    provider.addPostsToFeed(context);
     return Scaffold(
       key: key,
       body: NestedScrollView(
