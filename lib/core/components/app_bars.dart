@@ -19,10 +19,28 @@ class AppBars {
     );
   }
 
-  static AppBar homeAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
-    return blankAppBar(
+  static SliverAppBar blankSliverAppBar({Widget? leading}) {
+    return SliverAppBar(
+      floating: true,
+      snap: true,
+      toolbarHeight: 70,
+      backgroundColor: AppColors.primary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.elliptical(900, 50),
+        ),
+      ),
+      leading: leading,
+      title: AppAssets.descolarLogoSvg,
+      centerTitle: true,
+      iconTheme: const IconThemeData(color: AppColors.white),
+    );
+  }
+
+  static SliverAppBar homeSliverAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
+    return blankSliverAppBar(
       leading: IconButton(
-        icon: AppAssets.settingsIcon,
+        icon: AppAssets.optionsIcon,
         onPressed: () {
           key.currentState!.openDrawer();
         },

@@ -4,12 +4,20 @@ import 'package:provider/provider.dart';
 
 import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
+import 'package:descolar_front/core/components/app_bars.dart';
+import 'package:descolar_front/core/components/navigation_bar.dart';
+import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
+import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/providers/get_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/providers/new_post_provider.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
+
+import 'features/auth/presentation/widgets/cgu_text.dart';
 
 void main() async {
   runApp(
