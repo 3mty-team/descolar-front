@@ -22,7 +22,7 @@ class AppBars {
   static AppBar homeAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
     return blankAppBar(
       leading: IconButton(
-        icon: AppAssets.settingsIcon,
+        icon: AppAssets.optionsIcon,
         onPressed: () {
           key.currentState!.openDrawer();
         },
