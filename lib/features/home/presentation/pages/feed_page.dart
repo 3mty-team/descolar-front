@@ -7,6 +7,7 @@ import 'package:descolar_front/features/post/presentation/providers/get_post_pro
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomePageState extends State<Home> {
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      GetPostProvider provider = Provider.of<GetPostProvider>(context, listen: false);
+      provider.addPostsToFeed();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -31,7 +42,6 @@ class _HomePageState extends State<Home> {
     );
     final GlobalKey<ScaffoldState> key = GlobalKey();
     GetPostProvider provider = Provider.of<GetPostProvider>(context);
-    provider.addPostsToFeed(context);
     return Scaffold(
       key: key,
       body: NestedScrollView(
@@ -42,7 +52,7 @@ class _HomePageState extends State<Home> {
         body: RefreshIndicator(
           color: AppColors.primary,
           onRefresh: () async {
-            provider.addPostsToFeed(context);
+            provider.addPostsToFeed();
           },
           child: ListView(
             children: CachedPost.feed.reversed.map((item) {

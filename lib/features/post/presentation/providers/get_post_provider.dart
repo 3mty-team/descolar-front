@@ -13,7 +13,7 @@ import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 
 class GetPostProvider extends ChangeNotifier {
-  void addPostsToFeed(BuildContext context) async {
+  void addPostsToFeed() async {
     PostRepositoryImpl repository = PostRepositoryImpl(
       remoteDataSource: PostRemoteDataSourceImpl(dio: Dio()),
       networkInfo: NetworkInfoImpl(DataConnectionChecker()),
