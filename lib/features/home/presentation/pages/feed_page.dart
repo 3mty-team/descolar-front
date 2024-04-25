@@ -2,6 +2,7 @@ import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/presentation/widgets/cgu_text.dart';
 import 'package:descolar_front/features/post/presentation/providers/get_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 
@@ -32,7 +33,25 @@ class _HomePageState extends State<Home> {
     GetPostProvider provider = Provider.of<GetPostProvider>(context);
     return Scaffold(
       key: key,
-      appBar: AppBars.homeAppBar(context, key),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          AppBars.homeSliverAppBar(context, key),
+        ],
+        body: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () async {
+            provider.addPostsToFeed(context);
+          },
+          child: ListView(
+            children: CachedPost.feed.reversed.map((item) {
+              return PostItem(
+                post: item,
+              );
+            }).toList(),
+          ),
+        ),
+      ),
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
       drawer: Drawer(
         child: ListView(
@@ -46,6 +65,14 @@ class _HomePageState extends State<Home> {
             ),
             ListTile(
               title: const Text(
+                'Conditions Générales d\'Utilisation',
+              ),
+              onTap: () async {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CGUText(),));
+              },
+            ),
+            ListTile(
+              title: const Text(
                 'Se déconnecter',
                 style: TextStyle(
                   color: AppColors.error,
@@ -56,19 +83,6 @@ class _HomePageState extends State<Home> {
               },
             ),
           ],
-        ),
-      ),
-      body: RefreshIndicator(
-        color: AppColors.primary,
-        onRefresh: () async {
-          provider.addPostsToFeed(context);
-        },
-        child: ListView(
-          children: CachedPost.feed.reversed.map((item) {
-            return PostItem(
-              post: item,
-            );
-          }).toList(),
         ),
       ),
     );
