@@ -93,6 +93,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Helvetica
+      fonts:
+        - asset: fonts/Helvetica/Helvetica-Bold.ttf
+          weight: 700
+        - asset: fonts/Helvetica/Helvetica.ttf
+          weight: 400
+        - asset: fonts/Helvetica/Helvetica-Oblique.ttf
+          weight: 400
+          style: italic
     - family: Roboto
       fonts:
         - asset: fonts/Roboto/Roboto-Bold.ttf
@@ -101,6 +110,7 @@ flutter:
           weight: 400
         - asset: fonts/Roboto/Roboto-Italic.ttf
           weight: 400
+          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

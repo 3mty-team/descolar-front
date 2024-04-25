@@ -13,6 +13,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:descolar_front/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'features/auth/presentation/widgets/cgu_text.dart';
+
 void main() async {
   runApp(
     const MyApp(),
@@ -78,6 +80,12 @@ class Home extends StatelessWidget {
                 color: AppColors.primary,
               ),
               child: Text('Paramètres'),
+            ),
+            ListTile(
+              title: const Text('Conditions Générales d\'Utilisation'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CGUText(),));
+              },
             ),
             ListTile(
               title: const Text(
