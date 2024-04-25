@@ -59,7 +59,12 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       key: _key,
-      appBar: AppBars.homeAppBar(context, _key),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          AppBars.homeSliverAppBar(context, _key),
+        ], body: ListView.separated(padding: const EdgeInsets.all(12), itemBuilder: (context, index) => Text('Item $index'), separatorBuilder: (context, index) => const SizedBox(height: 12,), itemCount: 50),
+      ),
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
       drawer: Drawer(
         child: ListView(
