@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,9 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
         ),
       );
       // Token cache
-      sharedPreferences.setString(cachedUserToken, await remote.getToken(uuid: user.uuid));
+      String token = await remote.getToken(uuid: user.uuid);
+      sharedPreferences.setString(cachedUserToken, token);
+      UserInfo.token = token;
     } else {
       throw CacheException();
     }
