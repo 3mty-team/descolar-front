@@ -28,7 +28,6 @@ class UserLoginParams {
   final String password;
   final bool? remember;
 
-
   const UserLoginParams({
     required this.username,
     required this.password,
@@ -48,6 +47,20 @@ class CreatePostParams {
     required this.location,
     required this.postDate,
     this.repostedPost,
+    this.medias,
+  });
+}
+
+class CreateMessageParams {
+  final String receiverUuid;
+  final String content;
+  final DateTime date;
+  final List<XFile>? medias;
+
+  const CreateMessageParams({
+    required this.receiverUuid,
+    required this.content,
+    required this.date,
     this.medias,
   });
 }
