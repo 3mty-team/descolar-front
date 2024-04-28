@@ -33,6 +33,7 @@ class ActionPostProvider extends ChangeNotifier {
         notifyListeners();
       },
       (bool response) {
+        Navigator.pushNamed(context, '/home');
         notifyListeners();
       },
     );

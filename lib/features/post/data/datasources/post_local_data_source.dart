@@ -23,8 +23,14 @@ class PostLocalDataSourceImpl implements PostLocalDataSource {
   @override
   Future<void> addToFeed({required PostModel? post}) async {
     if (post != null) {
-      if (!CachedPost.postAlreadyInFeed(post)) {
+      PostModel? existingPost = CachedPost.postAlreadyInFeed(post);
+      if (existingPost == null) {
         CachedPost.feed.add(post);
+      } else {
+        if ((existingPost.likes != post.likes) || (existingPost.comments != post.comments)) {
+          CachedPost.feed.remove(existingPost);
+          CachedPost.feed.add(post);
+        }
       }
     } else {
       throw CacheException();
@@ -34,7 +40,7 @@ class PostLocalDataSourceImpl implements PostLocalDataSource {
   @override
   Future<void> removeFromFeed({required PostModel? post}) async {
     if (post != null) {
-      if (CachedPost.postAlreadyInFeed(post)) {
+      if (CachedPost.postAlreadyInFeed(post) != null) {
         CachedPost.feed.remove(post);
       }
     } else {

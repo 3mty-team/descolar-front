@@ -1,8 +1,9 @@
-import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
-import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
+import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
+import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_comment_page.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
@@ -59,35 +60,7 @@ class _PostItemState extends State<PostItem> {
                         const Spacer(),
                         Text(datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
                         const SizedBox(width: 10),
-                        PopupMenuButton(
-                          color: AppColors.white,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: const Icon(Icons.more_horiz, size: 20),
-                          ),
-                          onSelected: (value) {
-                            if (value == 'deletePost') {
-                              provider.deletePost(context, widget.post);
-                            }
-                          },
-                          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                            const PopupMenuItem(
-                              value: 'deletePost',
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 5),
-                                    child: Icon(Icons.delete),
-                                  ),
-                                  Text(
-                                    'Supprimer',
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        PostPopMenu(post: widget.post, provider: provider),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -97,8 +70,7 @@ class _PostItemState extends State<PostItem> {
                     ),
                     Visibility(
                       visible: widget.post.repostedPost != null,
-                      child:
-                      widget.post.repostedPost != null ? QuotedPostItem(quotedPost: widget.post.repostedPost) : const SizedBox(),
+                      child: widget.post.repostedPost != null ? QuotedPostItem(quotedPost: widget.post.repostedPost) : const SizedBox(),
                     ),
                     const SizedBox(height: 7),
                     Wrap(

@@ -4,13 +4,13 @@ class CachedPost {
   static List<PostModel> feed = [];
   static List<PostModel> userPostList = [];
 
-  static bool postAlreadyInFeed(PostModel post) {
+  static PostModel? postAlreadyInFeed(PostModel post) {
     for (var element in feed) {
       if (post.postId == element.postId) {
-        return true;
+        return element;
       }
     }
-    return false;
+    return null;
   }
 
   static bool postAlreadyInUserList(PostModel post) {
