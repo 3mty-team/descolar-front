@@ -1,5 +1,6 @@
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+
 import 'package:flutter/material.dart';
 
 class AppBars {

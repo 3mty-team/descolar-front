@@ -6,6 +6,7 @@ import 'package:descolar_front/features/auth/presentation/pages/login_page.dart'
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/user_created_success.dart';
 import 'package:descolar_front/features/home/presentation/pages/feed_page.dart';
+import 'package:descolar_front/features/messages/presentation/pages/messages_menu_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class AppRoutes {
       case '/myProfil':
         return _materialRoute(const Home());
       case '/messages':
-        return _materialRoute(const Home());
+        return _materialRoute(const MessagesMenu());
       case '/settings':
         return _materialRoute(const Home());
       case '/signup':
