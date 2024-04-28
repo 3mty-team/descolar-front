@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/resources/app_colors.dart';
 
-class SearchConversationBar extends StatefulWidget {
+class ConversationBar extends StatefulWidget {
   final TextEditingController? controller;
+  final String placeHolder;
 
-  const SearchConversationBar({
+  const ConversationBar({
     super.key,
+    required this.placeHolder,
     this.controller,
   });
 
   @override
-  State<SearchConversationBar> createState() => _SearchConversationBarState();
+  State<ConversationBar> createState() => _ConversationBarState();
 }
 
-class _SearchConversationBarState extends State<SearchConversationBar> {
+class _ConversationBarState extends State<ConversationBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,11 +32,11 @@ class _SearchConversationBarState extends State<SearchConversationBar> {
         ),
         child: TextField(
           controller: widget.controller,
-          decoration: const InputDecoration(
-            hintText: 'Rechercher une conversation...',
-            prefixIcon: Icon(Icons.search),
+          decoration: InputDecoration(
+            hintText: widget.placeHolder,
+            prefixIcon: const Icon(Icons.search),
             border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(vertical: 9, horizontal: 0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 9, horizontal: 0),
           ),
         ),
       ),
