@@ -27,38 +27,44 @@ class _NewQuoteState extends State<NewQuote> {
     TextEditingController controller = provider.controller;
 
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context),
-      body: Column(
-        children: [
-          PostInput(
-            controller: controller,
-            hint: 'Message de votre citation...',
-            maxPostCharacters: 400,
-            userIcon: const Icon(Icons.account_circle_rounded, size: 40),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(5),
-            child: Wrap(
-              spacing: 5,
-              runSpacing: 5,
-            ),
-          ),
-          PostItem(post: widget.post),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                const Spacer(),
-                PrimaryTextButton(
-                  text: 'Republier le post',
-                  onTap: () {
-                    provider.repostPost(context, widget.post.postId);
-                  },
+      appBar: AppBars.closeIconAppBar(context, controller),
+      body: Expanded(
+        child: ListView(
+          children: [
+            Column(
+              children: [
+                PostInput(
+                  controller: controller,
+                  hint: 'Message de votre citation...',
+                  maxPostCharacters: 400,
+                  userIcon: const Icon(Icons.account_circle_rounded, size: 40),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                  ),
+                ),
+                PostItem(post: widget.post),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: <Widget>[
+                      const Spacer(),
+                      PrimaryTextButton(
+                        text: 'Republier le post',
+                        onTap: () {
+                          provider.repostPost(context, widget.post.postId);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

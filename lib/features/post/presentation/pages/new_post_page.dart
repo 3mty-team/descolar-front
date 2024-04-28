@@ -28,7 +28,7 @@ class _NewPostState extends State<NewPost> {
     int maxPostImages = provider.maxPostImages;
 
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context),
+      appBar: AppBars.closeIconAppBar(context, controller),
       body: Column(
         children: [
           PostInput(

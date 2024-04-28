@@ -24,9 +24,9 @@ class _NewCommentState extends State<NewComment> {
   @override
   Widget build(BuildContext context) {
     ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
-
+    TextEditingController controller = provider.controller;
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context),
+      appBar: AppBars.closeIconAppBar(context, controller),
       body: Column(
         children: [
           PostItem(post: widget.post),

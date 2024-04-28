@@ -64,13 +64,16 @@ class AppBars {
     );
   }
 
-  static AppBar closeIconAppBar(BuildContext context) {
+  static AppBar closeIconAppBar(BuildContext context, TextEditingController controller) {
     return AppBar(
       toolbarHeight: 70,
       backgroundColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.close),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          Navigator.pop(context);
+          controller.clear();
+        },
       ),
       title: AppAssets.descolarLogoSvg,
     );

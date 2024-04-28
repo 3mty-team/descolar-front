@@ -1,4 +1,3 @@
-import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 
@@ -17,7 +16,7 @@ class _ViewPostPageState extends State<ViewPostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context),
+      //appBar: AppBars.closeIconAppBar(context),
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
       body: widget.post,
     );

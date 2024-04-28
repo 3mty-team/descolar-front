@@ -28,6 +28,8 @@ class QuotedPostItem extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  const Icon(Icons.account_circle_rounded, size: 30),
+                  const SizedBox(width: 5),
                   Text(
                     quotedPost?.username ?? '',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
