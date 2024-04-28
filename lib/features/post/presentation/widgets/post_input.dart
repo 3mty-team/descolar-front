@@ -29,6 +29,7 @@ class _PostInputState extends State<PostInput> {
             maxLines: null,
             maxLength: widget.maxPostCharacters,
             decoration: InputDecoration(
+              border: InputBorder.none,
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(right: 10, left: 5),
                 child: widget.userIcon,

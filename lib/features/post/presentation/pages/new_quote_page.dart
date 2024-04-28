@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/post/presentation/widgets/post_item_without_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,6 @@ class _NewQuoteState extends State<NewQuote> {
   Widget build(BuildContext context) {
     ActionPostProvider provider = Provider.of<ActionPostProvider>(context);
     TextEditingController controller = provider.controller;
-
     return Scaffold(
       appBar: AppBars.closeIconAppBar(context, controller),
       body: Expanded(
@@ -46,7 +46,7 @@ class _NewQuoteState extends State<NewQuote> {
                     runSpacing: 5,
                   ),
                 ),
-                PostItem(post: widget.post),
+                PostItemWithoutIcons(post: widget.post),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
