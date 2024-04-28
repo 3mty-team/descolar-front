@@ -1,5 +1,4 @@
 import 'package:descolar_front/features/post/data/models/post_model.dart';
-import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item_without_icons.dart';
 

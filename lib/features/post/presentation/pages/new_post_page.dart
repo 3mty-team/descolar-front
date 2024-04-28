@@ -83,7 +83,9 @@ class _NewPostState extends State<NewPost> {
                 PrimaryTextButton(
                   text: 'Poster',
                   onTap: () {
-                    provider.processPost(context);
+                    if (controller.text.isNotEmpty) {
+                      provider.processPost(context);
+                    }
                   },
                 ),
               ],

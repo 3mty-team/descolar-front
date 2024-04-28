@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
-import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';
@@ -55,7 +54,9 @@ class _NewQuoteState extends State<NewQuote> {
                       PrimaryTextButton(
                         text: 'Republier le post',
                         onTap: () {
-                          provider.repostPost(context, widget.post.postId);
+                          if (controller.text.isNotEmpty) {
+                            provider.repostPost(context, widget.post.postId);
+                          }
                         },
                       ),
                     ],
