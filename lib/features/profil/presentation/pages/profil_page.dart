@@ -24,8 +24,6 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -65,7 +63,12 @@ class _ProfilPageState extends State<ProfilPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: ClipOval(
-                      child: Image.network('https://content.imageresizer.com/images/memes/Let-me-do-it-for-you-meme-3.jpg'),
+                      child: Image.asset(
+                        'assets/images/pp_placeholder.jpg',
+                        fit: BoxFit.cover,
+                        width: 120,
+                        height: 120,
+                      ),
                     ),
                   ),
                 ),
@@ -94,8 +97,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 right: 16,
                 bottom: -60,
                 child: TextButton(
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(
@@ -164,7 +166,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         style: const TextStyle(color: AppColors.black, fontSize: 16),
                         children: [
                           TextSpan(
-                            text: '${provider.userProfil.followers} ',
+                            text: '${provider.userProfil.followers.length} ',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const TextSpan(
@@ -185,7 +187,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         style: const TextStyle(color: AppColors.black, fontSize: 16),
                         children: [
                           TextSpan(
-                            text: '${provider.userProfil.followed} ',
+                            text: '${provider.userProfil.following.length} ',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),

@@ -3,8 +3,8 @@ class UserProfilEntity {
   final String firstname;
   final String lastname;
   final String username;
-  final int followers; // users that follows this // TODO : list of user
-  final int followed; // users that this follows // TODO : list of user
+  final List<UserProfilEntity> followers; // users that follows this
+  final List<UserProfilEntity> following; // users that this follows
   // final Image pp;
   // final Image bg;
 
@@ -14,6 +14,6 @@ class UserProfilEntity {
     required this.lastname,
     required this.username,
     required this.followers,
-    required this.followed,
+    required this.following,
   });
 }

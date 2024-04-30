@@ -17,7 +17,7 @@ import 'package:descolar_front/features/profil/data/repositories/user_profil_rep
 
 
 class ProfilProvider extends ChangeNotifier {
-  UserProfilEntity userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: 0, followed: 0,);
+  UserProfilEntity userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: [], following: [],);
   Failure? failure;
 
   ProfilProvider({
@@ -26,7 +26,7 @@ class ProfilProvider extends ChangeNotifier {
   });
 
   void getUserProfil(String uuid) async {
-    userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: 0, followed: 0,);
+    userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: [], following: [],);
     notifyListeners();
 
     UserProfilRepositoryImpl repository = UserProfilRepositoryImpl(
@@ -45,15 +45,13 @@ class ProfilProvider extends ChangeNotifier {
     final failureOrUserProfil = await GetUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
       (Failure newFailure) {
-        userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: 0, followed: 0,);
+        userProfil = const UserProfilEntity(uuid: '', lastname: '-', firstname: '-', username: '-', followers: [], following: [],);
         failure = newFailure;
         notifyListeners();
       },
       (UserProfilEntity newTemplate) {
         userProfil = newTemplate;
         failure = null;
-
-        // Get User followers
 
         notifyListeners();
       },

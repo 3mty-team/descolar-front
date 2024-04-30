@@ -57,13 +57,13 @@ class UserProfilParams {
   final String firstname;
   final String username;
   final int followers;
-  final int followed;
+  final int following;
 
   const UserProfilParams({
     required this.lastname,
     required this.firstname,
     required this.username,
     required this.followers,
-    required this.followed,
+    required this.following,
   });
 }

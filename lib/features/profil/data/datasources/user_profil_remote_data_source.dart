@@ -25,15 +25,28 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
   }
 
   @override
-  Future<UserProfilModel> getUserProfil(
-      {required String uuid,}) async {
-    final response = await dio.get(
+  Future<UserProfilModel> getUserProfil({required String uuid}) async {
+    final responseUser = await dio.get(
       '$baseDescolarApi/user/$uuid',
       options: _getRequestOptions(),
     );
 
-    if (response.statusCode == 200) {
-      return UserProfilModel.fromJson(json: response.data);
+    final responseFollowers = await dio.get(
+      '$baseDescolarApi/user/$uuid/followers',
+      options: _getRequestOptions(),
+    );
+
+    final responseFollowing = await dio.get(
+      '$baseDescolarApi/user/$uuid/following',
+      options: _getRequestOptions(),
+    );
+
+    Map<String, dynamic> json = responseUser.data;
+    json['followers'] = responseFollowers.data['users'];
+    json['following'] = responseFollowing.data['users'];
+
+    if (responseUser.statusCode == 200) {
+      return UserProfilModel.fromJson(json: json);
     } else {
       throw ServerException();
     }

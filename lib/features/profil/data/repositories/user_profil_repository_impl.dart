@@ -29,10 +29,10 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
     if (await networkInfo.isConnected!) {
       try {
         // If my user profil
-        if (uuid == UserInfo.user.uuid) {
-          UserProfilModel localTemplate = await localDataSource.getMyUserProfil();
-          return Right(localTemplate);
-        }
+        // if (uuid == UserInfo.user.uuid) {
+        //   UserProfilModel localTemplate = await localDataSource.getMyUserProfil();
+        //   return Right(localTemplate);
+        // }
         UserProfilModel remoteTemplate = await remoteDataSource.getUserProfil(uuid: uuid);
         return Right(remoteTemplate);
       } on ServerException {
@@ -46,6 +46,18 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   @override
   Future<Either<Failure, UserProfilEntity>> getMyUserProfil({required String uuid}) {
     // TODO: implement getMyUserProfil
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, UserProfilEntity>> getUserFollowing({required String uuid}) {
+    // TODO: implement getUserFollowing
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, UserProfilEntity>> getUserFollowers({required String uuid}) {
+    // TODO: implement getUserFollowers
     throw UnimplementedError();
   }
 }

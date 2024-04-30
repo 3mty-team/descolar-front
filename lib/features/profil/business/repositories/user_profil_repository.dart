@@ -11,4 +11,12 @@ abstract class UserProfilRepository {
   Future<Either<Failure, UserProfilEntity>> getMyUserProfil({
     required String uuid,
   });
+
+  Future<Either<Failure, UserProfilEntity>> getUserFollowers({
+    required String uuid,
+  });
+
+  Future<Either<Failure, UserProfilEntity>> getUserFollowing({
+    required String uuid,
+  });
 }
