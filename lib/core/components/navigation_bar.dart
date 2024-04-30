@@ -1,3 +1,5 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,7 @@ class DescolarNavigationBar {
               Navigator.pushNamed(context, '/newPost');
               break;
             case 3:
-              Navigator.pushNamed(context, '/myProfil');
+              Navigator.pushNamed(context, '/profil',  arguments: UserProfilArguments(UserInfo.user.uuid));
               break;
             case 4:
               Navigator.pushNamed(context, '/messages');

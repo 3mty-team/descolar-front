@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
+import 'package:descolar_front/features/profil/data/datasources/user_profil_local_data_source.dart';
+import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
@@ -65,7 +67,21 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       // Token cache
       String token = await remote.getToken(uuid: user.uuid);
       sharedPreferences.setString(cachedUserToken, token);
+      // UserInfo
       UserInfo.token = token;
+      UserInfo.user = user;
+      // User Profil
+      final UserProfilLocalDataSourceImpl userProfilLocal = UserProfilLocalDataSourceImpl(sharedPreferences: sharedPreferences);
+      userProfilLocal.cacheUserProfil(
+        userProfil: UserProfilModel(
+          uuid: user.uuid,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          username: user.username,
+          followers: 0,
+          followed: 0,
+        ),
+      );
     } else {
       throw CacheException();
     }

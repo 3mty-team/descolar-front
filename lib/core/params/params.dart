@@ -51,3 +51,19 @@ class CreatePostParams {
     this.medias,
   });
 }
+
+class UserProfilParams {
+  final String lastname;
+  final String firstname;
+  final String username;
+  final int followers;
+  final int followed;
+
+  const UserProfilParams({
+    required this.lastname,
+    required this.firstname,
+    required this.username,
+    required this.followers,
+    required this.followed,
+  });
+}

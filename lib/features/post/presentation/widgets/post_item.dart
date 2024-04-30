@@ -1,5 +1,8 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +47,15 @@ class _PostItemState extends State<PostItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.account_circle_rounded, size: 40),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profil',  arguments: UserProfilArguments(widget.post.userId));
+                },
+                child: const Icon(
+                  Icons.account_circle_rounded,
+                  size: 40,
+                ),
+              ),
               const SizedBox(width: 5),
               Flexible(
                 child: Column(
@@ -97,8 +108,7 @@ class _PostItemState extends State<PostItem> {
                     ),
                     Visibility(
                       visible: widget.post.repostedPost != null,
-                      child:
-                      widget.post.repostedPost != null ? QuotedPostItem(quotedPost: widget.post.repostedPost) : const SizedBox(),
+                      child: widget.post.repostedPost != null ? QuotedPostItem(quotedPost: widget.post.repostedPost) : const SizedBox(),
                     ),
                     const SizedBox(height: 7),
                     Wrap(
