@@ -5,6 +5,9 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/followUserProfilButton.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/modifyUserProfilButton.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/unfollowUserProfilButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -54,25 +57,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                 ),
               ),
-              Positioned(
-                left: 16,
-                bottom: -60,
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundColor: AppColors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/images/pp_placeholder.jpg',
-                        fit: BoxFit.cover,
-                        width: 120,
-                        height: 120,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
               // Back button
               Positioned(
                 left: 0,
@@ -92,45 +77,47 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                 ),
               ),
-              // Modify profil button
-              Positioned(
-                right: 16,
-                bottom: -60,
-                child: TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(36),
-                        side: const BorderSide(
-                          color: AppColors.secondary,
-                          width: 1,
-                          style: BorderStyle.solid,
+            ],
+          ),
+
+
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profil Picture
+                FractionalTranslation(
+                  translation: const Offset(0, -0.5),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: AppColors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/pp_placeholder.jpg',
+                          fit: BoxFit.cover,
+                          width: 120,
+                          height: 120,
                         ),
                       ),
                     ),
                   ),
-                  child: const Text(
-                    'Modifier le profil',
-                    style: TextStyle(
-                      color: AppColors.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
                 ),
-              ),
-            ],
-          ),
 
-          const SizedBox(
-            height: 68,
+                // Modify profil button
+                if (provider.isMyUserProfil == true)
+                  const ModifyUserProfilButton()
+                else
+                // Follow or Unfollow
+                  if (provider.isFollower())
+                    UnfollowUserProfilButton(profilProvider: provider,)
+                  else
+                    FollowUserProfilButton(profilProvider: provider,),
+              ],
+            ),
           ),
 
           // Info

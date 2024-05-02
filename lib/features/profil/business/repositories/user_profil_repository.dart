@@ -8,15 +8,11 @@ abstract class UserProfilRepository {
     required String uuid,
   });
 
-  Future<Either<Failure, UserProfilEntity>> getMyUserProfil({
+  Future<Either<Failure, UserProfilEntity>> follow({
     required String uuid,
   });
 
-  Future<Either<Failure, UserProfilEntity>> getUserFollowers({
-    required String uuid,
-  });
-
-  Future<Either<Failure, UserProfilEntity>> getUserFollowing({
+  Future<Either<Failure, UserProfilEntity>> unfollow({
     required String uuid,
   });
 }

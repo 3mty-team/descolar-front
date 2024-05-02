@@ -28,13 +28,8 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        // If my user profil
-        // if (uuid == UserInfo.user.uuid) {
-        //   UserProfilModel localTemplate = await localDataSource.getMyUserProfil();
-        //   return Right(localTemplate);
-        // }
-        UserProfilModel remoteTemplate = await remoteDataSource.getUserProfil(uuid: uuid);
-        return Right(remoteTemplate);
+        UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
+        return Right(userProfil);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
@@ -44,20 +39,36 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> getMyUserProfil({required String uuid}) {
-    // TODO: implement getMyUserProfil
-    throw UnimplementedError();
+  Future<Either<Failure, UserProfilEntity>> follow({required String uuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        UserProfilEntity userProfil = await remoteDataSource.follow(uuid: uuid);
+        return Right(userProfil);
+      }
+      on AlreadyExistsException {
+        return Left(AlreadyExistsFailure(errorMessage: 'Already follow'));
+      }
+      on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> getUserFollowing({required String uuid}) {
-    // TODO: implement getUserFollowing
-    throw UnimplementedError();
+  Future<Either<Failure, UserProfilEntity>> unfollow({required String uuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        UserProfilEntity userProfil = await remoteDataSource.unfollow(uuid: uuid);
+        return Right(userProfil);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
-  @override
-  Future<Either<Failure, UserProfilEntity>> getUserFollowers({required String uuid}) {
-    // TODO: implement getUserFollowers
-    throw UnimplementedError();
-  }
+
 }

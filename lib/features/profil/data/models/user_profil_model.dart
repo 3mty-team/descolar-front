@@ -22,16 +22,18 @@ class UserProfilModel extends UserProfilEntity {
     List<UserProfilEntity> followers = [];
     List<UserProfilEntity> following = [];
 
-    List<dynamic> jsonFollowers = json['followers'];
-    List<dynamic> jsonFollowing = json['following'];
+    List<dynamic> jsonFollowers = json['followers'] ?? [];
+    List<dynamic> jsonFollowing = json['following'] ?? [
+
+    ];
 
     for (var f in jsonFollowers) {
       followers.add(
         UserProfilEntity(
           uuid: f['uuid'],
-          firstname: f['firstname'],
-          lastname: f['lastname'],
-          username: f['username'],
+          firstname: f['firstname'] ?? '-',
+          lastname: f['lastname'] ?? '-',
+          username: f['username'] ?? '-',
           followers: [],
           following: [],
         ),
@@ -41,10 +43,10 @@ class UserProfilModel extends UserProfilEntity {
     for (var f in jsonFollowing) {
       following.add(
         UserProfilEntity(
-          uuid: f['uuid'],
-          firstname: f['firstname'],
-          lastname: f['lastname'],
-          username: f['username'],
+          uuid: f['uuid'] ?? '-',
+          firstname: f['firstname'] ?? '-',
+          lastname: f['lastname'] ?? '-',
+          username: f['username'] ?? '-',
           followers: [],
           following: [],
         ),
@@ -52,10 +54,10 @@ class UserProfilModel extends UserProfilEntity {
     }
 
     return UserProfilModel(
-      uuid: json['uuid'],
-      firstname: json['firstname'],
-      lastname: json['lastname'],
-      username: json['username'],
+      uuid: json['uuid'] ?? '-',
+      firstname: json['firstname'] ?? '-',
+      lastname: json['lastname'] ?? '-',
+      username: json['username'] ?? '-',
       followers: followers,
       following: following,
     );
