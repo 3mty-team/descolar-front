@@ -105,9 +105,19 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     required String userUUID,
   }) async {
     final response = await dio.get(
-      '$baseDescolarApi/post/message/$userUUID/$range',
+      '$baseDescolarApi/post/message/$userUUID/$range/20',
       options: _getRequestOptions(),
     );
+
+    List<PostModel> posts = [];
+    for (dynamic postJson in response.data) {
+      posts.add(PostModel.fromJson(json: postJson));
+    }
+    for (dynamic postJson in response.data) {
+      posts.add(PostModel.fromJson(json: postJson));
+    }
+    return posts;
+
     final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
     CachedPost.userPostList.clear();
     response.data.forEach((post) {

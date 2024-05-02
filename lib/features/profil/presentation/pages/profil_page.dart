@@ -3,13 +3,17 @@ import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/followUserProfilButton.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/modifyUserProfilButton.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/unfollowUserProfilButton.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -42,182 +46,199 @@ class _ProfilPageState extends State<ProfilPage> {
     double screenWidth = DeviceInfo().getWidth(context);
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  width: screenWidth,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-
-              // Back button
-              Positioned(
-                left: 0,
-                top: 32,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: AppColors.black.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(42),
-                    ),
-                    child: AppAssets.backIcon,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          // FractionalTranslation(
-          //                     translation: const Offset(0, -0.5),
-
-          Transform.translate(
-            offset: const Offset(0, -60),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Bg + Back button
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                // Profil picture + buttons
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundColor: AppColors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/images/pp_placeholder.jpg',
-                              fit: BoxFit.cover,
-                              width: 120,
-                              height: 120,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      if (provider.userProfil != null)
-                        // Modify profil button
-                        if (provider.isMyUserProfil == true)
-                          const ModifyUserProfilButton()
-                        else
-                        // Follow or Unfollow
-                        if (provider.isFollower)
-                          UnfollowUserProfilButton(
-                            profilProvider: provider,
-                          )
-                        else
-                          FollowUserProfilButton(
-                            profilProvider: provider,
-                          ),
-                    ],
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    width: screenWidth,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
 
-                // Info
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.userProfil != null ? '${provider.userProfil!.firstname} ${provider.userProfil!.lastname}' : '- -',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
+                // Back button
+                Positioned(
+                  left: 0,
+                  top: 32,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppColors.black.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(42),
                       ),
-                      Text(
-                        provider.userProfil != null ? '@${provider.userProfil!.username}' : '@-',
-                        style: const TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.secondary,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Row(
-                        children: [
-                          // Abonnées
-                          RichText(
-                            text: TextSpan(
-                              style: const TextStyle(color: AppColors.black, fontSize: 16),
-                              children: [
-                                TextSpan(
-                                  text: provider.userProfil != null ? '${provider.userProfil!.followers.length} ' : '- ',
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                const TextSpan(
-                                  text: 'Abonnées ',
-                                  style: TextStyle(
-                                    color: AppColors.gray,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          // Abonnements
-                          RichText(
-                            text: TextSpan(
-                              style: const TextStyle(color: AppColors.black, fontSize: 16),
-                              children: [
-                                TextSpan(
-                                  text: provider.userProfil != null ? '${provider.userProfil!.following.length} ' : '- ',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const TextSpan(
-                                  text: 'Abonnements ',
-                                  style: TextStyle(
-                                    color: AppColors.gray,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                      child: AppAssets.backIcon,
+                    ),
                   ),
-                ),
-
-                // Posts
-                const Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: null,
                 ),
               ],
             ),
-          ),
 
+            // Body page
+            Transform.translate(
+              offset: const Offset(0, -60),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Profil picture + buttons
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundColor: AppColors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/images/pp_placeholder.jpg',
+                                fit: BoxFit.cover,
+                                width: 120,
+                                height: 120,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if (provider.userProfil != null)
+                          // Modify profil button
+                          if (provider.isMyUserProfil == true)
+                            const ModifyUserProfilButton()
+                          else
+                          // Follow or Unfollow
+                          if (provider.isFollower)
+                            UnfollowUserProfilButton(
+                              profilProvider: provider,
+                            )
+                          else
+                            FollowUserProfilButton(
+                              profilProvider: provider,
+                            ),
+                      ],
+                    ),
+                  ),
 
-        ],
+                  // Info
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          provider.userProfil != null ? '${provider.userProfil!.firstname} ${provider.userProfil!.lastname}' : '- -',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                        Text(
+                          provider.userProfil != null ? '@${provider.userProfil!.username}' : '@-',
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.secondary,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            // Abonnées
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: AppColors.black, fontSize: 16),
+                                children: [
+                                  TextSpan(
+                                    text: provider.userProfil != null ? '${provider.userProfil!.followers.length} ' : '- ',
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  const TextSpan(
+                                    text: 'Abonnées ',
+                                    style: TextStyle(
+                                      color: AppColors.gray,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            // Abonnements
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: AppColors.black, fontSize: 16),
+                                children: [
+                                  TextSpan(
+                                    text: provider.userProfil != null ? '${provider.userProfil!.following.length} ' : '- ',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: 'Abonnements ',
+                                    style: TextStyle(
+                                      color: AppColors.gray,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+
+                  // Posts
+                  ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(left: 16),
+                    children: provider.posts
+                        .map(
+                          (post) {
+                        return PostItem(
+                          post: PostModel(
+                            comments: post.comments,
+                            content: post.content,
+                            likes: post.likes,
+                            postDate: post.postDate,
+                            postId: post.postId,
+                            userId: post.userId,
+                            username: post.username,
+                            repostedPost: post.repostedPost,
+                          ),
+                        );
+                      },
+                    )
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

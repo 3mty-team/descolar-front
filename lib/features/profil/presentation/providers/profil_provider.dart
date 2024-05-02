@@ -1,6 +1,11 @@
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
+import 'package:descolar_front/features/post/business/usecases/get_all_post_in_range_with_user_uuid.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
+import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/business/usecases/follow_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/unfollow_user_profil.dart';
 
@@ -23,9 +28,10 @@ class ProfilProvider extends ChangeNotifier {
   Failure? failure;
   bool isMyUserProfil = false;
   bool isFollower = false;
+  List<PostEntity> posts = [];
 
   ProfilProvider({
-    //this.userProfil,
+    this.userProfil,
     this.failure,
   });
 
@@ -40,17 +46,7 @@ class ProfilProvider extends ChangeNotifier {
   }
 
   void follow(String uuid) async {
-    UserProfilRepositoryImpl repository = UserProfilRepositoryImpl(
-      remoteDataSource: UserProfilRemoteDataSourceImpl(
-        dio: Dio(),
-      ),
-      localDataSource: UserProfilLocalDataSourceImpl(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      ),
-      networkInfo: NetworkInfoImpl(
-        DataConnectionChecker(),
-      ),
-    );
+    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
     final failureOrUserProfil = await FollowUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
@@ -63,7 +59,7 @@ class ProfilProvider extends ChangeNotifier {
       },
       (UserProfilEntity userProfilEntity) {
         print('user follow');
-        getUserProfil(uuid);
+        this.getUserProfil(uuid);
       },
     );
 
@@ -71,17 +67,7 @@ class ProfilProvider extends ChangeNotifier {
   }
 
   void unfollow(String uuid) async {
-    UserProfilRepositoryImpl repository = UserProfilRepositoryImpl(
-      remoteDataSource: UserProfilRemoteDataSourceImpl(
-        dio: Dio(),
-      ),
-      localDataSource: UserProfilLocalDataSourceImpl(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      ),
-      networkInfo: NetworkInfoImpl(
-        DataConnectionChecker(),
-      ),
-    );
+    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
     final failureOrUserProfil = await UnfollowUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
@@ -94,7 +80,7 @@ class ProfilProvider extends ChangeNotifier {
       },
       (UserProfilEntity userProfilEntity) {
         print('user unfollow');
-        getUserProfil(uuid);
+        this.getUserProfil(uuid);
       },
     );
 
@@ -103,19 +89,10 @@ class ProfilProvider extends ChangeNotifier {
 
   void getUserProfil(String uuid) async {
     userProfil = null;
+    posts = [];
     notifyListeners();
 
-    UserProfilRepositoryImpl repository = UserProfilRepositoryImpl(
-      remoteDataSource: UserProfilRemoteDataSourceImpl(
-        dio: Dio(),
-      ),
-      localDataSource: UserProfilLocalDataSourceImpl(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      ),
-      networkInfo: NetworkInfoImpl(
-        DataConnectionChecker(),
-      ),
-    );
+    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
     // Get User infos
     if (uuid == UserInfo.user.uuid) {
@@ -138,6 +115,22 @@ class ProfilProvider extends ChangeNotifier {
           this.isFollower = checkIsFollower();
         }
 
+        this.getUserPosts(uuid);
+
+        notifyListeners();
+      },
+    );
+  }
+
+  void getUserPosts(String uuid) async {
+    PostRepository repository = await PostRepository.getPostRepository();
+    final failureOrPosts = await GetAllPostInRangeWithUserUUID(postRepository: repository).call(range: 10, userUUID: uuid);
+    failureOrPosts.fold(
+      (Failure failure) {
+        print('f');
+      },
+      (List<PostEntity> userPosts) {
+        this.posts = userPosts;
         notifyListeners();
       },
     );
