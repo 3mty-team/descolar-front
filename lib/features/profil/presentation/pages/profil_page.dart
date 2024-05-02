@@ -115,19 +115,20 @@ class _ProfilPageState extends State<ProfilPage> {
                         ),
                       ),
 
-                      // Modify profil button
-                      if (provider.isMyUserProfil == true)
-                        const ModifyUserProfilButton()
-                      else
-                      // Follow or Unfollow
-                      if (provider.isFollower())
-                        UnfollowUserProfilButton(
-                          profilProvider: provider,
-                        )
-                      else
-                        FollowUserProfilButton(
-                          profilProvider: provider,
-                        ),
+                      if (provider.userProfil != null)
+                        // Modify profil button
+                        if (provider.isMyUserProfil == true)
+                          const ModifyUserProfilButton()
+                        else
+                        // Follow or Unfollow
+                        if (provider.isFollower())
+                          UnfollowUserProfilButton(
+                            profilProvider: provider,
+                          )
+                        else
+                          FollowUserProfilButton(
+                            profilProvider: provider,
+                          ),
                     ],
                   ),
                 ),
@@ -139,14 +140,14 @@ class _ProfilPageState extends State<ProfilPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${provider.userProfil.firstname} ${provider.userProfil.lastname}',
+                        provider.userProfil != null ? '${provider.userProfil!.firstname} ${provider.userProfil!.lastname}' : '- -',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         ),
                       ),
                       Text(
-                        '@${provider.userProfil.username}',
+                        provider.userProfil != null ? '@${provider.userProfil!.username}' : '@-',
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold,
@@ -165,7 +166,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               style: const TextStyle(color: AppColors.black, fontSize: 16),
                               children: [
                                 TextSpan(
-                                  text: '${provider.userProfil.followers.length} ',
+                                  text: provider.userProfil != null ? '${provider.userProfil!.followers.length} ' : '- ',
                                   style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 const TextSpan(
@@ -186,7 +187,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               style: const TextStyle(color: AppColors.black, fontSize: 16),
                               children: [
                                 TextSpan(
-                                  text: '${provider.userProfil.following.length} ',
+                                  text: provider.userProfil != null ? '${provider.userProfil!.following.length} ' : '- ',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),

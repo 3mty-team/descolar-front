@@ -19,7 +19,7 @@ import 'package:descolar_front/features/profil/data/datasources/user_profil_remo
 import 'package:descolar_front/features/profil/data/repositories/user_profil_repository_impl.dart';
 
 class ProfilProvider extends ChangeNotifier {
-  UserProfilEntity userProfil = const UserProfilEntity(
+  UserProfilEntity? userProfil = const UserProfilEntity(
     uuid: '',
     lastname: '-',
     firstname: '-',
@@ -37,7 +37,7 @@ class ProfilProvider extends ChangeNotifier {
 
   // Check if a current user is a follower of this.userProfil
   bool isFollower() {
-    for (UserProfilEntity follower in userProfil.followers) {
+    for (UserProfilEntity follower in userProfil!.followers) {
       if (follower.uuid == UserInfo.user.uuid) {
         return true;
       }
@@ -108,14 +108,7 @@ class ProfilProvider extends ChangeNotifier {
   }
 
   void getUserProfil(String uuid) async {
-    userProfil = const UserProfilEntity(
-      uuid: '',
-      lastname: '-',
-      firstname: '-',
-      username: '-',
-      followers: [],
-      following: [],
-    );
+    userProfil = null;
     notifyListeners();
 
     UserProfilRepositoryImpl repository = UserProfilRepositoryImpl(
@@ -139,14 +132,7 @@ class ProfilProvider extends ChangeNotifier {
     final failureOrUserProfil = await GetUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
           (Failure failure) {
-        userProfil = const UserProfilEntity(
-          uuid: '',
-          lastname: '-',
-          firstname: '-',
-          username: '-',
-          followers: [],
-          following: [],
-        );
+        userProfil = null;
         failure = failure;
         notifyListeners();
       },

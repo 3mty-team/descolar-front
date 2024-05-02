@@ -12,7 +12,7 @@ class FollowUserProfilButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         print('follow');
-        profilProvider.follow(profilProvider.userProfil.uuid);
+        profilProvider.follow(profilProvider.userProfil!.uuid);
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
