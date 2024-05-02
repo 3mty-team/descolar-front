@@ -80,125 +80,142 @@ class _ProfilPageState extends State<ProfilPage> {
             ],
           ),
 
+          // FractionalTranslation(
+          //                     translation: const Offset(0, -0.5),
 
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Transform.translate(
+            offset: const Offset(0, -60),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profil Picture
-                FractionalTranslation(
-                  translation: const Offset(0, -0.5),
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundColor: AppColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/pp_placeholder.jpg',
-                          fit: BoxFit.cover,
-                          width: 120,
-                          height: 120,
+                // Profil picture + buttons
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundColor: AppColors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/pp_placeholder.jpg',
+                              fit: BoxFit.cover,
+                              width: 120,
+                              height: 120,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+
+                      // Modify profil button
+                      if (provider.isMyUserProfil == true)
+                        const ModifyUserProfilButton()
+                      else
+                      // Follow or Unfollow
+                      if (provider.isFollower())
+                        UnfollowUserProfilButton(
+                          profilProvider: provider,
+                        )
+                      else
+                        FollowUserProfilButton(
+                          profilProvider: provider,
+                        ),
+                    ],
                   ),
                 ),
 
-                // Modify profil button
-                if (provider.isMyUserProfil == true)
-                  const ModifyUserProfilButton()
-                else
-                // Follow or Unfollow
-                  if (provider.isFollower())
-                    UnfollowUserProfilButton(profilProvider: provider,)
-                  else
-                    FollowUserProfilButton(profilProvider: provider,),
+                // Info
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${provider.userProfil.firstname} ${provider.userProfil.lastname}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                      Text(
+                        '@${provider.userProfil.username}',
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.secondary,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          // Abonnées
+                          RichText(
+                            text: TextSpan(
+                              style: const TextStyle(color: AppColors.black, fontSize: 16),
+                              children: [
+                                TextSpan(
+                                  text: '${provider.userProfil.followers.length} ',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const TextSpan(
+                                  text: 'Abonnées ',
+                                  style: TextStyle(
+                                    color: AppColors.gray,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          // Abonnements
+                          RichText(
+                            text: TextSpan(
+                              style: const TextStyle(color: AppColors.black, fontSize: 16),
+                              children: [
+                                TextSpan(
+                                  text: '${provider.userProfil.following.length} ',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: 'Abonnements ',
+                                  style: TextStyle(
+                                    color: AppColors.gray,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+
+                // Posts
+                const Padding(
+                  padding: EdgeInsets.only(left: 16),
+                  child: null,
+                ),
               ],
             ),
           ),
 
-          // Info
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${provider.userProfil.firstname} ${provider.userProfil.lastname}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                Text(
-                  '@${provider.userProfil.username}',
-                  style: const TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.secondary,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    // Abonnées
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(color: AppColors.black, fontSize: 16),
-                        children: [
-                          TextSpan(
-                            text: '${provider.userProfil.followers.length} ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const TextSpan(
-                            text: 'Abonnées ',
-                            style: TextStyle(
-                              color: AppColors.gray,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    // Abonnements
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(color: AppColors.black, fontSize: 16),
-                        children: [
-                          TextSpan(
-                            text: '${provider.userProfil.following.length} ',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(
-                            text: 'Abonnements ',
-                            style: TextStyle(
-                              color: AppColors.gray,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
 
-          // Posts
-          const Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: null,
-          ),
         ],
       ),
     );
