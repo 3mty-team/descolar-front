@@ -19,16 +19,10 @@ import 'package:descolar_front/features/profil/data/datasources/user_profil_remo
 import 'package:descolar_front/features/profil/data/repositories/user_profil_repository_impl.dart';
 
 class ProfilProvider extends ChangeNotifier {
-  UserProfilEntity? userProfil = const UserProfilEntity(
-    uuid: '',
-    lastname: '-',
-    firstname: '-',
-    username: '-',
-    followers: [],
-    following: [],
-  );
-  bool isMyUserProfil = false;
+  UserProfilEntity? userProfil;
   Failure? failure;
+  bool isMyUserProfil = false;
+  bool isFollower = false;
 
   ProfilProvider({
     //this.userProfil,
@@ -36,7 +30,7 @@ class ProfilProvider extends ChangeNotifier {
   });
 
   // Check if a current user is a follower of this.userProfil
-  bool isFollower() {
+  bool checkIsFollower() {
     for (UserProfilEntity follower in userProfil!.followers) {
       if (follower.uuid == UserInfo.user.uuid) {
         return true;
@@ -60,16 +54,16 @@ class ProfilProvider extends ChangeNotifier {
 
     final failureOrUserProfil = await FollowUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
-          (Failure failure) {
+      (Failure failure) {
         if (failure is AlreadyExistsFailure) {
           print('already exists');
-        }
-        else if (failure is ServerFailure) {
+        } else if (failure is ServerFailure) {
           print('server failed');
         }
       },
-          (UserProfilEntity userProfilEntity) {
+      (UserProfilEntity userProfilEntity) {
         print('user follow');
+        getUserProfil(uuid);
       },
     );
 
@@ -91,16 +85,16 @@ class ProfilProvider extends ChangeNotifier {
 
     final failureOrUserProfil = await UnfollowUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
-          (Failure failure) {
+      (Failure failure) {
         if (failure is AlreadyExistsFailure) {
           print('already exists');
-        }
-        else if (failure is ServerFailure) {
+        } else if (failure is ServerFailure) {
           print('server failed');
         }
       },
-          (UserProfilEntity userProfilEntity) {
+      (UserProfilEntity userProfilEntity) {
         print('user unfollow');
+        getUserProfil(uuid);
       },
     );
 
@@ -131,14 +125,19 @@ class ProfilProvider extends ChangeNotifier {
     }
     final failureOrUserProfil = await GetUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
-          (Failure failure) {
+      (Failure failure) {
         userProfil = null;
         failure = failure;
         notifyListeners();
       },
-          (UserProfilEntity userProfilEntity) {
+      (UserProfilEntity userProfilEntity) {
         userProfil = userProfilEntity;
         failure = null;
+
+        if (!this.isMyUserProfil) {
+          this.isFollower = checkIsFollower();
+        }
+
         notifyListeners();
       },
     );

@@ -121,7 +121,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           const ModifyUserProfilButton()
                         else
                         // Follow or Unfollow
-                        if (provider.isFollower())
+                        if (provider.isFollower)
                           UnfollowUserProfilButton(
                             profilProvider: provider,
                           )
