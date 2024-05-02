@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
+import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
@@ -7,6 +8,8 @@ import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/ProfilActionButtons.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/ProfilPicture.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/followUserProfilButton.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/modifyUserProfilButton.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/unfollowUserProfilButton.dart';
@@ -103,35 +106,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundColor: AppColors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/pp_placeholder.jpg',
-                                fit: BoxFit.cover,
-                                width: 120,
-                                height: 120,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (provider.userProfil != null)
-                          // Modify profil button
-                          if (provider.isMyUserProfil == true)
-                            const ModifyUserProfilButton()
-                          else
-                          // Follow or Unfollow
-                          if (provider.isFollower)
-                            UnfollowUserProfilButton(
-                              profilProvider: provider,
-                            )
-                          else
-                            FollowUserProfilButton(
-                              profilProvider: provider,
-                            ),
+                        const ProfilPicture(radius: 60,),
+                        ProfilActionButtons(provider: provider),
                       ],
                     ),
                   ),
