@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,14 @@ class QuotedPostItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const ProfilPicture(
-                    radius: 20,
-                    // TODO : Add user pp
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(quotedPost!.userId));
+                    },
+                    child: ProfilPicture(
+                      radius: 20,
+                      imageFile: quotedPost?.authorPfp,
+                    ),
                   ),
                   const SizedBox(width: 5),
                   Text(

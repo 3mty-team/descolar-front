@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 
 import 'package:descolar_front/core/connection/network_info.dart';
@@ -44,11 +43,9 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       try {
         UserProfilEntity userProfil = await remoteDataSource.follow(uuid: uuid);
         return Right(userProfil);
-      }
-      on AlreadyExistsException {
+      } on AlreadyExistsException {
         return Left(AlreadyExistsFailure(errorMessage: 'Already follow'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
     } else {
@@ -83,6 +80,4 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       return Left(ServerFailure(errorMessage: 'No connection'));
     }
   }
-
-
 }

@@ -1,6 +1,5 @@
+import 'dart:io';
 import 'dart:ui';
-
-import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class PostEntity {
   final int postId;
@@ -10,8 +9,9 @@ class PostEntity {
   final DateTime postDate;
   final int likes;
   final int comments;
-  final PostModel? repostedPost;
+  final PostEntity? repostedPost;
   final List<Image>? medias;
+  final File? authorPfp;
 
   const PostEntity({
     required this.postId,
@@ -23,5 +23,6 @@ class PostEntity {
     required this.comments,
     this.repostedPost,
     this.medias,
+    this.authorPfp,
   });
 }

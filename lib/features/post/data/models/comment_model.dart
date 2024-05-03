@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/post/business/entities/comment_entity.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
@@ -10,6 +12,7 @@ class CommentModel extends CommentEntity {
     required String content,
     required String username,
     required DateTime commentDate,
+    File? authorPfp,
   }) : super(
           commentID: commentID,
           userID: userID,
@@ -29,6 +32,7 @@ class CommentModel extends CommentEntity {
       content: json['content'],
       commentDate: stringToDatetime(date['date']),
       post: PostModel.fromJson(json: json['post']),
+      authorPfp: user['pfpPath'] == null ? null : File(user['pfpPath']),
     );
   }
 }
