@@ -55,11 +55,9 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
       options: _getRequestOptions(),
     );
     List<UserResultModel> searchResults = [];
-    if (response.data['users'] != null) {
-      response.data['users'].forEach((user) async {
-        searchResults.add(UserResultModel.fromJson(json: user));
-      });
-    }
+    response.data['users'].forEach((user) async {
+      searchResults.add(UserResultModel.fromJson(json: user));
+    });
     if (response.statusCode == 200) {
       return searchResults;
     } else {

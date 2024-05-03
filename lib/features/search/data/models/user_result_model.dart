@@ -21,8 +21,8 @@ class UserResultModel extends UserResultEntity {
     return UserResultModel(
       uuid: json['uuid'],
       username: json['username'],
-      followersNb: 0, //TODO : Get followers and following number
-      followingNb: 0,
+      followersNb: json['followers'],
+      followingNb: json['followings'],
       userPfp: json['pfpPath'] == null ? null : File(json['pfpPath']),
     );
   }
