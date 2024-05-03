@@ -1,9 +1,11 @@
-import 'package:descolar_front/core/resources/app_assets.dart';
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import 'package:descolar_front/core/resources/app_assets.dart';
+import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/auth/data/models/user_model.dart';
+
 class AppBars {
-  static AppBar blankAppBar({Widget? leading}) {
+  static AppBar blankAppBar({Widget? leading, Widget? title}) {
     return AppBar(
       toolbarHeight: 60,
       backgroundColor: AppColors.primary,
@@ -13,7 +15,7 @@ class AppBars {
         ),
       ),
       leading: leading,
-      title: AppAssets.descolarLogoSvg,
+      title: title,
       centerTitle: true,
       iconTheme: const IconThemeData(color: AppColors.white),
     );
@@ -58,16 +60,44 @@ class AppBars {
           );
         },
       ),
+      title: AppAssets.descolarLogoSvg,
     );
   }
 
-  static AppBar closeIconAppBar(BuildContext context) {
+  static AppBar closeIconAppBar(BuildContext context, TextEditingController controller) {
     return AppBar(
       toolbarHeight: 70,
       backgroundColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.close),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          Navigator.pop(context);
+          controller.clear();
+        },
+      ),
+      title: AppAssets.descolarLogoSvg,
+    );
+  }
+
+  static AppBar conversationAppBar(BuildContext context, UserModel receiver) {
+    return blankAppBar(
+      title: Row(
+        children: [
+          const Icon(Icons.account_circle_rounded, size: 40),
+          const SizedBox(width: 10),
+          Text(
+            '${receiver.firstname} ${receiver.lastname}',
+            style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ],
+      ),
+      leading: IconButton(
+        icon: AppAssets.backIcon,
+        onPressed: () {
+          Navigator.pop(
+            context,
+          );
+        },
       ),
     );
   }

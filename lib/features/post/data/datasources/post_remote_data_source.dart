@@ -1,3 +1,5 @@
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,14 +15,19 @@ abstract class PostRemoteDataSource {
 
   Future<PostModel> repostPost({required CreatePostParams params, required int postID});
 
-  Future<bool> deletePost({required PostModel post});
+  Future<bool> deletePost({required PostEntity post});
+
+  Future<PostModel> likePost({required PostEntity post});
+
+  Future<PostModel> unlikePost({required PostEntity post});
+
+  Future<bool> reportPost({required ReportPostParams params});
 
   Future<List<PostModel>> getAllPostInRange({required int range});
 
-  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
-    required int range,
-    required String userUUID,
-  });
+  Future<List<PostEntity>> getLikedPost({required String userUUID});
+
+  Future<List<String>> getAllReportCategories();
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -50,7 +57,11 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       }),
       options: _getRequestOptions(),
     );
-    return PostModel.fromJson(json: response.data);
+    if (response.statusCode == 200) {
+      return PostModel.fromJson(json: response.data);
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
@@ -70,7 +81,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }
 
   @override
-  Future<bool> deletePost({required PostModel post}) async {
+  Future<bool> deletePost({required PostEntity post}) async {
     int postID = post.postId;
     final response = await dio.delete(
       '$baseDescolarApi/post/$postID',
@@ -79,9 +90,64 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       }),
       options: _getRequestOptions(),
     );
-    final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
-    local.removeFromFeed(post: post);
-    return response.data['id'] != null;
+    if (response.statusCode == 200) {
+      final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      local.removeFromFeed(post: post);
+      return response.data['id'] != null;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<PostModel> likePost({required PostEntity post}) async {
+    int postID = post.postId;
+    final response = await dio.post(
+      '$baseDescolarApi/post/$postID/like',
+      options: _getRequestOptions(),
+    );
+    if (response.statusCode == 200) {
+      final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      local.addToLikedPost(post: post);
+      return PostModel.fromJson(json: response.data);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<PostModel> unlikePost({required PostEntity post}) async {
+    int postID = post.postId;
+    final response = await dio.delete(
+      '$baseDescolarApi/post/$postID/like',
+      options: _getRequestOptions(),
+    );
+    if (response.statusCode == 200) {
+      final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      local.removeFromLikedPost(post: post);
+      return PostModel.fromJson(json: response.data);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> reportPost({required ReportPostParams params}) async {
+    final response = await dio.post(
+      '$baseDescolarApi/report/post/create',
+      data: FormData.fromMap({
+        'post_id': params.post.postId,
+        'report_category_id': params.reportCategoryID,
+        'comment': params.comment,
+        'date': params.date,
+      }),
+      options: _getRequestOptions(),
+    );
+    if (response.statusCode == 200) {
+      return response.data['id'] != null;
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
@@ -95,25 +161,46 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       PostModel? repostedPost = post['repostedPost'] == null ? null : PostModel.fromJson(json: post['repostedPost']);
       local.addToFeed(post: PostModel.fromJson(json: post, repostedPost: repostedPost));
     });
-    CachedPost.feed.sort((a, b) => a.postId.compareTo(b.postId));
-    return CachedPost.feed;
+    if (response.statusCode == 200) {
+      CachedPost.feed.sort((a, b) => a.postId.compareTo(b.postId));
+      return CachedPost.feed;
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
-  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
-    required int range,
-    required String userUUID,
-  }) async {
+  Future<List<PostEntity>> getLikedPost({required String userUUID}) async {
     final response = await dio.get(
-      '$baseDescolarApi/post/message/$userUUID/$range',
+      '$baseDescolarApi/post/$userUUID/like',
       options: _getRequestOptions(),
     );
-    final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
-    CachedPost.userPostList.clear();
-    response.data.forEach((post) {
-      local.addToUserPostList(post: PostModel.fromJson(json: post));
-    });
-    CachedPost.userPostList.sort((a, b) => a.postId.compareTo(b.postId));
-    return CachedPost.userPostList;
+    if (response.statusCode == 200) {
+      final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      CachedPost.likedPost.clear();
+      response.data['posts'].forEach((post) {
+        local.addToLikedPost(post: PostModel.fromJson(json: post));
+      });
+      return CachedPost.likedPost;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<String>> getAllReportCategories() async {
+    final response = await dio.get(
+      '$baseDescolarApi/report/category',
+      options: _getRequestOptions(),
+    );
+    if (response.statusCode == 200) {
+      final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      response.data['report_categories'].forEach((categorie) {
+        local.addToReportCategories(categorie: categorie);
+      });
+      return CachedPost.reportCategories;
+    } else {
+      throw ServerException();
+    }
   }
 }

@@ -1,27 +1,30 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:data_connection_checker_tv/data_connection_checker.dart';
 
-import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
-import 'package:descolar_front/features/post/data/datasources/post_remote_data_source.dart';
-import 'package:descolar_front/features/post/data/repositories/post_repository_impl.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
+import 'package:descolar_front/features/post/business/usecases/get_liked_post.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/business/usecases/get_all_post_in_range.dart';
-import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/failure.dart';
+import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
 
 class GetPostProvider extends ChangeNotifier {
-  void addPostsToFeed() async {
-    PostRepositoryImpl repository = PostRepositoryImpl(
-      remoteDataSource: PostRemoteDataSourceImpl(dio: Dio()),
-      networkInfo: NetworkInfoImpl(DataConnectionChecker()),
-      localDataSource: PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance()),
-    );
-
+  Future<void> addPostsToFeed() async {
+    PostRepository repository = await PostRepository.getPostRepository();
     final failureOrPost = await GetAllPostInRange(postRepository: repository).call(range: 20);
+    failureOrPost.fold(
+      (Failure failure) {
+        notifyListeners();
+      },
+      (List<PostEntity> posts) {
+        notifyListeners();
+      },
+    );
+  }
 
+  Future<void> getLikedPost() async {
+    PostRepository repository = await PostRepository.getPostRepository();
+    final failureOrPost = await GetLikedPost(postRepository: repository).call(userUUID: UserInfo.user.uuid);
     failureOrPost.fold(
       (Failure failure) {
         notifyListeners();

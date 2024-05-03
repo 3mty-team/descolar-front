@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
@@ -37,7 +38,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, PostEntity>> repostPost({required CreatePostParams params, required int postID}) async {
+  Future<Either<Failure, PostModel>> repostPost({required CreatePostParams params, required int postID}) async {
     if (await networkInfo.isConnected!) {
       try {
         PostModel post = await remoteDataSource.repostPost(params: params, postID: postID);
@@ -51,7 +52,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deletePost({required PostModel post}) async {
+  Future<Either<Failure, bool>> deletePost({required PostEntity post}) async {
     if (await networkInfo.isConnected!) {
       try {
         return Right(await remoteDataSource.deletePost(post: post));
@@ -80,23 +81,64 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<PostEntity>>> getAllPostInRangeWithTimestamp({
-    required int range,
-    required DateTime timestamp,
-  }) {
-    // TODO: implement getAllPostInRangeWithTimestamp
-    throw UnimplementedError();
+  Future<Either<Failure, PostModel>> likePost({required PostEntity post}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        return Right(await remoteDataSource.likePost(post: post));
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<PostEntity>>> getAllPostInRangeWithUserUUID({
-    required int range,
-    required String userUUID,
-  }) async {
+  Future<Either<Failure, PostModel>> unlikePost({required PostEntity post}) async {
     if (await networkInfo.isConnected!) {
       try {
-        List<PostModel> posts = await remoteDataSource.getAllPostInRangeWithUserUUID(range: range, userUUID: userUUID);
+        return Right(await remoteDataSource.unlikePost(post: post));
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PostEntity>>> getLikedPost({required String userUUID}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        List<PostEntity> posts = await remoteDataSource.getLikedPost(userUUID: userUUID);
         return Right(posts);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> getAllReportCategories() async {
+    if (await networkInfo.isConnected!) {
+      try {
+        List<String> categories = await remoteDataSource.getAllReportCategories();
+        return Right(categories);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> reportPost({required ReportPostParams params}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        return Right(await remoteDataSource.reportPost(params: params));
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'Server exception'));
       }

@@ -1,4 +1,5 @@
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NoParams {}
@@ -28,7 +29,6 @@ class UserLoginParams {
   final String password;
   final bool? remember;
 
-
   const UserLoginParams({
     required this.username,
     required this.password,
@@ -41,13 +41,51 @@ class CreatePostParams {
   final String location;
   final int postDate;
   final PostEntity? repostedPost;
-  final List<XFile>? medias;
 
   const CreatePostParams({
     required this.content,
     required this.location,
     required this.postDate,
     this.repostedPost,
+  });
+}
+
+class CreateCommentParams {
+  final PostEntity post;
+  final String content;
+  final int commentDate;
+
+  const CreateCommentParams({
+    required this.post,
+    required this.content,
+    required this.commentDate,
+  });
+}
+
+class CreateMessageParams {
+  final String receiverUuid;
+  final String content;
+  final DateTime date;
+  final List<XFile>? medias;
+
+  const CreateMessageParams({
+    required this.receiverUuid,
+    required this.content,
+    required this.date,
     this.medias,
+  });
+}
+
+class ReportPostParams {
+  final PostEntity post;
+  final int reportCategoryID;
+  final String comment;
+  final int date;
+
+  const ReportPostParams({
+    required this.post,
+    required this.reportCategoryID,
+    required this.comment,
+    required this.date,
   });
 }

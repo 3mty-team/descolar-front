@@ -1,6 +1,5 @@
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CGUText extends StatelessWidget {

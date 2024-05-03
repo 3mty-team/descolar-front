@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class PostEntity {
@@ -9,6 +11,7 @@ class PostEntity {
   final int likes;
   final int comments;
   final PostModel? repostedPost;
+  final List<Image>? medias;
 
   const PostEntity({
     required this.postId,
@@ -19,5 +22,6 @@ class PostEntity {
     required this.likes,
     required this.comments,
     this.repostedPost,
+    this.medias,
   });
 }

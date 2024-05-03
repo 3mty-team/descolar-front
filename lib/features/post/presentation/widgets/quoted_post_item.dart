@@ -1,11 +1,11 @@
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class QuotedPostItem extends StatelessWidget {
-  final PostModel? quotedPost;
+  final PostEntity? quotedPost;
 
   const QuotedPostItem({
     super.key,
@@ -28,6 +28,8 @@ class QuotedPostItem extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  const Icon(Icons.account_circle_rounded, size: 30),
+                  const SizedBox(width: 5),
                   Text(
                     quotedPost?.username ?? '',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -46,7 +48,7 @@ class QuotedPostItem extends StatelessWidget {
               ),
               const SizedBox(height: 7),
               Text(
-                "${quotedPost?.comments ?? 0} réponse - ${quotedPost?.likes ?? 0} j'aime",
+                "${quotedPost?.comments ?? 0} réponse - ${quotedPost?.likes ?? 0} ${quotedPost!.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
                 style: const TextStyle(
                   color: AppColors.lightGray,
                   fontSize: 15,

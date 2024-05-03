@@ -26,9 +26,8 @@ class _NewPostState extends State<NewPost> {
     TextEditingController controller = provider.controller;
     List<XFile> selectedImages = provider.selectedImages;
     int maxPostImages = provider.maxPostImages;
-
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context),
+      appBar: AppBars.closeIconAppBar(context, controller),
       body: Column(
         children: [
           PostInput(
@@ -83,7 +82,9 @@ class _NewPostState extends State<NewPost> {
                 PrimaryTextButton(
                   text: 'Poster',
                   onTap: () {
-                    provider.processPost(context);
+                    if (controller.text.isNotEmpty) {
+                      provider.processPost(context);
+                    }
                   },
                 ),
               ],
