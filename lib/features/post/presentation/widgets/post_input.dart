@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
+import 'package:flutter/material.dart';
 
 class PostInput extends StatefulWidget {
   final String hint;
