@@ -227,6 +227,5 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       posts.add(PostModel.fromJson(json: postJson));
     }
     return posts;
-
   }
 }

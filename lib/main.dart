@@ -1,8 +1,9 @@
-import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GetPostProvider()),
         ChangeNotifierProvider(create: (context) => ActionPostProvider()),
         ChangeNotifierProvider(create: (context) => ProfilProvider()),
+        ChangeNotifierProvider(create: (context) => SearchProvider()),
       ],
       child: MaterialApp(
         // change to false for release

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 
 class DescolarSearchBar {
-  static Padding searchBar(String placeHolder, TextEditingController controller) {
+  static Padding searchBar({required String placeHolder, required TextEditingController controller, required ValueChanged<String>? onChanged}) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
@@ -15,6 +15,7 @@ class DescolarSearchBar {
           borderRadius: BorderRadius.circular(35),
         ),
         child: TextField(
+          onChanged: onChanged,
           controller: controller,
           decoration: InputDecoration(
             hintText: placeHolder,
