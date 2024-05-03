@@ -34,7 +34,6 @@ class _NewPostState extends State<NewPost> {
             controller: controller,
             hint: 'Quoi de neuf ?',
             maxPostCharacters: 400,
-            userIcon: const Icon(Icons.account_circle_rounded, size: 40),
           ),
           Padding(
             padding: const EdgeInsets.all(5),

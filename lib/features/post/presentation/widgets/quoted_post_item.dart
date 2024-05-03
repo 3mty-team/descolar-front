@@ -1,4 +1,5 @@
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/utils/date_converter.dart';
@@ -28,7 +29,10 @@ class QuotedPostItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.account_circle_rounded, size: 30),
+                  const ProfilPicture(
+                    radius: 20,
+                    // TODO : Add user pp
+                  ),
                   const SizedBox(width: 5),
                   Text(
                     quotedPost?.username ?? '',

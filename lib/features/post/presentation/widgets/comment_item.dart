@@ -1,6 +1,7 @@
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/post/business/entities/comment_entity.dart';
 import 'package:descolar_front/features/post/presentation/widgets/comment_pop_menu.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/utils/date_converter.dart';
@@ -31,7 +32,10 @@ class _CommentItemState extends State<CommentItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.account_circle_rounded, size: 40),
+              const ProfilPicture(
+                radius: 20,
+                // TODO : Add user pp
+              ),
               const SizedBox(width: 5),
               Flexible(
                 child: Column(

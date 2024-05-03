@@ -57,7 +57,6 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostEntity>>> getAllPostInRange({
     required int range,
-    required DateTime timestamp,
   });
 
   Future<Either<Failure, List<PostEntity>>> getLikedPost({
@@ -65,4 +64,9 @@ abstract class PostRepository {
   });
 
   Future<Either<Failure, List<String>>> getAllReportCategories();
+
+  Future<Either<Failure, List<PostEntity>>> getAllPostInRangeWithUserUUID({
+    required int range,
+    required String userUuid
+  });
 }

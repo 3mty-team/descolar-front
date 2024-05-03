@@ -117,7 +117,7 @@ class ProfilProvider extends ChangeNotifier {
 
   void getUserPosts(String uuid) async {
     PostRepository repository = await PostRepository.getPostRepository();
-    final failureOrPosts = await GetAllPostInRangeWithUserUUID(postRepository: repository).call(range: 10, userUUID: uuid);
+    final failureOrPosts = await GetAllPostInRangeWithUserUUID(postRepository: repository).call(range: 10, userUuid: uuid);
     failureOrPosts.fold(
       (Failure failure) {
         print('f');

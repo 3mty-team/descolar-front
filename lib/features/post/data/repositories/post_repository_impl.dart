@@ -146,4 +146,18 @@ class PostRepositoryImpl implements PostRepository {
       return Left(ServerFailure(errorMessage: 'No connection'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<PostEntity>>> getAllPostInRangeWithUserUUID({required int range, required String userUuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        List<PostModel> posts = await remoteDataSource.getAllPostInRangeWithUserUUID(range: range, userUUID: userUuid);
+        return Right(posts);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
 }

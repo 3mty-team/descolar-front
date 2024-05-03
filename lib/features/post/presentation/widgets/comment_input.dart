@@ -30,7 +30,6 @@ class _CommentInputState extends State<CommentInput> {
           controller: widget.controller,
           hint: 'Que souhaitez-vous répondre ?',
           maxPostCharacters: 400,
-          userIcon: const Icon(Icons.account_circle_rounded, size: 40),
         ),
         const Padding(
           padding: EdgeInsets.all(5),

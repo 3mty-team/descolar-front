@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,6 @@ class _NewQuoteState extends State<NewQuote> {
                   controller: controller,
                   hint: 'Message de votre citation...',
                   maxPostCharacters: 400,
-                  userIcon: const Icon(Icons.account_circle_rounded, size: 40),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(5),

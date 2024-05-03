@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class ProfilPicture extends StatefulWidget {
   final double radius;
   final File? imageFile;
+  final double? borderWidth;
 
-  const ProfilPicture({super.key, required this.radius, this.imageFile});
+  const ProfilPicture({super.key, required this.radius, this.imageFile, this.borderWidth});
 
   @override
   State<ProfilPicture> createState() => _ProfilPictureState();
@@ -20,7 +21,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
       radius: widget.radius,
       backgroundColor: AppColors.white,
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: EdgeInsets.all(widget.borderWidth ?? 0),
         child: ClipOval(
           child: widget.imageFile != null ?
           Image.file(widget.imageFile!, fit: BoxFit.cover,

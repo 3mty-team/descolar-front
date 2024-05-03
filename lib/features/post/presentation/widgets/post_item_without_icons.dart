@@ -1,4 +1,5 @@
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,10 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.account_circle_rounded, size: 40),
+              const ProfilPicture(
+                radius: 20,
+                // TODO : Add user pp
+              ),
               const SizedBox(width: 5),
               Flexible(
                 child: Column(

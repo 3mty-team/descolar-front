@@ -109,6 +109,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           child: ProfilPicture(
                             radius: 60,
                             imageFile: provider.userProfil?.pp,
+                            borderWidth: 4,
                           ),
                         )
                         else

@@ -228,12 +228,5 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     }
     return posts;
 
-    // final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
-    // CachedPost.userPostList.clear();
-    // response.data.forEach((post) {
-    //   local.addToUserPostList(post: PostModel.fromJson(json: post));
-    // });
-    // CachedPost.userPostList.sort((a, b) => a.postId.compareTo(b.postId));
-    // return CachedPost.userPostList;
   }
 }
