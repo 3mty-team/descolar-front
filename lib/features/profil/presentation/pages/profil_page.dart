@@ -121,7 +121,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     ),
                   ),
 
-                  // Info
+                  // User Info
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
@@ -196,27 +196,35 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
 
                   // Posts
-                  ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(left: 16),
-                    children: provider.posts.map(
-                      (post) {
-                        return PostItem(
-                          post: PostModel(
-                            comments: post.comments,
-                            content: post.content,
-                            likes: post.likes,
-                            postDate: post.postDate,
-                            postId: post.postId,
-                            userId: post.userId,
-                            username: post.username,
-                            repostedPost: post.repostedPost,
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ),
+                  if (provider.posts.isEmpty)
+                    // Spinner
+                    const Padding(
+                      padding: EdgeInsets.only(top: 64),
+                      child: Center(child: CircularProgressIndicator(),),
+                    )
+                  else
+                    //
+                    ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 16),
+                      children: provider.posts.map(
+                        (post) {
+                          return PostItem(
+                            post: PostModel(
+                              comments: post.comments,
+                              content: post.content,
+                              likes: post.likes,
+                              postDate: post.postDate,
+                              postId: post.postId,
+                              userId: post.userId,
+                              username: post.username,
+                              repostedPost: post.repostedPost,
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
                 ],
               ),
             ),
