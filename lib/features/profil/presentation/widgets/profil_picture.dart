@@ -25,14 +25,10 @@ class _ProfilPictureState extends State<ProfilPicture> {
         child: ClipOval(
           child: widget.imageFile != null ?
           Image.file(widget.imageFile!, fit: BoxFit.cover,
-            width: 120,
-            height: 120,
           ) :
           Image.asset(
             'assets/images/pp_placeholder.jpg',
             fit: BoxFit.cover,
-            width: 120,
-            height: 120,
           ),
         ),
       ),

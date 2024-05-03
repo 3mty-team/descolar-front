@@ -116,6 +116,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           ProfilPicture(
                             radius: 60,
                             imageFile: provider.userProfil?.pp,
+                            borderWidth: 4,
                           ),
                         ProfilActionButtons(provider: provider),
                       ],
