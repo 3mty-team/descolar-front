@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
@@ -72,7 +72,7 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
                     ),
                     const SizedBox(height: 7),
                     Text(
-                      "${widget.post.comments} ${widget.post.comments > 1 ? 'réponses' : 'réponse'} - ${widget.post.likes} ${widget.post.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
+                      "${widget.post.comments} réponse - ${widget.post.likes} j'aime",
                       style: const TextStyle(
                         color: AppColors.lightGray,
                         fontSize: 15,
