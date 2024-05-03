@@ -76,6 +76,22 @@ class CreateMessageParams {
   });
 }
 
+class UserProfilParams {
+  final String lastname;
+  final String firstname;
+  final String username;
+  final int followers;
+  final int following;
+
+  const UserProfilParams({
+    required this.lastname,
+    required this.firstname,
+    required this.username,
+    required this.followers,
+    required this.following,
+  });
+}
+
 class ReportPostParams {
   final PostEntity post;
   final int reportCategoryID;

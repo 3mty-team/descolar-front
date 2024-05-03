@@ -2,6 +2,7 @@
   /!\ MAYBE USELESS WITH PROVIDERS /!\ 
 */
 
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/auth/presentation/pages/login_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/user_created_success.dart';
@@ -13,6 +14,7 @@ import 'package:descolar_front/features/post/presentation/pages/view_post_page.d
 import 'package:descolar_front/screens/feed_page.dart';
 import 'package:descolar_front/features/messages/presentation/pages/messages_menu_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
+import 'package:descolar_front/features/profil/presentation/pages/profil_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -36,8 +38,9 @@ class AppRoutes {
       case '/viewPost':
         final post = settings.arguments as PostEntity;
         return MaterialPageRoute(builder: (_) => ViewPostPage(post: post));
-      case '/myProfil':
-        return _materialRoute(const Home());
+      case '/profil':
+        final args = settings.arguments as UserProfilArguments;
+        return MaterialPageRoute(builder: (_) => ProfilPage(args: args,));
       case '/messages':
         return _materialRoute(const MessagesMenu());
       case '/settings':

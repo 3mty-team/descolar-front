@@ -28,6 +28,11 @@ abstract class PostRemoteDataSource {
   Future<List<PostEntity>> getLikedPost({required String userUUID});
 
   Future<List<String>> getAllReportCategories();
+
+  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
+    required int range,
+    required String userUUID,
+  });
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -202,5 +207,33 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<List<PostModel>> getAllPostInRangeWithUserUUID({
+    required int range,
+    required String userUUID,
+  }) async {
+    final response = await dio.get(
+      '$baseDescolarApi/post/message/$userUUID/$range/20',
+      options: _getRequestOptions(),
+    );
+
+    List<PostModel> posts = [];
+    for (dynamic postJson in response.data) {
+      posts.add(PostModel.fromJson(json: postJson));
+    }
+    for (dynamic postJson in response.data) {
+      posts.add(PostModel.fromJson(json: postJson));
+    }
+    return posts;
+
+    // final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+    // CachedPost.userPostList.clear();
+    // response.data.forEach((post) {
+    //   local.addToUserPostList(post: PostModel.fromJson(json: post));
+    // });
+    // CachedPost.userPostList.sort((a, b) => a.postId.compareTo(b.postId));
+    // return CachedPost.userPostList;
   }
 }
