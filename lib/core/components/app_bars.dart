@@ -2,8 +2,8 @@ import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/ProfilActionButtons.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/ProfilPicture.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 
 class AppBars {
