@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfilModel extends UserProfilEntity {
   const UserProfilModel({
@@ -8,6 +11,7 @@ class UserProfilModel extends UserProfilEntity {
     required String username,
     required List<UserProfilEntity> followers,
     required List<UserProfilEntity> following,
+    File? pp,
   }) : super(
           uuid: uuid,
           firstname: firstname,
@@ -15,6 +19,7 @@ class UserProfilModel extends UserProfilEntity {
           username: username,
           followers: followers,
           following: following,
+          pp: pp,
         );
 
   factory UserProfilModel.fromJson({required Map<String, dynamic> json}) {
@@ -23,9 +28,7 @@ class UserProfilModel extends UserProfilEntity {
     List<UserProfilEntity> following = [];
 
     List<dynamic> jsonFollowers = json['followers'] ?? [];
-    List<dynamic> jsonFollowing = json['following'] ?? [
-
-    ];
+    List<dynamic> jsonFollowing = json['following'] ?? [];
 
     for (var f in jsonFollowers) {
       followers.add(
@@ -36,6 +39,7 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
+          pp : f['pfpPath'] != null ? File(f['pfpPath']) : null,
         ),
       );
     }
@@ -49,6 +53,7 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
+          pp : f['pfpPath'] != null ? File(f['pfpPath']) : null,
         ),
       );
     }
@@ -60,6 +65,7 @@ class UserProfilModel extends UserProfilEntity {
       username: json['username'] ?? '-',
       followers: followers,
       following: following,
+      pp : json['pfpPath'] != null ? File(json['pfpPath']) : null,
     );
   }
 
@@ -71,6 +77,7 @@ class UserProfilModel extends UserProfilEntity {
       'username': username,
       'followers': followers,
       'following': following,
+      'pfpPath': pp?.path,
     };
   }
 }

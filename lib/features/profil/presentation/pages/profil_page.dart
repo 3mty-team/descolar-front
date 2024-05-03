@@ -1,18 +1,12 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
-import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/ProfilActionButtons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/ProfilPicture.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/followUserProfilButton.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/modifyUserProfilButton.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/unfollowUserProfilButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -106,7 +100,22 @@ class _ProfilPageState extends State<ProfilPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const ProfilPicture(radius: 60,),
+                        // TODO : if isMyProfil, TextButton, else ProfilPicture
+                        if (provider.isMyUserProfil)
+                          TextButton(
+                          onPressed: () {
+                            provider.changeProfilPicture(provider.userProfil!.uuid);
+                          },
+                          child: ProfilPicture(
+                            radius: 60,
+                            imageFile: provider.userProfil?.pp,
+                          ),
+                        )
+                        else
+                          ProfilPicture(
+                            radius: 60,
+                            imageFile: provider.userProfil?.pp,
+                          ),
                         ProfilActionButtons(provider: provider),
                       ],
                     ),
@@ -191,9 +200,8 @@ class _ProfilPageState extends State<ProfilPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.only(left: 16),
-                    children: provider.posts
-                        .map(
-                          (post) {
+                    children: provider.posts.map(
+                      (post) {
                         return PostItem(
                           post: PostModel(
                             comments: post.comments,
@@ -207,8 +215,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           ),
                         );
                       },
-                    )
-                        .toList(),
+                    ).toList(),
                   ),
                 ],
               ),

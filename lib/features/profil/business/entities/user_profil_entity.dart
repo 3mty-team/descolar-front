@@ -1,3 +1,6 @@
+import 'dart:io';
+
+
 class UserProfilEntity {
   final String uuid;
   final String firstname;
@@ -5,7 +8,7 @@ class UserProfilEntity {
   final String username;
   final List<UserProfilEntity> followers; // users that follows this
   final List<UserProfilEntity> following; // users that this follows
-  // final Image pp;
+  final File? pp;
   // final Image bg;
 
   const UserProfilEntity({
@@ -15,5 +18,6 @@ class UserProfilEntity {
     required this.username,
     required this.followers,
     required this.following,
+    this.pp,
   });
 }

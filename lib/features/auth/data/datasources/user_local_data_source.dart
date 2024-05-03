@@ -80,6 +80,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
           username: user.username,
           followers: [],
           following: [],
+          pp: null,
         ),
       );
     } else {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:descolar_front/core/connection/network_info.dart';
@@ -7,6 +9,7 @@ import 'package:descolar_front/features/profil/data/datasources/user_profil_loca
 import 'package:descolar_front/features/profil/data/datasources/user_profil_remote_data_source.dart';
 import 'package:descolar_front/features/profil/data/repositories/user_profil_repository_impl.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserProfilRepository {
@@ -31,4 +34,10 @@ abstract class UserProfilRepository {
   Future<Either<Failure, UserProfilEntity>> unfollow({
     required String uuid,
   });
+
+  Future<Either<Failure, UserProfilEntity>> changeProfilPicture({
+    required String uuid,
+    required File image,
+  });
+
 }

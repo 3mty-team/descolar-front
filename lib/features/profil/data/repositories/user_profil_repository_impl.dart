@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cross_file/src/types/interface.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:descolar_front/core/connection/network_info.dart';
@@ -61,6 +64,20 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
     if (await networkInfo.isConnected!) {
       try {
         UserProfilEntity userProfil = await remoteDataSource.unfollow(uuid: uuid);
+        return Right(userProfil);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserProfilEntity>> changeProfilPicture({required String uuid, required File image}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        UserProfilEntity userProfil = await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
         return Right(userProfil);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));

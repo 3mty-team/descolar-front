@@ -1,15 +1,17 @@
+import 'dart:io';
+
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/errors/exceptions.dart';
-import '../../../../core/params/params.dart';
 import '../models/user_profil_model.dart';
+import 'package:path/path.dart';
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
   Future<UserProfilModel> follow({required String uuid});
   Future<UserProfilModel> unfollow({required String uuid});
+  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -82,6 +84,42 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
 
     if (response.statusCode == 200) {
       return UserProfilModel.fromJson(json: response.data);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image}) async {
+    final responseMedia = await dio.post(
+      '$baseDescolarApi/media',
+      options: _getRequestOptions(),
+      data: FormData.fromMap({
+        'image[]': await MultipartFile.fromFile(image.path, filename: basename(image.path)),
+      }),
+    );
+
+    print('RESPONSE MEDIA : ${responseMedia.statusCode}');
+
+    if (responseMedia.statusCode == 200) {
+      print(responseMedia.data);
+
+      final responseEditProfil = await dio.put(
+        '$baseDescolarApi/media',
+        options: _getRequestOptions(),
+        data: FormData.fromMap({
+          'profile_path': responseMedia.data['path'],
+        }),
+      );
+
+      print('RESPONSE EDIT PROFIL : ${responseEditProfil.statusCode}');
+
+      if (responseEditProfil.statusCode == 200) {
+        print(responseEditProfil.data);
+        return UserProfilModel.fromJson(json: responseEditProfil.data);
+      } else {
+        throw ServerException();
+      }
     } else {
       throw ServerException();
     }
