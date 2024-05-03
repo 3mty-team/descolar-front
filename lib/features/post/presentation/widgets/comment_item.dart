@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/post/business/entities/comment_entity.dart';
 import 'package:descolar_front/features/post/presentation/widgets/comment_pop_menu.dart';
@@ -32,9 +33,14 @@ class _CommentItemState extends State<CommentItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfilPicture(
-                radius: 20,
-                // TODO : Add user pp
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(widget.comment.userID));
+                },
+                child: ProfilPicture(
+                  radius: 20,
+                  imageFile: widget.comment.authorPfp,
+                ),
               ),
               const SizedBox(width: 5),
               Flexible(

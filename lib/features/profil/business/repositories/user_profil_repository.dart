@@ -9,7 +9,6 @@ import 'package:descolar_front/features/profil/data/datasources/user_profil_loca
 import 'package:descolar_front/features/profil/data/datasources/user_profil_remote_data_source.dart';
 import 'package:descolar_front/features/profil/data/repositories/user_profil_repository_impl.dart';
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserProfilRepository {

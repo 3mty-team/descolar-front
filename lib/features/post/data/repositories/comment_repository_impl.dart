@@ -10,7 +10,6 @@ import 'package:descolar_front/features/post/data/datasources/comment_local_data
 import 'package:descolar_front/features/post/data/datasources/comment_remote_data_source.dart';
 import 'package:descolar_front/features/post/data/models/comment_model.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final CommentRemoteDateSource remoteDataSource;

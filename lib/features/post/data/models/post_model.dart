@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:descolar_front/core/utils/date_converter.dart';
@@ -14,6 +15,7 @@ class PostModel extends PostEntity {
     required int comments,
     PostModel? repostedPost,
     List<Image>? medias,
+    File? authorPfp,
   }) : super(
           postId: postId,
           userId: userId,
@@ -24,6 +26,7 @@ class PostModel extends PostEntity {
           comments: comments,
           repostedPost: repostedPost,
           medias: medias,
+          authorPfp: authorPfp,
         );
 
   factory PostModel.fromJson({required Map<String, dynamic> json, PostModel? repostedPost}) {
@@ -38,6 +41,7 @@ class PostModel extends PostEntity {
       likes: json['likes'],
       comments: json['comments'],
       repostedPost: repostedPost,
+      authorPfp: user['pfpPath'] == null ? null : File(user['pfpPath']),
     );
   }
 }

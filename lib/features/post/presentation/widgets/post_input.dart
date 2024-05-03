@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 
@@ -29,11 +30,11 @@ class _PostInputState extends State<PostInput> {
             maxLength: widget.maxPostCharacters,
             decoration: InputDecoration(
               border: InputBorder.none,
-              prefixIcon: const Padding(
-                padding: EdgeInsets.only(right: 10, left: 5),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(right: 10, left: 5),
                 child: ProfilPicture(
                   radius: 20,
-                  // TODO : Add user pp
+                  imageFile: UserInfo.userProfil.pp,
                 ),
               ),
               hintText: widget.hint,

@@ -2,7 +2,7 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
@@ -103,15 +103,15 @@ class _ProfilPageState extends State<ProfilPage> {
                         // TODO : if isMyProfil, TextButton, else ProfilPicture
                         if (provider.isMyUserProfil)
                           TextButton(
-                          onPressed: () {
-                            provider.changeProfilPicture(provider.userProfil!.uuid);
-                          },
-                          child: ProfilPicture(
-                            radius: 60,
-                            imageFile: provider.userProfil?.pp,
-                            borderWidth: 4,
-                          ),
-                        )
+                            onPressed: () {
+                              provider.changeProfilPicture(provider.userProfil!.uuid);
+                            },
+                            child: ProfilPicture(
+                              radius: 60,
+                              imageFile: provider.userProfil?.pp,
+                              borderWidth: 4,
+                            ),
+                          )
                         else
                           ProfilPicture(
                             radius: 60,
@@ -202,7 +202,9 @@ class _ProfilPageState extends State<ProfilPage> {
                     // Spinner
                     const Padding(
                       padding: EdgeInsets.only(top: 64),
-                      child: Center(child: CircularProgressIndicator(),),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     )
                   else
                     //
@@ -213,7 +215,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       children: provider.posts.map(
                         (post) {
                           return PostItem(
-                            post: PostModel(
+                            post: PostEntity(
                               comments: post.comments,
                               content: post.content,
                               likes: post.likes,

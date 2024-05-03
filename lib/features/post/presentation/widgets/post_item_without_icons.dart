@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,14 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfilPicture(
-                radius: 20,
-                // TODO : Add user pp
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(widget.post.userId));
+                },
+                child: ProfilPicture(
+                  radius: 20,
+                  imageFile: widget.post.authorPfp,
+                ),
               ),
               const SizedBox(width: 5),
               Flexible(

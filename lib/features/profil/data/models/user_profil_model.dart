@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserProfilModel extends UserProfilEntity {
   const UserProfilModel({

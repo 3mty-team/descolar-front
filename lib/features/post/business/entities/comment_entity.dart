@@ -1,12 +1,15 @@
-import 'package:descolar_front/features/post/data/models/post_model.dart';
+import 'dart:io';
+
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 
 class CommentEntity {
   final int commentID;
   final String userID;
-  final PostModel post;
+  final PostEntity post;
   final String content;
   final String username;
   final DateTime commentDate;
+  final File? authorPfp;
 
   const CommentEntity({
     required this.commentID,
@@ -15,5 +18,6 @@ class CommentEntity {
     required this.content,
     required this.username,
     required this.commentDate,
+    this.authorPfp,
   });
 }
