@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
+import 'package:descolar_front/core/utils/file_utils.dart';
 import 'package:dio/dio.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../models/user_profil_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
 import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
@@ -95,27 +97,21 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       '$baseDescolarApi/media',
       options: _getRequestOptions(),
       data: FormData.fromMap({
-        'image[]': await MultipartFile.fromFile(image.path, filename: basename(image.path)),
+        'image[]': await MultipartFile.fromFile(image.path, filename: FileUtils.getFileName(image.path), contentType: FileUtils.getMediaType('image', image.path)),
       }),
     );
 
-    print('RESPONSE MEDIA : ${responseMedia.statusCode}');
-
     if (responseMedia.statusCode == 200) {
-      print(responseMedia.data);
-
       final responseEditProfil = await dio.put(
-        '$baseDescolarApi/media',
+        '$baseDescolarApi/user',
         options: _getRequestOptions(),
         data: FormData.fromMap({
-          'profile_path': responseMedia.data['path'],
+          'profile_path': responseMedia.data['medias'][0]['path'],
+          'send_timestamp': 20,
         }),
       );
 
-      print('RESPONSE EDIT PROFIL : ${responseEditProfil.statusCode}');
-
       if (responseEditProfil.statusCode == 200) {
-        print(responseEditProfil.data);
         return UserProfilModel.fromJson(json: responseEditProfil.data);
       } else {
         throw ServerException();

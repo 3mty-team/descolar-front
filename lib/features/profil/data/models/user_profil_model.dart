@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserProfilModel extends UserProfilEntity {
   const UserProfilModel({
@@ -11,7 +8,7 @@ class UserProfilModel extends UserProfilEntity {
     required String username,
     required List<UserProfilEntity> followers,
     required List<UserProfilEntity> following,
-    File? pp,
+    required String? pfpPath,
   }) : super(
           uuid: uuid,
           firstname: firstname,
@@ -19,7 +16,7 @@ class UserProfilModel extends UserProfilEntity {
           username: username,
           followers: followers,
           following: following,
-          pp: pp,
+          pfpPath: pfpPath,
         );
 
   factory UserProfilModel.fromJson({required Map<String, dynamic> json}) {
@@ -39,7 +36,7 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
-          pp : f['pfpPath'] != null ? File(f['pfpPath']) : null,
+          pfpPath : f['pfpPath'],
         ),
       );
     }
@@ -53,7 +50,7 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
-          pp : f['pfpPath'] != null ? File(f['pfpPath']) : null,
+          pfpPath : f['pfpPath'],
         ),
       );
     }
@@ -65,7 +62,7 @@ class UserProfilModel extends UserProfilEntity {
       username: json['username'] ?? '-',
       followers: followers,
       following: following,
-      pp : json['pfpPath'] != null ? File(json['pfpPath']) : null,
+      pfpPath : json['pfpPath'],
     );
   }
 
@@ -77,7 +74,7 @@ class UserProfilModel extends UserProfilEntity {
       'username': username,
       'followers': followers,
       'following': following,
-      'pfpPath': pp?.path,
+      'pfpPath': pfpPath,
     };
   }
 }
