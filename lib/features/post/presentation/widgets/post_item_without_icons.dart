@@ -1,9 +1,9 @@
-import 'package:descolar_front/core/arguments/arguments.dart';
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/core/arguments/arguments.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
