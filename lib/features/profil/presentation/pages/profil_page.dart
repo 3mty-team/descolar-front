@@ -2,7 +2,7 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
@@ -211,16 +211,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       children: provider.posts.map(
                         (post) {
                           return PostItem(
-                            post: PostModel(
-                              comments: post.comments,
-                              content: post.content,
-                              likes: post.likes,
-                              postDate: post.postDate,
-                              postId: post.postId,
-                              userId: post.userId,
-                              username: post.username,
-                              repostedPost: post.repostedPost,
-                            ),
+                            post: post,
                           );
                         },
                       ).toList(),

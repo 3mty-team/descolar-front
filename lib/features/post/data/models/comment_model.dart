@@ -10,6 +10,7 @@ class CommentModel extends CommentEntity {
     required String content,
     required String username,
     required DateTime commentDate,
+    String? authorPfp,
   }) : super(
           commentID: commentID,
           userID: userID,
@@ -17,6 +18,7 @@ class CommentModel extends CommentEntity {
           content: content,
           username: username,
           commentDate: commentDate,
+          authorPfp: authorPfp,
         );
 
   factory CommentModel.fromJson({required Map<String, dynamic> json, CommentModel? repostedPost}) {
@@ -29,6 +31,7 @@ class CommentModel extends CommentEntity {
       content: json['content'],
       commentDate: stringToDatetime(date['date']),
       post: PostModel.fromJson(json: json['post']),
+      authorPfp: user['pfpPath'],
     );
   }
 }

@@ -34,7 +34,7 @@ class PostLocalDataSourceImpl implements PostLocalDataSource {
       if (existingPost == null) {
         CachedPost.feed.add(post);
       } else {
-        if ((existingPost.likes != post.likes) || (existingPost.comments != post.comments)) {
+        if ((existingPost.likes != post.likes) || (existingPost.comments != post.comments) || existingPost.authorPfp != post.authorPfp) {
           CachedPost.feed.remove(existingPost);
           CachedPost.feed.add(post);
         }

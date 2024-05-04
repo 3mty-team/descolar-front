@@ -1,8 +1,8 @@
-import 'package:descolar_front/core/errors/exceptions.dart';
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
@@ -221,12 +221,9 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
     List<PostModel> posts = [];
     for (dynamic postJson in response.data) {
-      posts.add(PostModel.fromJson(json: postJson));
-    }
-    for (dynamic postJson in response.data) {
-      posts.add(PostModel.fromJson(json: postJson));
+      PostModel? repostedPost = postJson['repostedPost'] == null ? null : PostModel.fromJson(json: postJson['repostedPost']);
+      posts.add(PostModel.fromJson(json: postJson, repostedPost: repostedPost));
     }
     return posts;
-
   }
 }

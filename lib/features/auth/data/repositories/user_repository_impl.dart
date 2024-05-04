@@ -25,7 +25,7 @@ class UserRepositoryImpl implements UserRepository {
     if (await networkInfo.isConnected!) {
       try {
         UserModel? user = localDataSource.getRememberUser();
-        await localDataSource.cacheUser(user: user);
+        await localDataSource.cacheUser(user: user, pfpPath: null);
         return Right(user);
       } on CacheException {
         return Left(CacheFailure(errorMessage: 'Cache error'));
