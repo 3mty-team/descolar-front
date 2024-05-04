@@ -1,6 +1,6 @@
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:flutter/material.dart';
 
+import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_input.dart';

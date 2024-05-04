@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
-import 'package:flutter/material.dart';
-
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 
@@ -58,7 +58,7 @@ class QuotedPostItem extends StatelessWidget {
               ),
               const SizedBox(height: 7),
               Text(
-                "${quotedPost?.comments ?? 0} réponse - ${quotedPost?.likes ?? 0} ${quotedPost!.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
+                "${quotedPost?.comments ?? 0} ${quotedPost!.comments > 1 ? 'réponses' : 'réponse'} - ${quotedPost?.likes ?? 0} ${quotedPost!.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
                 style: const TextStyle(
                   color: AppColors.lightGray,
                   fontSize: 15,
