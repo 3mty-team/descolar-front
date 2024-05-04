@@ -10,7 +10,7 @@ import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 abstract class UserLocalDataSource {
-  Future<void> cacheUser({required UserModel? user});
+  Future<void> cacheUser({required UserModel? user, required String? pfpPath});
 
   void cacheRememberUser({required UserModel? user});
 
@@ -55,7 +55,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> cacheUser({required UserModel? user}) async {
+  Future<void> cacheUser({required UserModel? user, required String? pfpPath}) async {
     if (user != null) {
       // User cache
       sharedPreferences.setString(
@@ -80,7 +80,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
           username: user.username,
           followers: [],
           following: [],
-          pfpPath: null,
+          pfpPath: pfpPath,
         ),
       );
     } else {

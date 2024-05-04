@@ -221,10 +221,8 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
     List<PostModel> posts = [];
     for (dynamic postJson in response.data) {
-      posts.add(PostModel.fromJson(json: postJson));
-    }
-    for (dynamic postJson in response.data) {
-      posts.add(PostModel.fromJson(json: postJson));
+      PostModel? repostedPost = postJson['repostedPost'] == null ? null : PostModel.fromJson(json: postJson['repostedPost']);
+      posts.add(PostModel.fromJson(json: postJson, repostedPost: repostedPost));
     }
     return posts;
   }

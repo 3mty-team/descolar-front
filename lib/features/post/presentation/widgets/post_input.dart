@@ -34,7 +34,7 @@ class _PostInputState extends State<PostInput> {
                 padding: const EdgeInsets.only(right: 10, left: 5),
                 child: ProfilPicture(
                   radius: 20,
-                  imageFile: UserInfo.userProfil.pp,
+                  imagePath: UserInfo.userProfil.pfpPath,
                 ),
               ),
               hintText: widget.hint,

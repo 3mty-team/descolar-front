@@ -41,7 +41,7 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
                 },
                 child: ProfilPicture(
                   radius: 20,
-                  imageFile: widget.post.authorPfp,
+                  imagePath: widget.post.authorPfp,
                 ),
               ),
               const SizedBox(width: 5),

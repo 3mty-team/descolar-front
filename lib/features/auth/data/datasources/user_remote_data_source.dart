@@ -89,7 +89,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         sharedPreferences: await SharedPreferences.getInstance(),
       );
       // User cache
-      local.cacheUser(user: user);
+      local.cacheUser(user: user, pfpPath: response.data['pfpPath']);
       // Remember me
       if (params.remember! == true) {
         local.cacheRememberUser(user: user);

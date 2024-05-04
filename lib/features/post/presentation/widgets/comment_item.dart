@@ -39,7 +39,7 @@ class _CommentItemState extends State<CommentItem> {
                 },
                 child: ProfilPicture(
                   radius: 20,
-                  imageFile: widget.comment.authorPfp,
+                  imagePath: widget.comment.authorPfp,
                 ),
               ),
               const SizedBox(width: 5),
