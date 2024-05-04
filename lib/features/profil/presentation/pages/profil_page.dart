@@ -2,15 +2,13 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -85,7 +83,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
             // Body page
             Transform.translate(
-              offset: const Offset(0, -60),
+              offset: const Offset(0, -78),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,19 +101,19 @@ class _ProfilPageState extends State<ProfilPage> {
                         // TODO : if isMyProfil, TextButton, else ProfilPicture
                         if (provider.isMyUserProfil)
                           TextButton(
-                            onPressed: () {
-                              provider.changeProfilPicture(provider.userProfil!.uuid);
-                            },
-                            child: ProfilPicture(
-                              radius: 60,
-                              imageFile: provider.userProfil?.pp,
-                              borderWidth: 4,
-                            ),
-                          )
+                          onPressed: () {
+                            provider.changeProfilPicture(provider.userProfil!.uuid);
+                          },
+                          child: ProfilPicture(
+                            radius: 60,
+                            imagePath: provider.userProfil?.pfpPath,
+                            borderWidth: 4,
+                          ),
+                        )
                         else
                           ProfilPicture(
                             radius: 60,
-                            imageFile: provider.userProfil?.pp,
+                            imagePath: provider.userProfil?.pfpPath,
                             borderWidth: 4,
                           ),
                         ProfilActionButtons(provider: provider),
@@ -202,9 +200,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     // Spinner
                     const Padding(
                       padding: EdgeInsets.only(top: 64),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                      child: Center(child: CircularProgressIndicator(),),
                     )
                   else
                     //
@@ -215,7 +211,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       children: provider.posts.map(
                         (post) {
                           return PostItem(
-                            post: PostEntity(
+                            post: PostModel(
                               comments: post.comments,
                               content: post.content,
                               likes: post.likes,

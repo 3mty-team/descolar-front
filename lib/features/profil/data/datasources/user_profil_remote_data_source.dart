@@ -6,6 +6,8 @@ import 'package:descolar_front/core/utils/file_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
+import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
