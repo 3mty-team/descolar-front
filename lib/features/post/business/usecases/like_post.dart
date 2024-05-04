@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class LikePost {
   final PostRepository postRepository;

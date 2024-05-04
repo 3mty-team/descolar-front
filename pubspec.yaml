@@ -51,6 +51,8 @@ dependencies:
   path_provider: ^2.1.0
   syncfusion_flutter_pdfviewer: ^22.2.8
 
+  path: any
+  http_parser: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

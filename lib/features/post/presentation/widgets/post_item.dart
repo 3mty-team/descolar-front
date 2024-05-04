@@ -2,8 +2,6 @@ import 'package:descolar_front/features/profil/presentation/widgets/profil_pictu
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';

@@ -1,5 +1,4 @@
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
-import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NoParams {}

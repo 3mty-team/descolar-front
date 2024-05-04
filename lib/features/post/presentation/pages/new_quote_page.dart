@@ -1,4 +1,3 @@
-import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

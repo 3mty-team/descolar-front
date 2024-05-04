@@ -1,4 +1,3 @@
-import 'package:descolar_front/features/post/business/entities/comment_entity.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/data/models/comment_model.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
