@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/search/business/entities/user_result_entity.dart';
+import 'package:descolar_front/features/search/presentation/widgets/user_result_item.dart';
 import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/search_bar.dart';
@@ -17,12 +19,20 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController controller = TextEditingController();
   List<PostEntity> postResult = [];
+  List<UserResultEntity> userResult = [];
 
   void _onType(String content) async {
+    if (content.startsWith(' ') || content.isEmpty) {
+      postResult.clear();
+      userResult.clear();
+      return;
+    }
     final provider = Provider.of<SearchProvider>(context, listen: false);
-    List<PostEntity> newResult = await provider.getPostsByContent(content);
+    List<PostEntity> newPostResult = await provider.getPostsByContent(content);
+    List<UserResultEntity> newUserResult = await provider.getUsersByUsername(content);
     setState(() {
-      postResult = newResult;
+      postResult = newPostResult;
+      userResult = newUserResult;
     });
   }
 
@@ -49,8 +59,12 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  const Center(
-                    child: Text('Utilisateurs'),
+                  ListView.builder(
+                    itemCount: userResult.length,
+                    itemBuilder: (context, index) {
+                      final user = userResult[userResult.length - 1 - index];
+                      return UserResultItem(user: user);
+                    },
                   ),
                   ListView.builder(
                     itemCount: postResult.length,

@@ -7,6 +7,7 @@ import 'package:descolar_front/features/post/presentation/widgets/quoted_post_it
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
+import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
