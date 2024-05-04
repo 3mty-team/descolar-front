@@ -1,17 +1,14 @@
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/arguments/arguments.dart';
-import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
-import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
