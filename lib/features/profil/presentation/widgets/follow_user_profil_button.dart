@@ -11,7 +11,6 @@ class FollowUserProfilButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        print('follow');
         profilProvider.follow(profilProvider.userProfil!.uuid);
       },
       style: ButtonStyle(
