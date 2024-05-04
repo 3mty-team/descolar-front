@@ -30,11 +30,13 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       try {
         UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
         return Right(userProfil);
+      }  on NotExistsException {
+        return Left(NotExistsFailure(errorMessage: 'Utilisateur indisponible'));
       } on ServerException {
-        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+        return Left(ServerFailure(errorMessage: 'Erreur serveur'));
       }
     } else {
-      return Left(ServerFailure(errorMessage: 'No connection'));
+      return Left(ServerFailure(errorMessage: 'Pas de connexion'));
     }
   }
 
