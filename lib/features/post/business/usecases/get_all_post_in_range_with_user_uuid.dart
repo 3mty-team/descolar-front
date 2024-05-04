@@ -11,7 +11,7 @@ class GetAllPostInRangeWithUserUUID {
 
   Future<Either<Failure, List<PostEntity>>> call({
     required int range,
-    required String userUuid
+    required String userUuid,
   }) async {
     return await postRepository.getAllPostInRangeWithUserUUID(range: range, userUuid: userUuid);
   }

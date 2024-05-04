@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:cross_file/src/types/interface.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:descolar_front/core/connection/network_info.dart';
-import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
-import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/data/datasources/user_profil_local_data_source.dart';

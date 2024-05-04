@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/post/business/entities/comment_entity.dart';
 import 'package:descolar_front/features/post/business/repositories/comment_repository.dart';
-import 'package:descolar_front/features/post/data/models/comment_model.dart';
 
 class DeleteComment {
   final CommentRepository commentRepository;
