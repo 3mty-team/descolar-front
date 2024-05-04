@@ -47,15 +47,15 @@ class _UserResultItemState extends State<UserResultItem> {
                         text: '${widget.user.followingNb} ',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const TextSpan(
-                        text: 'abonnements  ',
+                      TextSpan(
+                        text: widget.user.followingNb > 1 ? 'abonnements  ' : 'abonnement  ',
                       ),
                       TextSpan(
                         text: '${widget.user.followersNb} ',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const TextSpan(
-                        text: 'abonnés',
+                      TextSpan(
+                        text: widget.user.followersNb > 1 ? 'abonnés' : 'abonné',
                       ),
                     ],
                   ),

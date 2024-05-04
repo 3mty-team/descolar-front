@@ -66,7 +66,7 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
                     ),
                     const SizedBox(height: 7),
                     Text(
-                      "${widget.post.comments} réponse - ${widget.post.likes} j'aime",
+                      "${widget.post.comments} ${widget.post.comments > 1 ? 'réponses' : 'réponse'} - ${widget.post.likes} ${widget.post.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
                       style: const TextStyle(
                         color: AppColors.lightGray,
                         fontSize: 15,

@@ -52,7 +52,7 @@ class QuotedPostItem extends StatelessWidget {
               ),
               const SizedBox(height: 7),
               Text(
-                "${quotedPost?.comments ?? 0} réponse - ${quotedPost?.likes ?? 0} ${quotedPost!.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
+                "${quotedPost?.comments ?? 0} ${quotedPost!.comments > 1 ? 'réponses' : 'réponse'} - ${quotedPost?.likes ?? 0} ${quotedPost!.likes > 1 ? 'j\'aimes' : 'j\'aime'}",
                 style: const TextStyle(
                   color: AppColors.lightGray,
                   fontSize: 15,
