@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 class PostEntity {
@@ -11,7 +10,7 @@ class PostEntity {
   final int comments;
   final PostEntity? repostedPost;
   final List<Image>? medias;
-  final File? authorPfp;
+  final String? authorPfp;
 
   const PostEntity({
     required this.postId,

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 
 class CommentEntity {
@@ -9,7 +7,7 @@ class CommentEntity {
   final String content;
   final String username;
   final DateTime commentDate;
-  final File? authorPfp;
+  final String? authorPfp;
 
   const CommentEntity({
     required this.commentID,

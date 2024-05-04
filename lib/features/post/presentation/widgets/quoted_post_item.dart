@@ -35,11 +35,11 @@ class QuotedPostItem extends StatelessWidget {
                       Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(quotedPost!.userId));
                     },
                     child: ProfilPicture(
-                      radius: 20,
-                      imageFile: quotedPost?.authorPfp,
+                      radius: 15,
+                      imagePath: quotedPost?.authorPfp,
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 7),
                   Text(
                     quotedPost?.username ?? '',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
