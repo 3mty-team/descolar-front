@@ -45,13 +45,10 @@ class ProfilProvider extends ChangeNotifier {
     failureOrUserProfil.fold(
       (Failure failure) {
         if (failure is AlreadyExistsFailure) {
-          print('already exists');
         } else if (failure is ServerFailure) {
-          print('server failed');
         }
       },
       (UserProfilEntity userProfilEntity) {
-        print('user follow');
         this.getUserProfil(uuid);
       },
     );
@@ -66,13 +63,10 @@ class ProfilProvider extends ChangeNotifier {
     failureOrUserProfil.fold(
       (Failure failure) {
         if (failure is AlreadyExistsFailure) {
-          print('already exists');
         } else if (failure is ServerFailure) {
-          print('server failed');
         }
       },
       (UserProfilEntity userProfilEntity) {
-        print('user unfollow');
         this.getUserProfil(uuid);
       },
     );
@@ -120,7 +114,7 @@ class ProfilProvider extends ChangeNotifier {
     final failureOrPosts = await GetAllPostInRangeWithUserUUID(postRepository: repository).call(range: 10, userUuid: uuid);
     failureOrPosts.fold(
       (Failure failure) {
-        print('f');
+
       },
       (List<PostEntity> userPosts) {
         this.posts = userPosts;
@@ -130,16 +124,13 @@ class ProfilProvider extends ChangeNotifier {
   }
 
   void changeProfilPicture(String uuid) async {
-    // Image.file(File(XFile.path))
     if (this.isMyUserProfil) {
       UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
-      print('test');
       final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null) {
         final failureOrUserProfil = await ChangeProfilPicture(userProfilRepository: repository).call(uuid: uuid, image: File(image.path));
         failureOrUserProfil.fold(
           (Failure failure) {
-            print('f');
           },
           (UserProfilEntity userProfilEntity) {
             getUserProfil(uuid);

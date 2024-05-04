@@ -7,10 +7,8 @@ import 'package:descolar_front/features/post/presentation/widgets/post_item.dart
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -85,7 +83,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
             // Body page
             Transform.translate(
-              offset: const Offset(0, -60),
+              offset: const Offset(0, -78),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,14 +106,14 @@ class _ProfilPageState extends State<ProfilPage> {
                           },
                           child: ProfilPicture(
                             radius: 60,
-                            imageFile: provider.userProfil?.pp,
+                            imagePath: provider.userProfil?.pfpPath,
                             borderWidth: 4,
                           ),
                         )
                         else
                           ProfilPicture(
                             radius: 60,
-                            imageFile: provider.userProfil?.pp,
+                            imagePath: provider.userProfil?.pfpPath,
                             borderWidth: 4,
                           ),
                         ProfilActionButtons(provider: provider),
