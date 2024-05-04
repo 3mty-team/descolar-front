@@ -76,6 +76,7 @@ class ProfilProvider extends ChangeNotifier {
 
   void getUserProfil(String uuid) async {
     userProfil = null;
+    failure = null;
     posts = [];
     notifyListeners();
 
@@ -91,7 +92,7 @@ class ProfilProvider extends ChangeNotifier {
     failureOrUserProfil.fold(
       (Failure failure) {
         userProfil = null;
-        failure = failure;
+        this.failure = failure;
         notifyListeners();
       },
       (UserProfilEntity userProfilEntity) {
