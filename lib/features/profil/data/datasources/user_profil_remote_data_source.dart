@@ -36,22 +36,24 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       options: _getRequestOptions(),
     );
 
-    final responseFollowers = await dio.get(
-      '$baseDescolarApi/user/$uuid/followers',
-      options: _getRequestOptions(),
-    );
-
-    final responseFollowing = await dio.get(
-      '$baseDescolarApi/user/$uuid/following',
-      options: _getRequestOptions(),
-    );
-
-    Map<String, dynamic> json = responseUser.data;
-    json['followers'] = responseFollowers.data['users'];
-    json['following'] = responseFollowing.data['users'];
-
     if (responseUser.statusCode == 200) {
+      final responseFollowers = await dio.get(
+        '$baseDescolarApi/user/$uuid/followers',
+        options: _getRequestOptions(),
+      );
+
+      final responseFollowing = await dio.get(
+        '$baseDescolarApi/user/$uuid/following',
+        options: _getRequestOptions(),
+      );
+
+      Map<String, dynamic> json = responseUser.data;
+      json['followers'] = responseFollowers.data['users'];
+      json['following'] = responseFollowing.data['users'];
+
       return UserProfilModel.fromJson(json: json);
+    } else if (responseUser.statusCode == 400) {
+      throw NotExistsException();
     } else {
       throw ServerException();
     }
