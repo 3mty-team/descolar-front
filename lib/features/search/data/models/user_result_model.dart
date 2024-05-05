@@ -21,9 +21,9 @@ class UserResultModel extends UserResultEntity {
     return UserResultModel(
       uuid: json['uuid'],
       username: json['username'],
-      firstName: 'Prénom', //TODO : Get first name and last name
-      lastName: 'Nom',
-      followersNb: 0, //TODO : Get followers number
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      followersNb: json['followers'],
       userPfp: json['pfpPath'],
     );
   }
