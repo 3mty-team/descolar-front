@@ -1,18 +1,18 @@
-import 'dart:io';
-
 import 'package:descolar_front/features/search/business/entities/user_result_entity.dart';
 
 class UserResultModel extends UserResultEntity {
   const UserResultModel({
     required String uuid,
     required String username,
-    required int followingNb,
+    required String firstName,
+    required String lastName,
     required int followersNb,
-    File? userPfp,
+    String? userPfp,
   }) : super(
           uuid: uuid,
           username: username,
-          followingNb: followingNb,
+          firstName: firstName,
+          lastName: lastName,
           followersNb: followersNb,
           userPfp: userPfp,
         );
@@ -21,9 +21,10 @@ class UserResultModel extends UserResultEntity {
     return UserResultModel(
       uuid: json['uuid'],
       username: json['username'],
-      followersNb: 0, //TODO : Get followers and following number
-      followingNb: 0,
-      userPfp: json['pfpPath'] == null ? null : File(json['pfpPath']),
+      firstName: 'Prénom', //TODO : Get first name and last name
+      lastName: 'Nom',
+      followersNb: 0, //TODO : Get followers number
+      userPfp: json['pfpPath'],
     );
   }
 }

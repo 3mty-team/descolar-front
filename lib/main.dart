@@ -42,9 +42,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('fr'),
-        ],
+        supportedLocales: const [Locale('fr', 'FR')],
         title: 'Descolar',
         theme: AppTheme.theme(),
         home: const SplashScreen(),

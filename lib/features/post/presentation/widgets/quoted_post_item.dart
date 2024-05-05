@@ -46,7 +46,7 @@ class QuotedPostItem extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    datetimeToFormattedString('dd MMM. yyyy', quotedPost!.postDate),
+                    datetimeToFormattedString('dd MMM yyyy', quotedPost!.postDate),
                     style: const TextStyle(fontSize: 14),
                   ),
                 ],

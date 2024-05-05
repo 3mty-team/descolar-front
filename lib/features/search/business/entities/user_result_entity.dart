@@ -1,16 +1,16 @@
-import 'dart:io';
-
 class UserResultEntity {
   final String uuid;
   final String username;
-  final int followingNb;
+  final String firstName;
+  final String lastName;
   final int followersNb;
-  final File? userPfp;
+  final String? userPfp;
 
   const UserResultEntity({
     required this.uuid,
     required this.username,
-    required this.followingNb,
+    required this.firstName,
+    required this.lastName,
     required this.followersNb,
     this.userPfp,
   });

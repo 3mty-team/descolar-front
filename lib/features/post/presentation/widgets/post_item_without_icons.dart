@@ -56,7 +56,7 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const Spacer(),
-                        Text(datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
+                        Text(datetimeToFormattedString('dd MMM yyyy', widget.post.postDate)),
                         const SizedBox(width: 10),
                         PostPopMenu(post: widget.post, provider: provider),
                       ],

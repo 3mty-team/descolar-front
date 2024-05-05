@@ -54,7 +54,7 @@ class _CommentItemState extends State<CommentItem> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const Spacer(),
-                        Text(datetimeToFormattedString('dd MMM. yyyy', widget.comment.commentDate)),
+                        Text(datetimeToFormattedString('dd MMM yyyy', widget.comment.commentDate)),
                         const SizedBox(width: 10),
                         Visibility(
                           visible: widget.comment.userID == UserInfo.user.uuid,

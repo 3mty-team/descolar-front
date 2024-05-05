@@ -24,38 +24,35 @@ class _UserResultItemState extends State<UserResultItem> {
         Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(widget.user.uuid));
       },
       child: Padding(
-        padding: const EdgeInsets.all(7),
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
             ProfilPicture(
               radius: 25,
-              imageFile: widget.user.userPfp,
+              imagePath: widget.user.userPfp,
             ),
             const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.user.username,
+                  '${widget.user.firstName} ${widget.user.lastName}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '@${widget.user.username}',
+                  style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
                 RichText(
                   text: TextSpan(
                     style: DefaultTextStyle.of(context).style,
                     children: [
                       TextSpan(
-                        text: '${widget.user.followingNb} ',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const TextSpan(
-                        text: 'abonnements  ',
-                      ),
-                      TextSpan(
                         text: '${widget.user.followersNb} ',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const TextSpan(
-                        text: 'abonnés',
+                      TextSpan(
+                        text: widget.user.followersNb > 1 ? 'abonnés' : 'abonné',
                       ),
                     ],
                   ),

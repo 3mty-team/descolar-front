@@ -82,7 +82,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
             // Body page
             provider.failure != null && provider.userProfil == null
-                ?  Transform.translate(
+                ? Transform.translate(
                     offset: const Offset(0, -78),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -201,7 +201,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                           style: const TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                         const TextSpan(
-                                          text: 'Abonnées ',
+                                          text: 'Abonnés ',
                                           style: TextStyle(
                                             color: AppColors.gray,
                                           ),
