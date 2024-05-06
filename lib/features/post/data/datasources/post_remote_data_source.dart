@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +11,8 @@ import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/core/params/params.dart';
+
+import '../../../../core/utils/file_utils.dart';
 
 abstract class PostRemoteDataSource {
   Future<PostModel> createPost({required CreatePostParams params});
@@ -52,18 +56,54 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
   @override
   Future<PostModel> createPost({required CreatePostParams params}) async {
-    final response = await dio.post(
+    if (params.media != null) {
+      List<MultipartFile> pathFiles = [];
+      for (var file in params.media!) {
+        pathFiles.add(await MultipartFile.fromFile(file.path, filename: FileUtils.getFileName(file.path), contentType: FileUtils.getMediaType('image', file.path)));
+      }
+      final responseMedia = await dio.post(
+        '$baseDescolarApi/media',
+        options: _getRequestOptions(),
+        data: FormData.fromMap({
+          'image[]': pathFiles.toList(),
+        }),
+      );
+      if (responseMedia.statusCode == 200) {
+        List<int> medias = [];
+        await responseMedia.data['medias'].forEach((media) {
+          medias.add(media['id']);
+        });
+        final response = await dio.post(
+          '$baseDescolarApi/post',
+          data: FormData.fromMap({
+            'content': params.content,
+            'location': params.location,
+            'send_timestamp': params.postDate,
+            'medias': jsonEncode(medias),
+          }),
+          options: _getRequestOptions(),
+        );
+        if (response.statusCode == 200) {
+          return PostModel.fromJson(json: response.data);
+        } else {
+          throw ServerException();
+        }
+      } else {
+        throw ServerException();
+      }
+    }
+    final responsePost = await dio.post(
       '$baseDescolarApi/post',
       data: FormData.fromMap({
         'content': params.content,
         'location': params.location,
         'send_timestamp': params.postDate,
-        'medias': '[]',
+        'medias': [],
       }),
       options: _getRequestOptions(),
     );
-    if (response.statusCode == 200) {
-      return PostModel.fromJson(json: response.data);
+    if (responsePost.statusCode == 200) {
+      return PostModel.fromJson(json: responsePost.data);
     } else {
       throw ServerException();
     }

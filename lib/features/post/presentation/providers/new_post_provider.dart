@@ -31,6 +31,7 @@ class NewPostProvider extends ChangeNotifier {
         content: controller.text,
         location: await Ipify.ipv4(),
         postDate: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        media: selectedImages.isNotEmpty ? selectedImages : null,
       ),
     );
     failureOrPost.fold(
