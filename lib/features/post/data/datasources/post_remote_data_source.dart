@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,8 +10,7 @@ import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/post/data/datasources/post_local_data_source.dart';
 import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/core/params/params.dart';
-
-import '../../../../core/utils/file_utils.dart';
+import 'package:descolar_front/core/utils/file_utils.dart';
 
 abstract class PostRemoteDataSource {
   Future<PostModel> createPost({required CreatePostParams params});
@@ -203,8 +201,18 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     );
     final PostLocalDataSourceImpl local = PostLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
     response.data.forEach((post) async {
+      List<String> mediasPath = [];
+      if (post['medias'] != []) {
+        for (var media in post['medias']) {
+          final mediaReponse = await dio.get(
+            '$baseDescolarApi/media/$media',
+            options: _getRequestOptions(),
+          );
+          mediasPath.add(mediaReponse.data['path']);
+        }
+      }
       PostModel? repostedPost = post['repostedPost'] == null ? null : PostModel.fromJson(json: post['repostedPost']);
-      local.addToFeed(post: PostModel.fromJson(json: post, repostedPost: repostedPost));
+      local.addToFeed(post: PostModel.fromJson(json: post, repostedPost: repostedPost, mediasPath: mediasPath));
     });
     if (response.statusCode == 200) {
       CachedPost.feed.sort((a, b) => a.postId.compareTo(b.postId));
@@ -261,8 +269,18 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
     List<PostModel> posts = [];
     for (dynamic postJson in response.data) {
+      List<String> mediasPath = [];
+      if (postJson['medias'] != []) {
+        for (var media in postJson['medias']) {
+          final mediaReponse = await dio.get(
+            '$baseDescolarApi/media/$media',
+            options: _getRequestOptions(),
+          );
+          mediasPath.add(mediaReponse.data['path']);
+        }
+      }
       PostModel? repostedPost = postJson['repostedPost'] == null ? null : PostModel.fromJson(json: postJson['repostedPost']);
-      posts.add(PostModel.fromJson(json: postJson, repostedPost: repostedPost));
+      posts.add(PostModel.fromJson(json: postJson, repostedPost: repostedPost, mediasPath: mediasPath));
     }
     return posts;
   }

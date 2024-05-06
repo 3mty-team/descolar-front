@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -89,6 +90,10 @@ class _PostItemState extends State<PostItem> {
                       Text(
                         widget.post.content,
                         style: const TextStyle(fontSize: 16),
+                      ),
+                      Visibility(
+                        visible: widget.post.mediasPath != null && widget.post.mediasPath!.isNotEmpty,
+                        child: PostImageDisplay(mediasPath: widget.post.mediasPath),//s
                       ),
                       Visibility(
                         visible: widget.post.repostedPost != null,

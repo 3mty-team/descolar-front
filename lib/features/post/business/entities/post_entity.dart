@@ -9,7 +9,7 @@ class PostEntity {
   final int likes;
   final int comments;
   final PostEntity? repostedPost;
-  final List<Image>? medias;
+  final List<String>? mediasPath;
   final String? authorPfp;
 
   const PostEntity({
@@ -21,7 +21,7 @@ class PostEntity {
     required this.likes,
     required this.comments,
     this.repostedPost,
-    this.medias,
+    this.mediasPath,
     this.authorPfp,
   });
 }
