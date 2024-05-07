@@ -99,6 +99,17 @@ class LoginProvider extends ChangeNotifier {
             'Le pseudonyme ou le mot de passe est incorrect',
           );
         }
+
+        if (failure is NotValidFailure) {
+          changeError(
+            LoginInputName.login,
+            'Le mail n\'est pas vérifié',
+          );
+          removeError(
+            LoginInputName.password,
+          );
+        }
+
         notifyListeners();
       },
       (UserEntity user) {

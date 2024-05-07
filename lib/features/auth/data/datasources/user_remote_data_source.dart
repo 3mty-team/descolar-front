@@ -71,32 +71,40 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserModel> getUser({required UserLoginParams params}) async {
-    final response = await dio.post(
-      '$baseDescolarApi/config/login',
-      data: FormData.fromMap(
-        {
-          'username': params.username,
-          'password': params.password,
-        },
-      ),
-    );
-    if (response.statusCode == 200) {
-      if (response.data['error'] != null) {
-        throw NotExistsException();
-      }
-      UserModel user = UserModel.fromJson(json: response.data);
-      final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
-        sharedPreferences: await SharedPreferences.getInstance(),
+    try {
+      final response = await dio.post(
+        '$baseDescolarApi/config/login',
+        data: FormData.fromMap(
+          {
+            'username': params.username,
+            'password': params.password,
+          },
+        ),
       );
-      // User cache
-      local.cacheUser(user: user, pfpPath: response.data['pfpPath']);
-      // Remember me
-      if (params.remember! == true) {
-        local.cacheRememberUser(user: user);
+      if (response.statusCode == 200) {
+        if (response.data['error'] != null) {
+          throw NotExistsException();
+        }
+        UserModel user = UserModel.fromJson(json: response.data);
+        final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
+          sharedPreferences: await SharedPreferences.getInstance(),
+        );
+        // User cache
+        local.cacheUser(user: user, pfpPath: response.data['pfpPath']);
+        // Remember me
+        if (params.remember! == true) {
+          local.cacheRememberUser(user: user);
+        }
+        return user;
+      } else {
+        throw ServerException();
       }
-      return user;
-    } else {
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 403) {
+        throw NotValidException();
+      }
       throw ServerException();
     }
+
   }
 }

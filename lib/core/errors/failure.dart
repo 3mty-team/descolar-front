@@ -20,3 +20,7 @@ class AlreadyExistsFailure extends Failure {
 class NotExistsFailure extends Failure {
   NotExistsFailure({required super.errorMessage});
 }
+
+class NotValidFailure extends Failure {
+  NotValidFailure({required super.errorMessage});
+}

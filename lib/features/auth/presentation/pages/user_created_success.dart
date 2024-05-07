@@ -13,7 +13,7 @@ class UserCreatedSuccessPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Votre compte à bien été créé',
+              'Votre compte à bien été créé. Vous avez recu un mail pour confirmer votre adresse mail. Veuillez la confirmer pour valider votre compte.',
               style: TextStyle(
                 fontSize: 18,
               ),
