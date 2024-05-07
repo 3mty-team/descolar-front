@@ -26,6 +26,21 @@ class PostImageDisplay extends StatelessWidget {
     }
   }
 
+  Widget _loadingBuilder(BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+    if (loadingProgress == null) {
+      return child;
+    }
+    return Center(
+      child: CircularProgressIndicator(
+        value: loadingProgress.expectedTotalBytes != null
+            ? loadingProgress.cumulativeBytesLoaded /
+            loadingProgress.expectedTotalBytes!
+            : null,
+      ),
+    );
+  }
+
+
   Widget _buildSingleImage(BuildContext context, String imageUrl) {
     return GestureDetector(
       onTap: () => _showFullScreenImage(context, imageUrl),
@@ -33,6 +48,7 @@ class PostImageDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Image.network(
           imageUrl,
+          loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
           width: double.infinity,
           height: 150,
           fit: BoxFit.cover,
@@ -53,6 +69,7 @@ class PostImageDisplay extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   url,
+                  loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
                   height: 150,
                   fit: BoxFit.cover,
                 ),
@@ -77,6 +94,7 @@ class PostImageDisplay extends StatelessWidget {
                 height: 150,
                 child: Image.network(
                   images[0],
+                  loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
@@ -95,6 +113,7 @@ class PostImageDisplay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       url,
+                      loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
                       height: 150,
                       fit: BoxFit.cover,
                     ),
@@ -122,6 +141,7 @@ class PostImageDisplay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       url,
+                      loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
                       height: 150,
                       fit: BoxFit.cover,
                     ),
@@ -142,6 +162,7 @@ class PostImageDisplay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       url,
+                      loadingBuilder: (context, child, loadingProgress) => _loadingBuilder(context, child, loadingProgress),
                       height: 150,
                       fit: BoxFit.cover,
                     ),
