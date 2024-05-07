@@ -39,4 +39,12 @@ abstract class UserProfilRepository {
     required File image,
   });
 
+  Future<Either<Failure, bool>> block({
+    required String uuid,
+  });
+
+  Future<Either<Failure, bool>> unblock({
+    required String uuid,
+  });
+
 }

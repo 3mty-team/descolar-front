@@ -5,6 +5,7 @@ import 'package:descolar_front/features/post/business/entities/post_entity.dart'
 import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
 import 'package:descolar_front/features/post/business/usecases/get_all_post_in_range_with_user_uuid.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
+import 'package:descolar_front/features/profil/business/usecases/block_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/change_profil_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/follow_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/unfollow_user_profil.dart';
@@ -43,10 +44,10 @@ class ProfilProvider extends ChangeNotifier {
       UserProfilRepository repository =
       await UserProfilRepository.getUserProfilRepository();
 
-      final failureOrUserProfil =
+      final failureOrFollow =
       await FollowUserProfil(userProfilRepository: repository)
           .call(uuid: userProfil!.uuid);
-      failureOrUserProfil.fold(
+      failureOrFollow.fold(
             (Failure failure) {
           if (failure is AlreadyExistsFailure) {
           } else if (failure is ServerFailure) {}
@@ -62,23 +63,26 @@ class ProfilProvider extends ChangeNotifier {
   }
 
   void unfollow() async {
-    UserProfilRepository repository =
-        await UserProfilRepository.getUserProfilRepository();
+    if (!isMyUserProfil) {
+      UserProfilRepository repository =
+      await UserProfilRepository.getUserProfilRepository();
 
-    final failureOrUserProfil =
-        await UnfollowUserProfil(userProfilRepository: repository)
-            .call(uuid: userProfil!.uuid);
-    failureOrUserProfil.fold(
-      (Failure failure) {
-        if (failure is AlreadyExistsFailure) {
-        } else if (failure is ServerFailure) {}
-      },
-      (bool b) {},
-    );
+      final failureOrUnfollow =
+      await UnfollowUserProfil(userProfilRepository: repository)
+          .call(uuid: userProfil!.uuid);
+      failureOrUnfollow.fold(
+            (Failure failure) {
+          if (failure is AlreadyExistsFailure) {
+          } else if (failure is ServerFailure) {}
+        },
+            (bool b) {},
+      );
 
-    // Refresh
-    this.getUserProfil(userProfil!.uuid);
-    notifyListeners();
+      // Refresh
+      this.getUserProfil(userProfil!.uuid);
+      notifyListeners();
+    }
+
   }
 
   void getUserProfil(String uuid) async {
@@ -105,6 +109,7 @@ class ProfilProvider extends ChangeNotifier {
         notifyListeners();
       },
       (UserProfilEntity userProfilEntity) {
+        print(userProfilEntity.uuid);
         userProfil = userProfilEntity;
         failure = null;
 
@@ -140,10 +145,10 @@ class ProfilProvider extends ChangeNotifier {
       final XFile? image =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null) {
-        final failureOrUserProfil =
+        final failureOrPP =
             await ChangeProfilPicture(userProfilRepository: repository)
                 .call(uuid: userProfil!.uuid, image: File(image.path));
-        failureOrUserProfil.fold(
+        failureOrPP.fold(
           (Failure failure) {},
           (bool b) {
           },
@@ -160,7 +165,15 @@ class ProfilProvider extends ChangeNotifier {
     if (!this.isMyUserProfil) {
       UserProfilRepository repository =
           await UserProfilRepository.getUserProfilRepository();
-
+      final failureOrBlock = await BlockUserProfil(userProfilRepository: repository).call(uuid: userProfil!.uuid);
+      failureOrBlock.fold(
+            (Failure failure) {},
+            (bool b) {
+        },
+      );
+      // Refresh
+      this.getUserProfil(userProfil!.uuid);
+      notifyListeners();
     }
   }
 }
