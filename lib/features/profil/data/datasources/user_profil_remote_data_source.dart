@@ -51,21 +51,25 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       );
 
       if (responseBlocked.statusCode == 200) {
-        // Get followers/following
-        final responseFollowers = await dio.get(
-          '$baseDescolarApi/user/$uuid/followers',
-          options: _getRequestOptions(),
-        );
-        final responseFollowing = await dio.get(
-          '$baseDescolarApi/user/$uuid/following',
-          options: _getRequestOptions(),
-        );
+        if (responseBlocked.data['result'] == false) {
+          // Get followers/following
+          final responseFollowers = await dio.get(
+            '$baseDescolarApi/user/$uuid/followers',
+            options: _getRequestOptions(),
+          );
+          final responseFollowing = await dio.get(
+            '$baseDescolarApi/user/$uuid/following',
+            options: _getRequestOptions(),
+          );
 
-        Map<String, dynamic> json = responseUser.data;
-        json['followers'] = responseFollowers.data['users'];
-        json['following'] = responseFollowing.data['users'];
+          Map<String, dynamic> json = responseUser.data;
+          json['followers'] = responseFollowers.data['users'];
+          json['following'] = responseFollowing.data['users'];
 
-        return UserProfilModel.fromJson(json: json);
+          return UserProfilModel.fromJson(json: json);
+        } else {
+          throw BlockedException();
+        }
       } else {
         throw BlockedException();
       }

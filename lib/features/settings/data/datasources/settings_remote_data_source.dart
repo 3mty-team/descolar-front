@@ -35,6 +35,8 @@ class SettingsRemoteDataSourceImpl implements SettingsRemoteDataSource {
     if (response.statusCode == 200) {
       List<UserProfilModel> blockedUsers = [];
       for (dynamic userJson in response.data['users']) {
+        userJson['followers'] = [];
+        userJson['following'] = [];
         blockedUsers.add(UserProfilModel.fromJson(json: userJson));
       }
       return blockedUsers;
