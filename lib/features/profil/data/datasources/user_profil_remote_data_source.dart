@@ -76,7 +76,7 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       } else {
         throw BlockedException();
       }
-    } else if (responseUser.statusCode == 400) {
+    } else if (responseUser.statusCode == 400 || responseUser.statusCode == 404) {
       throw NotExistsException();
     } else {
       throw ServerException();
