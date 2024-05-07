@@ -1,3 +1,5 @@
+import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ActionPostProvider()),
         ChangeNotifierProvider(create: (context) => ProfilProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
       ],
       child: MaterialApp(
         // change to false for release

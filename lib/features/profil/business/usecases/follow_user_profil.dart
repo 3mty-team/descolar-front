@@ -9,7 +9,7 @@ class FollowUserProfil {
 
   FollowUserProfil({required this.userProfilRepository});
 
-  Future<Either<Failure, UserProfilEntity>> call({
+  Future<Either<Failure, bool>> call({
     required String uuid,
   }) async {
     return await userProfilRepository.follow(uuid: uuid);

@@ -20,7 +20,6 @@ class UserProfilModel extends UserProfilEntity {
         );
 
   factory UserProfilModel.fromJson({required Map<String, dynamic> json}) {
-    // TODO : put json data in UserProfilModel
     List<UserProfilEntity> followers = [];
     List<UserProfilEntity> following = [];
 
@@ -54,6 +53,10 @@ class UserProfilModel extends UserProfilEntity {
         ),
       );
     }
+
+    print(json);
+    print(json['firstname']);
+    print(json['lastname']);
 
     return UserProfilModel(
       uuid: json['uuid'] ?? '-',

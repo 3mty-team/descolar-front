@@ -9,9 +9,16 @@ import 'package:descolar_front/features/profil/data/models/user_profil_model.dar
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
-  Future<UserProfilModel> follow({required String uuid});
-  Future<UserProfilModel> unfollow({required String uuid});
-  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image});
+
+  Future<bool> follow({required String uuid});
+
+  Future<bool> unfollow({required String uuid});
+
+  Future<bool> changeProfilPicture({required String uuid, required File image});
+
+  Future<bool> block({required String uuid});
+
+  Future<bool> unblock({required String uuid});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -37,21 +44,35 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
     );
 
     if (responseUser.statusCode == 200) {
-      final responseFollowers = await dio.get(
-        '$baseDescolarApi/user/$uuid/followers',
+      // Check if user is blocked
+      final responseBlocked = await dio.get(
+        '$baseDescolarApi/user/$uuid/block',
         options: _getRequestOptions(),
       );
 
-      final responseFollowing = await dio.get(
-        '$baseDescolarApi/user/$uuid/following',
-        options: _getRequestOptions(),
-      );
+      if (responseBlocked.statusCode == 200) {
+        if (responseBlocked.data['result'] == false) {
+          // Get followers/following
+          final responseFollowers = await dio.get(
+            '$baseDescolarApi/user/$uuid/followers',
+            options: _getRequestOptions(),
+          );
+          final responseFollowing = await dio.get(
+            '$baseDescolarApi/user/$uuid/following',
+            options: _getRequestOptions(),
+          );
 
-      Map<String, dynamic> json = responseUser.data;
-      json['followers'] = responseFollowers.data['users'];
-      json['following'] = responseFollowing.data['users'];
+          Map<String, dynamic> json = responseUser.data;
+          json['followers'] = responseFollowers.data['users'];
+          json['following'] = responseFollowing.data['users'];
 
-      return UserProfilModel.fromJson(json: json);
+          return UserProfilModel.fromJson(json: json);
+        } else {
+          throw BlockedException();
+        }
+      } else {
+        throw BlockedException();
+      }
     } else if (responseUser.statusCode == 400) {
       throw NotExistsException();
     } else {
@@ -60,44 +81,45 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
   }
 
   @override
-  Future<UserProfilModel> follow({required String uuid}) async {
+  Future<bool> follow({required String uuid}) async {
     final response = await dio.post(
       '$baseDescolarApi/user/$uuid/follow',
       options: _getRequestOptions(),
     );
 
     if (response.statusCode == 200) {
-      return UserProfilModel.fromJson(json: response.data);
-    }
-    else if (response.statusCode == 403) {
+      return true;
+    } else if (response.statusCode == 403) {
       throw AlreadyExistsException();
-    }
-    else {
-      throw ServerException();
-    }
-  }
-
-  @override
-  Future<UserProfilModel> unfollow({required String uuid}) async {
-    final response = await dio.delete(
-      '$baseDescolarApi/user/$uuid/follow',
-      options: _getRequestOptions(),
-    );
-
-    if (response.statusCode == 200) {
-      return UserProfilModel.fromJson(json: response.data);
     } else {
       throw ServerException();
     }
   }
 
   @override
-  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image}) async {
+  Future<bool> unfollow({required String uuid}) async {
+    final response = await dio.delete(
+      '$baseDescolarApi/user/$uuid/follow',
+      options: _getRequestOptions(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> changeProfilPicture(
+      {required String uuid, required File image}) async {
     final responseMedia = await dio.post(
       '$baseDescolarApi/media',
       options: _getRequestOptions(),
       data: FormData.fromMap({
-        'image[]': await MultipartFile.fromFile(image.path, filename: FileUtils.getFileName(image.path), contentType: FileUtils.getMediaType('image', image.path)),
+        'image[]': await MultipartFile.fromFile(image.path,
+            filename: FileUtils.getFileName(image.path),
+            contentType: FileUtils.getMediaType('image', image.path)),
       }),
     );
 
@@ -112,7 +134,7 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       );
 
       if (responseEditProfil.statusCode == 200) {
-        return UserProfilModel.fromJson(json: responseEditProfil.data);
+        return true;
       } else {
         throw ServerException();
       }
@@ -121,4 +143,33 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
     }
   }
 
+  @override
+  Future<bool> block({required String uuid}) async {
+    final response = await dio.post(
+      '$baseDescolarApi/user/$uuid/block',
+      options: _getRequestOptions(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> unblock({required String uuid}) async {
+    final response = await dio.delete(
+      '$baseDescolarApi/user/$uuid/block',
+      options: _getRequestOptions(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 403) {
+      throw NotExistsException();
+    } else {
+      throw ServerException();
+    }
+  }
 }

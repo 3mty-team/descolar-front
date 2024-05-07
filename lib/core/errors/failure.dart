@@ -24,3 +24,7 @@ class NotExistsFailure extends Failure {
 class NotValidFailure extends Failure {
   NotValidFailure({required super.errorMessage});
 }
+
+class BlockedFailure extends Failure {
+  BlockedFailure({required super.errorMessage});
+}

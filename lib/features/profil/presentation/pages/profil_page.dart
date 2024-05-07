@@ -83,7 +83,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ],
             ),
 
-            // Body page
+            // Body page (error, success)
             provider.failure != null && provider.userProfil == null
                 ? Transform.translate(
                     offset: const Offset(0, -78),
@@ -91,7 +91,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Profil picture + buttons
+                        // Null Profil picture
                         const Padding(
                           padding: EdgeInsets.only(
                             left: 16,
@@ -130,7 +130,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     ),
                   ) // ERROR PAGE
                 : Transform.translate(
-                    offset: const Offset(0, -78),
+                    offset: const Offset(0, -60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +139,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 16,
-                            right: 16,
+                            right: 8,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,7 +148,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               if (provider.isMyUserProfil)
                                 TextButton(
                                   onPressed: () {
-                                    provider.changeProfilPicture(provider.userProfil!.uuid);
+                                    provider.changeProfilPicture();
                                   },
                                   child: ProfilPicture(
                                     radius: 60,

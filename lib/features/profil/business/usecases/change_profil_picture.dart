@@ -11,7 +11,7 @@ class ChangeProfilPicture {
 
   ChangeProfilPicture({required this.userProfilRepository});
 
-  Future<Either<Failure, UserProfilEntity>> call({
+  Future<Either<Failure, bool>> call({
     required String uuid,
     required File image,
   }) async {

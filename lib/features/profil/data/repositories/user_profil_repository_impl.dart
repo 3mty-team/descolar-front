@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/data/datasources/user_profil_local_data_source.dart';
 import 'package:descolar_front/features/profil/data/datasources/user_profil_remote_data_source.dart';
@@ -28,10 +27,13 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
+        UserProfilModel userProfil =
+            await remoteDataSource.getUserProfil(uuid: uuid);
         return Right(userProfil);
-      }  on NotExistsException {
+      } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'Utilisateur indisponible'));
+      } on BlockedException {
+        return Left(BlockedFailure(errorMessage: 'Utilisateur bloqué'));
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'Erreur serveur'));
       }
@@ -41,14 +43,72 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> follow({required String uuid}) async {
+  Future<Either<Failure, bool>> follow({required String uuid}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilEntity userProfil = await remoteDataSource.follow(uuid: uuid);
-        return Right(userProfil);
-      }
-      on AlreadyExistsException {
+        await remoteDataSource.follow(uuid: uuid);
+        return const Right(true);
+      } on AlreadyExistsException {
         return Left(AlreadyExistsFailure(errorMessage: 'Already follow'));
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> unfollow({required String uuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        await remoteDataSource.unfollow(uuid: uuid);
+        return const Right(true);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> changeProfilPicture(
+      {required String uuid, required File image}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
+        return const Right(true);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> block({required String uuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        await remoteDataSource.block(uuid: uuid);
+        return const Right(true);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> unblock({required String uuid}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        await remoteDataSource.unblock(uuid: uuid);
+        return const Right(true);
+      } on NotExistsException {
+        return Left(NotExistsFailure(errorMessage: 'L\'utilisateur n\'est pas bloqué'));
       }
       on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
@@ -57,34 +117,4 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       return Left(ServerFailure(errorMessage: 'No connection'));
     }
   }
-
-  @override
-  Future<Either<Failure, UserProfilEntity>> unfollow({required String uuid}) async {
-    if (await networkInfo.isConnected!) {
-      try {
-        UserProfilEntity userProfil = await remoteDataSource.unfollow(uuid: uuid);
-        return Right(userProfil);
-      } on ServerException {
-        return Left(ServerFailure(errorMessage: 'This is a server exception'));
-      }
-    } else {
-      return Left(ServerFailure(errorMessage: 'No connection'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, UserProfilEntity>> changeProfilPicture({required String uuid, required File image}) async {
-    if (await networkInfo.isConnected!) {
-      try {
-        UserProfilEntity userProfil = await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
-        return Right(userProfil);
-      } on ServerException {
-        return Left(ServerFailure(errorMessage: 'This is a server exception'));
-      }
-    } else {
-      return Left(ServerFailure(errorMessage: 'No connection'));
-    }
-  }
-
-
 }

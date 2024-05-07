@@ -11,7 +11,7 @@ class UnfollowUserProfilButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () async {
-        profilProvider.unfollow(profilProvider.userProfil!.uuid);
+        profilProvider.unfollow();
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
