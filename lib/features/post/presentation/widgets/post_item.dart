@@ -4,6 +4,7 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
 import 'package:provider/provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_pop_menu.dart';
@@ -80,7 +81,7 @@ class _PostItemState extends State<PostItem> {
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const Spacer(),
-                          Text(datetimeToFormattedString('dd MMM. yyyy', widget.post.postDate)),
+                          Text(datetimeToFormattedString('dd MMM yyyy', widget.post.postDate)),
                           const SizedBox(width: 10),
                           PostPopMenu(post: widget.post, provider: provider),
                         ],

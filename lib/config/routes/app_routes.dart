@@ -15,6 +15,7 @@ import 'package:descolar_front/screens/feed_page.dart';
 import 'package:descolar_front/features/messages/presentation/pages/messages_menu_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
 import 'package:descolar_front/features/profil/presentation/pages/profil_page.dart';
+import 'package:descolar_front/features/search/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -23,7 +24,7 @@ class AppRoutes {
       case '/home':
         return _materialRoute(const Home());
       case '/search':
-        return _materialRoute(const Home());
+        return _materialRoute(const SearchPage());
       case '/newPost':
         return _materialRoute(const NewPost());
       case '/newQuote':

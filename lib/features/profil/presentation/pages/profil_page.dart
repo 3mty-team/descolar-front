@@ -2,12 +2,15 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/constants/device_info.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -82,7 +85,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
             // Body page
             provider.failure != null && provider.userProfil == null
-                ?  Transform.translate(
+                ? Transform.translate(
                     offset: const Offset(0, -78),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -201,7 +204,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                           style: const TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                         const TextSpan(
-                                          text: 'Abonnées ',
+                                          text: 'Abonnés ',
                                           style: TextStyle(
                                             color: AppColors.gray,
                                           ),

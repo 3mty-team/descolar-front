@@ -27,10 +27,7 @@ class _ViewPostPageState extends State<ViewPostPage> {
         children: [
           const SizedBox(height: 15),
           PostItemWithoutIcons(post: widget.post),
-          const Divider(
-            height: 10,
-            color: Colors.grey,
-          ),
+          const Divider(height: 10, color: Colors.grey),
           const SizedBox(height: 5),
           const Text('Réponses'),
           const SizedBox(height: 5),
