@@ -28,9 +28,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColors.primary,
+        statusBarColor: Colors.transparent,
+      ),
+    );
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [SystemUiOverlay.top],
+      overlays: SystemUiOverlay.values,
     );
 
     Future.delayed(
@@ -60,20 +66,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        statusBarColor: Colors.transparent,
-      ),
-    );
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.edgeToEdge,
-    );
-    super.dispose();
   }
 
   @override

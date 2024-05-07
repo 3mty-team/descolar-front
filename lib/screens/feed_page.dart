@@ -31,7 +31,6 @@ class _HomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _setSystemUI();
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final provider = Provider.of<GetPostProvider>(context);
     return Scaffold(
@@ -46,16 +45,6 @@ class _HomePageState extends State<Home> {
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
       drawer: _buildDrawer(context),
     );
-  }
-
-  void _setSystemUI() {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        statusBarColor: Colors.transparent,
-      ),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   Widget _buildPostFeed(GetPostProvider provider) {
