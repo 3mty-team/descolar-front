@@ -9,9 +9,9 @@ import 'package:descolar_front/features/profil/data/models/user_profil_model.dar
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
-  Future<UserProfilModel> follow({required String uuid});
-  Future<UserProfilModel> unfollow({required String uuid});
-  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image});
+  Future<bool> follow({required String uuid});
+  Future<bool> unfollow({required String uuid});
+  Future<bool> changeProfilPicture({required String uuid, required File image});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -60,14 +60,14 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
   }
 
   @override
-  Future<UserProfilModel> follow({required String uuid}) async {
+  Future<bool> follow({required String uuid}) async {
     final response = await dio.post(
       '$baseDescolarApi/user/$uuid/follow',
       options: _getRequestOptions(),
     );
 
     if (response.statusCode == 200) {
-      return UserProfilModel.fromJson(json: response.data);
+      return true;
     }
     else if (response.statusCode == 403) {
       throw AlreadyExistsException();
@@ -78,21 +78,21 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
   }
 
   @override
-  Future<UserProfilModel> unfollow({required String uuid}) async {
+  Future<bool> unfollow({required String uuid}) async {
     final response = await dio.delete(
       '$baseDescolarApi/user/$uuid/follow',
       options: _getRequestOptions(),
     );
 
     if (response.statusCode == 200) {
-      return UserProfilModel.fromJson(json: response.data);
+      return true;
     } else {
       throw ServerException();
     }
   }
 
   @override
-  Future<UserProfilModel> changeProfilPicture({required String uuid, required File image}) async {
+  Future<bool> changeProfilPicture({required String uuid, required File image}) async {
     final responseMedia = await dio.post(
       '$baseDescolarApi/media',
       options: _getRequestOptions(),
@@ -112,7 +112,7 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       );
 
       if (responseEditProfil.statusCode == 200) {
-        return UserProfilModel.fromJson(json: responseEditProfil.data);
+        return true;
       } else {
         throw ServerException();
       }

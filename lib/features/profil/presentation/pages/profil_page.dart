@@ -145,7 +145,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               if (provider.isMyUserProfil)
                                 TextButton(
                                   onPressed: () {
-                                    provider.changeProfilPicture(provider.userProfil!.uuid);
+                                    provider.changeProfilPicture();
                                   },
                                   child: ProfilPicture(
                                     radius: 60,

@@ -26,15 +26,15 @@ abstract class UserProfilRepository {
     required String uuid,
   });
 
-  Future<Either<Failure, UserProfilEntity>> follow({
+  Future<Either<Failure, bool>> follow({
     required String uuid,
   });
 
-  Future<Either<Failure, UserProfilEntity>> unfollow({
+  Future<Either<Failure, bool>> unfollow({
     required String uuid,
   });
 
-  Future<Either<Failure, UserProfilEntity>> changeProfilPicture({
+  Future<Either<Failure, bool>> changeProfilPicture({
     required String uuid,
     required File image,
   });

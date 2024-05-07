@@ -39,6 +39,15 @@ class OtherActionUserProfilButton extends StatelessWidget {
          ),
        ];
       },
+      onSelected: (value) {
+        switch (value) {
+          case 'report':
+            break;
+          case 'block':
+            profilProvider.blockUser();
+            break;
+        }
+      },
       child: Container(
         width: 42,
         height: 42,

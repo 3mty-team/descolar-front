@@ -38,43 +38,46 @@ class ProfilProvider extends ChangeNotifier {
     return false;
   }
 
-  void follow(String uuid) async {
-    UserProfilRepository repository =
-        await UserProfilRepository.getUserProfilRepository();
+  void follow() async {
+    if (!isMyUserProfil) {
+      UserProfilRepository repository =
+      await UserProfilRepository.getUserProfilRepository();
 
-    final failureOrUserProfil =
-        await FollowUserProfil(userProfilRepository: repository)
-            .call(uuid: uuid);
-    failureOrUserProfil.fold(
-      (Failure failure) {
-        if (failure is AlreadyExistsFailure) {
-        } else if (failure is ServerFailure) {}
-      },
-      (UserProfilEntity userProfilEntity) {},
-    );
+      final failureOrUserProfil =
+      await FollowUserProfil(userProfilRepository: repository)
+          .call(uuid: userProfil!.uuid);
+      failureOrUserProfil.fold(
+            (Failure failure) {
+          if (failure is AlreadyExistsFailure) {
+          } else if (failure is ServerFailure) {}
+        },
+            (bool b) {},
+      );
 
-    // Refresh
-    this.getUserProfil(uuid);
-    notifyListeners();
+      // Refresh
+      this.getUserProfil(userProfil!.uuid);
+      notifyListeners();
+    }
+
   }
 
-  void unfollow(String uuid) async {
+  void unfollow() async {
     UserProfilRepository repository =
         await UserProfilRepository.getUserProfilRepository();
 
     final failureOrUserProfil =
         await UnfollowUserProfil(userProfilRepository: repository)
-            .call(uuid: uuid);
+            .call(uuid: userProfil!.uuid);
     failureOrUserProfil.fold(
       (Failure failure) {
         if (failure is AlreadyExistsFailure) {
         } else if (failure is ServerFailure) {}
       },
-      (UserProfilEntity userProfilEntity) {},
+      (bool b) {},
     );
 
     // Refresh
-    this.getUserProfil(uuid);
+    this.getUserProfil(userProfil!.uuid);
     notifyListeners();
   }
 
@@ -109,18 +112,18 @@ class ProfilProvider extends ChangeNotifier {
           this.isFollower = checkIsFollower();
         }
 
-        this.getUserPosts(uuid);
+        this.getUserPosts();
 
         notifyListeners();
       },
     );
   }
 
-  void getUserPosts(String uuid) async {
+  void getUserPosts() async {
     PostRepository repository = await PostRepository.getPostRepository();
     final failureOrPosts =
         await GetAllPostInRangeWithUserUUID(postRepository: repository)
-            .call(range: 10, userUuid: uuid);
+            .call(range: 10, userUuid: userProfil!.uuid);
     failureOrPosts.fold(
       (Failure failure) {},
       (List<PostEntity> userPosts) {
@@ -130,7 +133,7 @@ class ProfilProvider extends ChangeNotifier {
     );
   }
 
-  void changeProfilPicture(String uuid) async {
+  void changeProfilPicture() async {
     if (this.isMyUserProfil) {
       UserProfilRepository repository =
           await UserProfilRepository.getUserProfilRepository();
@@ -139,14 +142,25 @@ class ProfilProvider extends ChangeNotifier {
       if (image != null) {
         final failureOrUserProfil =
             await ChangeProfilPicture(userProfilRepository: repository)
-                .call(uuid: uuid, image: File(image.path));
+                .call(uuid: userProfil!.uuid, image: File(image.path));
         failureOrUserProfil.fold(
           (Failure failure) {},
-          (UserProfilEntity userProfilEntity) {
-            getUserProfil(uuid);
+          (bool b) {
           },
         );
+
+        // Refresh
+        this.getUserProfil(userProfil!.uuid);
+        notifyListeners();
       }
+    }
+  }
+
+  void blockUser() async {
+    if (!this.isMyUserProfil) {
+      UserProfilRepository repository =
+          await UserProfilRepository.getUserProfilRepository();
+
     }
   }
 }

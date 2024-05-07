@@ -41,11 +41,11 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> follow({required String uuid}) async {
+  Future<Either<Failure, bool>> follow({required String uuid}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilEntity userProfil = await remoteDataSource.follow(uuid: uuid);
-        return Right(userProfil);
+        await remoteDataSource.follow(uuid: uuid);
+        return const Right(true);
       }
       on AlreadyExistsException {
         return Left(AlreadyExistsFailure(errorMessage: 'Already follow'));
@@ -59,11 +59,11 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> unfollow({required String uuid}) async {
+  Future<Either<Failure, bool>> unfollow({required String uuid}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilEntity userProfil = await remoteDataSource.unfollow(uuid: uuid);
-        return Right(userProfil);
+        await remoteDataSource.unfollow(uuid: uuid);
+        return const Right(true);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
@@ -73,11 +73,11 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, UserProfilEntity>> changeProfilPicture({required String uuid, required File image}) async {
+  Future<Either<Failure, bool>> changeProfilPicture({required String uuid, required File image}) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilEntity userProfil = await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
-        return Right(userProfil);
+        await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
+        return const Right(true);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
