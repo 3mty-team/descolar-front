@@ -239,7 +239,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         ),
 
                         // Posts
-                        if (provider.posts.isEmpty)
+                        if (provider.posts == null)
                           // Spinner
                           const Padding(
                             padding: EdgeInsets.only(top: 64),
@@ -253,7 +253,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             padding: const EdgeInsets.only(top: 16),
-                            children: provider.posts.map(
+                            children: provider.posts!.map(
                               (post) {
                                 return PostItem(
                                   post: post,

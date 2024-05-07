@@ -26,7 +26,7 @@ class ProfilProvider extends ChangeNotifier {
   Failure? failure;
   bool isMyUserProfil = false;
   bool isFollower = false;
-  List<PostEntity> posts = [];
+  List<PostEntity>? posts;
   List<String>? reportCategories;
   TextEditingController reportController = TextEditingController();
 
@@ -92,7 +92,7 @@ class ProfilProvider extends ChangeNotifier {
   void getUserProfil(String uuid) async {
     userProfil = null;
     failure = null;
-    posts = [];
+    posts = null;
     notifyListeners();
 
     UserProfilRepository repository =
