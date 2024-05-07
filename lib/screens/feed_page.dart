@@ -83,7 +83,19 @@ class _HomePageState extends State<Home> {
             decoration: BoxDecoration(
               color: AppColors.primary,
             ),
-            child: Text('Paramètres'),
+            child: Text(
+              'Paramètres',
+              style: TextStyle(color: AppColors.white, fontSize: 24),
+            ),
+          ),
+          ListTile(
+            title: const Text("Comptes bloqués"),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/blocked-users'
+              );
+            },
           ),
           ListTile(
             title: const Text("Conditions Générales d'Utilisation"),

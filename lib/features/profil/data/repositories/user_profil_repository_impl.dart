@@ -107,7 +107,10 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       try {
         await remoteDataSource.unblock(uuid: uuid);
         return const Right(true);
-      } on ServerException {
+      } on NotExistsException {
+        return Left(NotExistsFailure(errorMessage: 'L\'utilisateur n\'est pas bloqué'));
+      }
+      on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
     } else {

@@ -109,7 +109,6 @@ class ProfilProvider extends ChangeNotifier {
         notifyListeners();
       },
       (UserProfilEntity userProfilEntity) {
-        print(userProfilEntity.uuid);
         userProfil = userProfilEntity;
         failure = null;
 
