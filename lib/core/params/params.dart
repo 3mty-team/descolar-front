@@ -106,3 +106,17 @@ class ReportPostParams {
     required this.date,
   });
 }
+
+class ReportUserParams {
+  final String uuid;
+  final int category;
+  final String comment;
+  final int date;
+
+  const ReportUserParams({
+    required this.uuid,
+    required this.category,
+    required this.comment,
+    required this.date,
+  });
+}

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
+import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/core/utils/file_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
@@ -19,6 +20,8 @@ abstract class UserProfilRemoteDataSource {
   Future<bool> block({required String uuid});
 
   Future<bool> unblock({required String uuid});
+
+  Future<bool> report({required ReportUserParams params});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -168,6 +171,26 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       return true;
     } else if (response.statusCode == 403) {
       throw NotExistsException();
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> report({required ReportUserParams params}) async {
+    final response = await dio.post(
+      '$baseDescolarApi/report/user/create',
+      options: _getRequestOptions(),
+      data: FormData.fromMap({
+        'reported_uuid': params.uuid,
+        'report_category_id': params.category,
+        'comment': params.comment,
+        'date': params.date,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
     } else {
       throw ServerException();
     }

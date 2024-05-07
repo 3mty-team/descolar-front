@@ -1,13 +1,17 @@
 import 'dart:io';
 
+import 'package:descolar_front/core/components/snack_bars.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
+import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
 import 'package:descolar_front/features/post/business/usecases/get_all_post_in_range_with_user_uuid.dart';
+import 'package:descolar_front/features/post/business/usecases/get_all_report_categories.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/business/usecases/block_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/change_profil_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/follow_user_profil.dart';
+import 'package:descolar_front/features/profil/business/usecases/report_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/unfollow_user_profil.dart';
 
 import 'package:flutter/material.dart';
@@ -23,6 +27,8 @@ class ProfilProvider extends ChangeNotifier {
   bool isMyUserProfil = false;
   bool isFollower = false;
   List<PostEntity> posts = [];
+  List<String>? reportCategories;
+  TextEditingController reportController = TextEditingController();
 
   ProfilProvider({
     this.userProfil,
@@ -42,47 +48,45 @@ class ProfilProvider extends ChangeNotifier {
   void follow() async {
     if (!isMyUserProfil) {
       UserProfilRepository repository =
-      await UserProfilRepository.getUserProfilRepository();
+          await UserProfilRepository.getUserProfilRepository();
 
       final failureOrFollow =
-      await FollowUserProfil(userProfilRepository: repository)
-          .call(uuid: userProfil!.uuid);
+          await FollowUserProfil(userProfilRepository: repository)
+              .call(uuid: userProfil!.uuid);
       failureOrFollow.fold(
-            (Failure failure) {
+        (Failure failure) {
           if (failure is AlreadyExistsFailure) {
           } else if (failure is ServerFailure) {}
         },
-            (bool b) {},
+        (bool b) {},
       );
 
       // Refresh
       this.getUserProfil(userProfil!.uuid);
       notifyListeners();
     }
-
   }
 
   void unfollow() async {
     if (!isMyUserProfil) {
       UserProfilRepository repository =
-      await UserProfilRepository.getUserProfilRepository();
+          await UserProfilRepository.getUserProfilRepository();
 
       final failureOrUnfollow =
-      await UnfollowUserProfil(userProfilRepository: repository)
-          .call(uuid: userProfil!.uuid);
+          await UnfollowUserProfil(userProfilRepository: repository)
+              .call(uuid: userProfil!.uuid);
       failureOrUnfollow.fold(
-            (Failure failure) {
+        (Failure failure) {
           if (failure is AlreadyExistsFailure) {
           } else if (failure is ServerFailure) {}
         },
-            (bool b) {},
+        (bool b) {},
       );
 
       // Refresh
       this.getUserProfil(userProfil!.uuid);
       notifyListeners();
     }
-
   }
 
   void getUserProfil(String uuid) async {
@@ -149,8 +153,7 @@ class ProfilProvider extends ChangeNotifier {
                 .call(uuid: userProfil!.uuid, image: File(image.path));
         failureOrPP.fold(
           (Failure failure) {},
-          (bool b) {
-          },
+          (bool b) {},
         );
 
         // Refresh
@@ -164,15 +167,61 @@ class ProfilProvider extends ChangeNotifier {
     if (!this.isMyUserProfil) {
       UserProfilRepository repository =
           await UserProfilRepository.getUserProfilRepository();
-      final failureOrBlock = await BlockUserProfil(userProfilRepository: repository).call(uuid: userProfil!.uuid);
+      final failureOrBlock =
+          await BlockUserProfil(userProfilRepository: repository)
+              .call(uuid: userProfil!.uuid);
       failureOrBlock.fold(
-            (Failure failure) {},
-            (bool b) {
-        },
+        (Failure failure) {},
+        (bool b) {},
       );
       // Refresh
       this.getUserProfil(userProfil!.uuid);
       notifyListeners();
+    }
+  }
+
+  void getAllReportCategories(BuildContext context) async {
+    PostRepository repository = await PostRepository.getPostRepository();
+    final failureOrPost =
+        await GetAllReportCategories(postRepository: repository).call();
+    failureOrPost.fold(
+      (Failure failure) {
+        SnackBars.failureSnackBar(
+            context: context, title: 'Une erreur est survenue.');
+        reportCategories = null;
+        notifyListeners();
+      },
+      (List<String> categories) {
+        reportCategories = categories;
+        notifyListeners();
+      },
+    );
+  }
+
+  void reportUser(BuildContext context, ReportUserParams params) async {
+    if (!this.isMyUserProfil) {
+      UserProfilRepository repository =
+          await UserProfilRepository.getUserProfilRepository();
+      final failureOrReport =
+          await ReportUserProfil(userProfilRepository: repository)
+              .call(params: params);
+
+      failureOrReport.fold(
+        (Failure failure) {
+          SnackBars.failureSnackBar(
+              context: context, title: 'Une erreur est survenue.');
+          notifyListeners();
+        },
+        (bool response) {
+          Navigator.pushReplacementNamed(context, '/home');
+          reportController.clear();
+          SnackBars.successSnackBar(
+              context: context,
+              title:
+                  'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.');
+          notifyListeners();
+        },
+      );
     }
   }
 }

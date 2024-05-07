@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,8 @@ class OtherActionUserProfilButton extends StatelessWidget {
       onSelected: (value) {
         switch (value) {
           case 'report':
+            print(profilProvider.userProfil!.uuid);
+            Navigator.pushNamed(context, '/report-user', arguments: UserProfilArguments(profilProvider.userProfil!.uuid));
             break;
           case 'block':
             profilProvider.blockUser();
