@@ -8,35 +8,47 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 
 class SearchProvider extends ChangeNotifier {
-  Future<List<PostEntity>> getPostsByContent(String content) async {
+  List<UserResultEntity>? users;
+  List<PostEntity>? posts;
+
+  void init() {
+    users = [];
+    posts = [];
+    notifyListeners();
+  }
+
+  void getPostsByContent(String content) async {
+    this.posts = null;
+    notifyListeners();
     SearchRepository repository = await SearchRepository.getSearchRepository();
-    List<PostEntity> result = [];
     final failureOrPost = await GetPostsByContent(searchRepository: repository).call(content: content);
     failureOrPost.fold(
       (Failure failure) {
+        this.posts = null;
         notifyListeners();
       },
       (List<PostEntity> posts) {
+        this.posts = posts;
         notifyListeners();
-        result = posts;
       },
     );
-    return result;
   }
 
-  Future<List<UserResultEntity>> getUsersByUsername(String username) async {
+  void getUsersByUsername(String username) async {
+    this.users = null;
+    notifyListeners();
     SearchRepository repository = await SearchRepository.getSearchRepository();
     List<UserResultEntity> result = [];
     final failureOrPost = await GetUsersByUsername(searchRepository: repository).call(username: username);
     failureOrPost.fold(
       (Failure failure) {
+        this.users = null;
         notifyListeners();
       },
       (List<UserResultEntity> users) {
+        this.users = users;
         notifyListeners();
-        result = users;
       },
     );
-    return result;
   }
 }

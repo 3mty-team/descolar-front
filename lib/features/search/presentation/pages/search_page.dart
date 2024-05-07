@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/features/search/business/entities/user_result_entity.dart';
@@ -6,7 +7,6 @@ import 'package:descolar_front/features/search/presentation/widgets/user_result_
 import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/search_bar.dart';
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 
 class SearchPage extends StatefulWidget {
@@ -18,26 +18,29 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController controller = TextEditingController();
-  List<PostEntity> postResult = [];
-  List<UserResultEntity> userResult = [];
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<SearchProvider>(context, listen: false);
+      provider.init();
+    });
+  }
 
   void _onType(String content) async {
-    if (content.startsWith(' ') || content.isEmpty) {
-      postResult.clear();
-      userResult.clear();
+    content = content.trim();
+    if (content.isEmpty) {
       return;
     }
     final provider = Provider.of<SearchProvider>(context, listen: false);
-    List<PostEntity> newPostResult = await provider.getPostsByContent(content);
-    List<UserResultEntity> newUserResult = await provider.getUsersByUsername(content);
-    setState(() {
-      postResult = newPostResult;
-      userResult = newUserResult;
-    });
+    provider.getPostsByContent(content);
+    provider.getUsersByUsername(content);
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SearchProvider>(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -59,20 +62,36 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ListView.builder(
-                    itemCount: userResult.length,
-                    itemBuilder: (context, index) {
-                      final user = userResult[userResult.length - 1 - index];
-                      return UserResultItem(user: user);
-                    },
-                  ),
-                  ListView.builder(
-                    itemCount: postResult.length,
-                    itemBuilder: (context, index) {
-                      final post = postResult[postResult.length - 1 - index];
-                      return PostItem(post: post);
-                    },
-                  ),
+                  provider.users == null
+                      ? const Padding(
+                          padding: EdgeInsets.only(top: 64),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: provider.users!.length,
+                          itemBuilder: (context, index) {
+                            final user = provider
+                                .users![provider.users!.length - 1 - index];
+                            return UserResultItem(user: user);
+                          },
+                        ),
+                  provider.posts == null
+                      ? const Padding(
+                          padding: EdgeInsets.only(top: 64),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: provider.posts!.length,
+                          itemBuilder: (context, index) {
+                            final post = provider
+                                .posts![provider.posts!.length - 1 - index];
+                            return PostItem(post: post);
+                          },
+                        ),
                 ],
               ),
             ),
