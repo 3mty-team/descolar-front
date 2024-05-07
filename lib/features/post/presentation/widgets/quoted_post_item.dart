@@ -1,5 +1,6 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +56,10 @@ class QuotedPostItem extends StatelessWidget {
               Text(
                 quotedPost?.content ?? '',
                 style: const TextStyle(fontSize: 16),
+              ),
+              Visibility(
+                visible: quotedPost?.mediasPath != null && quotedPost!.mediasPath!.isNotEmpty,
+                child: PostImageDisplay(mediasPath: quotedPost?.mediasPath),
               ),
               const SizedBox(height: 7),
               Text(

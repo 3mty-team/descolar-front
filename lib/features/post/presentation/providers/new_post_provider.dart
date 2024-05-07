@@ -31,15 +31,18 @@ class NewPostProvider extends ChangeNotifier {
         content: controller.text,
         location: await Ipify.ipv4(),
         postDate: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        media: selectedImages.isNotEmpty ? selectedImages : null,
       ),
     );
     failureOrPost.fold(
       (Failure failure) {
+        SnackBars.failureSnackBar(context: context, title: 'Une erreur est survenue lors de la création du post.');
         notifyListeners();
       },
       (PostEntity post) {
         Navigator.pushReplacementNamed(context, '/home');
         controller.clear();
+        selectedImages.clear();
         SnackBars.successSnackBar(context: context, title: 'Votre post a bien été publié !');
         notifyListeners();
       },

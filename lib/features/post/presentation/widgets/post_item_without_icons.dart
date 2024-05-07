@@ -1,5 +1,6 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -65,6 +66,10 @@ class _PostItemWithoutIconsState extends State<PostItemWithoutIcons> {
                     Text(
                       widget.post.content,
                       style: const TextStyle(fontSize: 16),
+                    ),
+                    Visibility(
+                      visible: widget.post.mediasPath != null && widget.post.mediasPath!.isNotEmpty,
+                      child: PostImageDisplay(mediasPath: widget.post.mediasPath),
                     ),
                     Visibility(
                       visible: widget.post.repostedPost != null,

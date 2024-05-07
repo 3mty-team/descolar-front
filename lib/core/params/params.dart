@@ -40,12 +40,14 @@ class CreatePostParams {
   final String location;
   final int postDate;
   final PostEntity? repostedPost;
+  final List<XFile>? media;
 
   const CreatePostParams({
     required this.content,
     required this.location,
     required this.postDate,
     this.repostedPost,
+    this.media,
   });
 }
 
