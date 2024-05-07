@@ -1,8 +1,6 @@
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
-import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
-import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/features/settings/presentation/widgets/user_blocked_detail.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +73,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                             fontSize: 14,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 );

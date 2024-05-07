@@ -187,7 +187,7 @@ class ProfilProvider extends ChangeNotifier {
     failureOrPost.fold(
       (Failure failure) {
         SnackBars.failureSnackBar(
-            context: context, title: 'Une erreur est survenue.');
+            context: context, title: 'Une erreur est survenue.',);
         reportCategories = null;
         notifyListeners();
       },
@@ -209,7 +209,7 @@ class ProfilProvider extends ChangeNotifier {
       failureOrReport.fold(
         (Failure failure) {
           SnackBars.failureSnackBar(
-              context: context, title: 'Une erreur est survenue.');
+              context: context, title: 'Une erreur est survenue.',);
           notifyListeners();
         },
         (bool response) {
@@ -218,7 +218,7 @@ class ProfilProvider extends ChangeNotifier {
           SnackBars.successSnackBar(
               context: context,
               title:
-                  'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.');
+                  'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.',);
           notifyListeners();
         },
       );

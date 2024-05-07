@@ -115,14 +115,14 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
 
   @override
   Future<bool> changeProfilPicture(
-      {required String uuid, required File image}) async {
+      {required String uuid, required File image,}) async {
     final responseMedia = await dio.post(
       '$baseDescolarApi/media',
       options: _getRequestOptions(),
       data: FormData.fromMap({
         'image[]': await MultipartFile.fromFile(image.path,
             filename: FileUtils.getFileName(image.path),
-            contentType: FileUtils.getMediaType('image', image.path)),
+            contentType: FileUtils.getMediaType('image', image.path),),
       }),
     );
 

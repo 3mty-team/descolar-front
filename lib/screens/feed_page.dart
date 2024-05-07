@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/core/components/app_bars.dart';
@@ -79,11 +78,11 @@ class _HomePageState extends State<Home> {
             ),
           ),
           ListTile(
-            title: const Text("Comptes bloqués"),
+            title: const Text('Comptes bloqués'),
             onTap: () {
               Navigator.pushNamed(
                 context,
-                '/blocked-users'
+                '/blocked-users',
               );
             },
           ),

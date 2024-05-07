@@ -1,17 +1,12 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
-import 'package:descolar_front/features/profil/business/usecases/report_user_profil.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/settings/presentation/widgets/user_blocked_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/components/buttons.dart';
-import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/params/params.dart';
-import 'package:descolar_front/features/post/presentation/widgets/post_item_without_icons.dart';
-import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 
 class ReportProfilPage extends StatefulWidget {
@@ -124,7 +119,7 @@ class _ReportProfilPageState extends State<ReportProfilPage> {
                                       comment: controller.text,
                                       date: DateTime.now()
                                               .millisecondsSinceEpoch ~/
-                                          1000),
+                                          1000,),
                                 );
                               }
                             },

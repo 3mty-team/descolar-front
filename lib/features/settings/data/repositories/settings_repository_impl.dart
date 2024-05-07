@@ -4,11 +4,9 @@ import 'package:descolar_front/features/profil/data/models/user_profil_model.dar
 import '../../../../core/connection/network_info.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
-import '../../../../core/params/params.dart';
 import '../../business/repositories/settings_repository.dart';
 import '../datasources/settings_local_data_source.dart';
 import '../datasources/settings_remote_data_source.dart';
-import '../models/template_model.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsRemoteDataSource remoteDataSource;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import 'package:descolar_front/features/search/business/entities/user_result_entity.dart';
 import 'package:descolar_front/features/search/presentation/widgets/user_result_item.dart';
 import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';

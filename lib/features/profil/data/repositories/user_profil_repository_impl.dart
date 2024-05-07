@@ -75,7 +75,7 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
 
   @override
   Future<Either<Failure, bool>> changeProfilPicture(
-      {required String uuid, required File image}) async {
+      {required String uuid, required File image,}) async {
     if (await networkInfo.isConnected!) {
       try {
         await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);

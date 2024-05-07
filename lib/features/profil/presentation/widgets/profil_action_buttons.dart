@@ -29,7 +29,7 @@ class _ProfilActionButtonsState extends State<ProfilActionButtons> {
             ? UnfollowUserProfilButton(profilProvider: widget.provider)
             : FollowUserProfilButton(profilProvider: widget.provider),
         const SizedBox(width: 8,),
-        OtherActionUserProfilButton(profilProvider: widget.provider)
+        OtherActionUserProfilButton(profilProvider: widget.provider),
       ],
     );
   }

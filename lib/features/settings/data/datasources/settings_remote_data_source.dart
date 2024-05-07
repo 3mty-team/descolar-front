@@ -3,8 +3,6 @@ import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/errors/exceptions.dart';
-import '../../../../core/params/params.dart';
-import '../models/template_model.dart';
 
 abstract class SettingsRemoteDataSource {
   Future<List<UserProfilModel>> getBlockedUsers();
