@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         // change to false for release
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         // /!\ MAYBE USELESS WITH PROVIDERS /!\
         onGenerateRoute: AppRoutes.onGenerateRoutes,
         localizationsDelegates: const [
