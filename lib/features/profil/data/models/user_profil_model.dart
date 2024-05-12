@@ -54,10 +54,6 @@ class UserProfilModel extends UserProfilEntity {
       );
     }
 
-    print(json);
-    print(json['firstname']);
-    print(json['lastname']);
-
     return UserProfilModel(
       uuid: json['uuid'] ?? '-',
       firstname: json['firstname'] ?? '-',
@@ -70,13 +66,40 @@ class UserProfilModel extends UserProfilEntity {
   }
 
   Map<String, dynamic> toJson() {
+    List<dynamic> jsonFollowers = [];
+    List<dynamic> jsonFollowings = [];
+
+    for (var f in followers) {
+      jsonFollowers.add({
+        'uuid': f.uuid,
+        'firstname': f.firstname,
+        'lastname': f.lastname,
+        'username': f.username,
+        'followers': [],
+        'following': [],
+        'pfpPath': f.pfpPath,
+      });
+    }
+
+    for (var f in following) {
+      jsonFollowings.add({
+        'uuid': f.uuid,
+        'firstname': f.firstname,
+        'lastname': f.lastname,
+        'username': f.username,
+        'followers': [],
+        'following': [],
+        'pfpPath': f.pfpPath,
+      });
+    }
+
     return {
       'uuid': uuid,
       'firstname': firstname,
       'lastname': lastname,
       'username': username,
-      'followers': followers,
-      'following': following,
+      'followers': jsonFollowers,
+      'following': jsonFollowings,
       'pfpPath': pfpPath,
     };
   }

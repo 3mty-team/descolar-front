@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 
 import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/params/params.dart';
@@ -79,6 +80,9 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
     if (await networkInfo.isConnected!) {
       try {
         await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
+        UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
+        await localDataSource.cacheUserProfil(userProfil: userProfil);
+        UserInfo.setUserInfo();
         return const Right(true);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));

@@ -42,7 +42,6 @@ class OtherActionUserProfilButton extends StatelessWidget {
       onSelected: (value) {
         switch (value) {
           case 'report':
-            print(profilProvider.userProfil!.uuid);
             Navigator.pushNamed(context, '/report-user', arguments: UserProfilArguments(profilProvider.userProfil!.uuid));
             break;
           case 'block':
