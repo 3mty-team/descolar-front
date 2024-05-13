@@ -147,11 +147,29 @@ class _ProfilPageState extends State<ProfilPage> {
                                   onPressed: () {
                                     provider.changeProfilPicture();
                                   },
-                                  child: ProfilPicture(
-                                    radius: 60,
-                                    imagePath: provider.userProfil?.pfpPath,
-                                    borderWidth: 4,
-                                  ),
+                                  child: provider.isChangingPfp
+                                      ? Center(
+                                          child: Stack(
+                                            alignment: AlignmentDirectional.center,
+                                            children: [
+                                              ProfilPicture(
+                                                radius: 60,
+                                                imagePath: provider.userProfil?.pfpPath,
+                                                borderWidth: 4,
+                                              ),
+                                              const SizedBox(
+                                                width: 60,
+                                                height: 60,
+                                                child: CircularProgressIndicator(),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : ProfilPicture(
+                                          radius: 60,
+                                          imagePath: provider.userProfil?.pfpPath,
+                                          borderWidth: 4,
+                                        ),
                                 )
                               else
                                 ProfilPicture(

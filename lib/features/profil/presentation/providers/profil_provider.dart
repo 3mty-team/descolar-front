@@ -22,7 +22,7 @@ import 'package:descolar_front/features/profil/business/usecases/get_user_profil
 import 'package:image_picker/image_picker.dart';
 
 class ProfilProvider extends ChangeNotifier {
-  bool isSavingEdit = false;
+  bool isChangingPfp = false;
   UserProfilEntity? userProfil;
   Failure? failure;
   bool isMyUserProfil = false;
@@ -94,7 +94,7 @@ class ProfilProvider extends ChangeNotifier {
     userProfil = null;
     failure = null;
     posts = null;
-    isSavingEdit = false;
+    isChangingPfp = false;
     notifyListeners();
 
     UserProfilRepository repository =
@@ -150,7 +150,7 @@ class ProfilProvider extends ChangeNotifier {
       final XFile? image =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null) {
-        isSavingEdit = true;
+        isChangingPfp = true;
         notifyListeners();
         final failureOrPP =
             await ChangeProfilPicture(userProfilRepository: repository)
