@@ -40,7 +40,7 @@ class NewPostProvider extends ChangeNotifier {
     failureOrPost.fold(
       (Failure failure) {
         SnackBars.failureSnackBar(context: context, title: 'Une erreur est survenue lors de la création du post.');
-        isCreatingPost = true;
+        isCreatingPost = false;
         notifyListeners();
       },
       (PostEntity post) {
@@ -48,7 +48,7 @@ class NewPostProvider extends ChangeNotifier {
         controller.clear();
         selectedImages.clear();
         SnackBars.successSnackBar(context: context, title: 'Votre post a bien été publié !');
-        isCreatingPost = true;
+        isCreatingPost = false;
         notifyListeners();
       },
     );
