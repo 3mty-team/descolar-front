@@ -2,6 +2,7 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
+import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +112,7 @@ class _HomePageState extends State<Home> {
             onTap: () async {
               UserRepository repository = await UserRepository.getUserRepository();
               final failureOrSignout = await SignOut(userRepository: repository).call();
+              Provider.of<LoginProvider>(context, listen: false).reset();
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),
