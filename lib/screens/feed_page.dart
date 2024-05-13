@@ -1,5 +1,3 @@
-import 'package:descolar_front/core/errors/failure.dart';
-import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
