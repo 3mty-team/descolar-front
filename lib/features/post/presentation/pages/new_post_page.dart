@@ -68,6 +68,8 @@ class _NewPostState extends State<NewPost> {
             ),
           ),
           Text('Images importées : ${selectedImages.length}/$maxPostImages'),
+          if (provider.isCreatingPost)
+            const CircularProgressIndicator(),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.all(10),

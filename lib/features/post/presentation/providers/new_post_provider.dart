@@ -11,6 +11,7 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/post/business/repositories/post_repository.dart';
 
 class NewPostProvider extends ChangeNotifier {
+  bool isCreatingPost = false;
   List<XFile> selectedImages = [];
   final int maxPostImages = 4;
   TextEditingController controller = TextEditingController();
@@ -25,6 +26,8 @@ class NewPostProvider extends ChangeNotifier {
   }
 
   void processPost(BuildContext context) async {
+    isCreatingPost = true;
+    notifyListeners();
     PostRepository repository = await PostRepository.getPostRepository();
     final failureOrPost = await CreatePost(postRepository: repository).call(
       params: CreatePostParams(
@@ -37,6 +40,7 @@ class NewPostProvider extends ChangeNotifier {
     failureOrPost.fold(
       (Failure failure) {
         SnackBars.failureSnackBar(context: context, title: 'Une erreur est survenue lors de la création du post.');
+        isCreatingPost = true;
         notifyListeners();
       },
       (PostEntity post) {
@@ -44,6 +48,7 @@ class NewPostProvider extends ChangeNotifier {
         controller.clear();
         selectedImages.clear();
         SnackBars.successSnackBar(context: context, title: 'Votre post a bien été publié !');
+        isCreatingPost = true;
         notifyListeners();
       },
     );
