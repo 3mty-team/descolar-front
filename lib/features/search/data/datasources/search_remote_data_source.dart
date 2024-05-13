@@ -36,12 +36,23 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
       }),
       options: _getRequestOptions(),
     );
-    List<PostModel> searchResults = [];
-    response.data['posts'].forEach((post) async {
-      PostModel? repostedPost = post['repostedPost'] == null ? null : PostModel.fromJson(json: post['repostedPost']);
-      searchResults.add(PostModel.fromJson(json: post, repostedPost: repostedPost));
-    });
+
     if (response.statusCode == 200) {
+      List<PostModel> searchResults = [];
+      for (var post in response.data['posts']) {
+        List<String> mediasPath = [];
+        if (post['medias'] != []) {
+          for (var media in post['medias']) {
+            final mediaReponse = await dio.get(
+              '$baseDescolarApi/media/$media',
+              options: _getRequestOptions(),
+            );
+            mediasPath.add(mediaReponse.data['path']);
+          }
+        }
+        PostModel? repostedPost = post['repostedPost'] == null ? null : PostModel.fromJson(json: post['repostedPost']);
+        searchResults.add(PostModel.fromJson(json: post, repostedPost: repostedPost, mediasPath: mediasPath));
+      }
       return searchResults;
     } else {
       throw ServerException();
