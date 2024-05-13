@@ -105,7 +105,7 @@ class ActionPostProvider extends ChangeNotifier {
         notifyListeners();
       },
       (bool response) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pop(context);
         controller.clear();
         SnackBars.successSnackBar(context: context, title: 'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.');
         notifyListeners();

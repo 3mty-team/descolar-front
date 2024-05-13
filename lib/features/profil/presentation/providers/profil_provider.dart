@@ -217,7 +217,7 @@ class ProfilProvider extends ChangeNotifier {
           notifyListeners();
         },
         (bool response) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pop(context);
           reportController.clear();
           SnackBars.successSnackBar(
               context: context,
