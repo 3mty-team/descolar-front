@@ -93,28 +93,14 @@ class LoginProvider extends ChangeNotifier {
     failureOrUser.fold(
       (Failure failure) {
         isLoging = false;
-
-        if (failure is NotExistsFailure) {
-          changeError(
-            LoginInputName.login,
-            'Le pseudonyme ou le mot de passe est incorrect',
-          );
-          changeError(
-            LoginInputName.password,
-            'Le pseudonyme ou le mot de passe est incorrect',
-          );
-        }
-
-        if (failure is NotValidFailure) {
-          changeError(
-            LoginInputName.login,
-            'Le mail n\'est pas vérifié',
-          );
-          removeError(
-            LoginInputName.password,
-          );
-        }
-
+        changeError(
+          LoginInputName.login,
+          failure.errorMessage,
+        );
+        changeError(
+          LoginInputName.password,
+          failure.errorMessage,
+        );
         notifyListeners();
       },
       (UserEntity user) {

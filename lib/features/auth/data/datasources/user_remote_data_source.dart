@@ -82,9 +82,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         ),
       );
       if (response.statusCode == 200) {
-        if (response.data['error'] != null) {
-          throw NotExistsException();
-        }
         UserModel user = UserModel.fromJson(json: response.data);
         final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
           sharedPreferences: await SharedPreferences.getInstance(),
@@ -97,13 +94,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         }
         return user;
       } else {
-        throw ServerException();
+        throw NotValidException.fromName(response.data['message']);
       }
     } on DioException catch (e) {
-      if (e.response!.statusCode == 403) {
-        throw NotValidException();
-      }
-      throw ServerException();
+      throw NotValidException.fromName(e.response?.data['message']);
     }
 
   }

@@ -43,12 +43,8 @@ class UserRepositoryImpl implements UserRepository {
       try {
         UserModel? user = await remoteDataSource.getUser(params: params);
         return Right(user);
-      } on NotExistsException {
-        return Left(NotExistsFailure(errorMessage: 'Le compte n\'existe pas'));
-      } on NotValidException {
-        return Left(NotValidFailure(errorMessage: 'Le mail du compte n\'est pas vérifié'));
-      } on ServerException {
-        return Left(ServerFailure(errorMessage: 'Erreur serveur'));
+      } on NotValidException catch (e) {
+        return Left(NotValidFailure(errorMessage: e.message ?? 'Erreur serveur'));
       }
     } else {
       return Left(ServerFailure(errorMessage: 'Pas de connexion'));
