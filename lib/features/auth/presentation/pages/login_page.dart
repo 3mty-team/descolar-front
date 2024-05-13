@@ -107,6 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                   linkText: 'Créer un compte',
                   action: Provider.of<SignupProvider>(context, listen: false).reset,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (provider.isLoging)
+                  const CircularProgressIndicator(),
               ],
             ),
           ),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 enum LoginInputName { login, password }
 
 class LoginProvider extends ChangeNotifier {
+  bool isLoging = false;
   bool? checkboxRememberMe = false;
   Map<LoginInputName, TextEditingController> controllers = {
     LoginInputName.login: TextEditingController(),
@@ -77,6 +78,8 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void connect(BuildContext context) async {
+    isLoging = true;
+    notifyListeners();
     UserRepository repository = await UserRepository.getUserRepository();
 
     final failureOrUser = await GetUser(userRepository: repository).call(
@@ -89,6 +92,8 @@ class LoginProvider extends ChangeNotifier {
 
     failureOrUser.fold(
       (Failure failure) {
+        isLoging = false;
+
         if (failure is NotExistsFailure) {
           changeError(
             LoginInputName.login,
@@ -113,6 +118,7 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
       },
       (UserEntity user) {
+        isLoging = false;
         UserInfo.setUserInfo();
         Navigator.pushReplacementNamed(context, '/home');
         notifyListeners();
