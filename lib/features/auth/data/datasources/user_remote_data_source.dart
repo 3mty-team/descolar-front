@@ -62,7 +62,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     if (response.statusCode == 200) {
       return UserModel.fromJson(json: response.data['user']);
     }
-    if (response.statusCode == 400) {
+    if (response.statusCode == 403) {
       throw AlreadyExistsException();
     } else {
       throw ServerException();
