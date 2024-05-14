@@ -4,6 +4,9 @@ import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/get_user.dart';
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
+import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
+import 'package:descolar_front/features/profil/business/usecases/get_user_profil.dart';
 import 'package:flutter/material.dart';
 
 enum LoginInputName { login, password }
@@ -103,11 +106,31 @@ class LoginProvider extends ChangeNotifier {
         );
         notifyListeners();
       },
-      (UserEntity user) {
-        isLoging = false;
+      (UserEntity user) async {
         UserInfo.setUserInfo();
-        Navigator.pushReplacementNamed(context, '/home');
-        notifyListeners();
+        UserProfilRepository userProfilRepository =
+            await UserProfilRepository.getUserProfilRepository();
+        final failureOrUserProfil =
+            await GetUserProfil(userProfilRepository: userProfilRepository)
+                .call(uuid: user.uuid);
+
+        failureOrUserProfil.fold((Failure userProfilFailure) {
+          isLoging = false;
+          changeError(
+            LoginInputName.login,
+            userProfilFailure.errorMessage,
+          );
+          changeError(
+            LoginInputName.password,
+            userProfilFailure.errorMessage,
+          );
+          notifyListeners();
+        }, (UserProfilEntity userProfilEntity) {
+          isLoging = false;
+          UserInfo.setUserInfo();
+          Navigator.pushReplacementNamed(context, '/home');
+          notifyListeners();
+        });
       },
     );
   }
