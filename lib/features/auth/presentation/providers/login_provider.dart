@@ -93,7 +93,7 @@ class LoginProvider extends ChangeNotifier {
       ),
     );
 
-    failureOrUser.fold(
+     await failureOrUser.fold(
       (Failure failure) {
         isLoging = false;
         changeError(
@@ -107,30 +107,10 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
       },
       (UserEntity user) async {
+        isLoging = false;
         UserInfo.setUserInfo();
-        UserProfilRepository userProfilRepository =
-            await UserProfilRepository.getUserProfilRepository();
-        final failureOrUserProfil =
-            await GetUserProfil(userProfilRepository: userProfilRepository)
-                .call(uuid: user.uuid);
-
-        failureOrUserProfil.fold((Failure userProfilFailure) {
-          isLoging = false;
-          changeError(
-            LoginInputName.login,
-            userProfilFailure.errorMessage,
-          );
-          changeError(
-            LoginInputName.password,
-            userProfilFailure.errorMessage,
-          );
-          notifyListeners();
-        }, (UserProfilEntity userProfilEntity) {
-          isLoging = false;
-          UserInfo.setUserInfo();
-          Navigator.pushReplacementNamed(context, '/home');
-          notifyListeners();
-        });
+        Navigator.pushReplacementNamed(context, '/home');
+        notifyListeners();
       },
     );
   }

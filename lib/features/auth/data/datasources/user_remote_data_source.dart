@@ -1,6 +1,8 @@
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
+import 'package:descolar_front/features/profil/data/datasources/user_profil_local_data_source.dart';
+import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/params/params.dart';
@@ -86,8 +88,23 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(
           sharedPreferences: await SharedPreferences.getInstance(),
         );
+        final UserProfilLocalDataSourceImpl userProfilLocal = UserProfilLocalDataSourceImpl(
+          sharedPreferences: await SharedPreferences.getInstance(),
+        );
         // User cache
         local.cacheUser(user: user, pfpPath: response.data['pfpPath']);
+        // User profil cache
+        userProfilLocal.cacheUserProfil(
+          userProfil: UserProfilModel(
+            uuid: response.data['uuid'],
+            firstname: response.data['firstname'],
+            lastname: response.data['lastname'],
+            username: response.data['username'],
+            followers: [],
+            following: [],
+            pfpPath: response.data['pfpPath'],
+          ),
+        );
         // Remember me
         if (params.remember! == true) {
           local.cacheRememberUser(user: user);
@@ -99,6 +116,5 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } on DioException catch (e) {
       throw NotValidException.fromName(e.response?.data['message']);
     }
-
   }
 }
