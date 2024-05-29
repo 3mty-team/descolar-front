@@ -38,7 +38,6 @@ class SearchProvider extends ChangeNotifier {
     this.users = null;
     notifyListeners();
     SearchRepository repository = await SearchRepository.getSearchRepository();
-    List<UserResultEntity> result = [];
     final failureOrPost = await GetUsersByUsername(searchRepository: repository).call(username: username);
     failureOrPost.fold(
       (Failure failure) {

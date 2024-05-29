@@ -4,6 +4,7 @@ import 'package:descolar_front/core/resources/app_assets.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/banner_picture.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
@@ -37,28 +38,17 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     ProfilProvider provider = Provider.of<ProfilProvider>(context);
-    double screenWidth = DeviceInfo().getWidth(context);
+    DeviceInfo().getWidth(context);
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Bg + Back button
             Stack(
               clipBehavior: Clip.none,
               children: [
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    width: screenWidth,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-
-                // Back button
+                BannerPicture(imagePath: provider.userProfil?.bannerPath),
                 Positioned(
                   left: 0,
                   top: 32,
@@ -74,6 +64,27 @@ class _ProfilPageState extends State<ProfilPage> {
                         borderRadius: BorderRadius.circular(42),
                       ),
                       child: AppAssets.backIcon,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 32,
+                  child: TextButton(
+                    onPressed: () {
+                      provider.changeBannerPicture();
+                    },
+                    child: Visibility(
+                      visible: provider.isMyUserProfil,
+                      child: Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: AppColors.black.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(42),
+                        ),
+                        child: const Icon(Icons.edit, color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
