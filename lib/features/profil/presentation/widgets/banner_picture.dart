@@ -1,4 +1,5 @@
 import 'package:descolar_front/core/resources/app_colors.dart';
+import 'package:descolar_front/features/post/presentation/pages/view_media.dart';
 import 'package:flutter/material.dart';
 
 class BannerPicture extends StatefulWidget {
@@ -33,17 +34,31 @@ class _BannerPictureState extends State<BannerPicture> {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: validPath != null
-          ? Image.network(
-              validPath,
-              fit: BoxFit.cover,
+          ? GestureDetector(
+              onTap: () => _showFullScreenImage(context, validPath),
+              child: Image.network(
+                validPath,
+                fit: BoxFit.cover,
+              ),
             )
-          : Container(
-              color: AppColors.primary,
-              child: const Icon(
-                Icons.image,
+          : GestureDetector(
+              child: Container(
                 color: AppColors.primary,
+                child: const Icon(
+                  Icons.image,
+                  color: AppColors.primary,
+                ),
               ),
             ),
+    );
+  }
+
+  void _showFullScreenImage(BuildContext context, String imageUrl) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FullScreenImage(imageUrl: imageUrl),
+      ),
     );
   }
 }
