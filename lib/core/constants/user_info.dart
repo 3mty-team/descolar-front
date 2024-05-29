@@ -9,7 +9,7 @@ import 'package:descolar_front/features/auth/business/entities/user_entity.dart'
 class UserInfo {
   static String token = '';
   static UserEntity user = UserModel(uuid: '', email: '', lastname: '', firstname: '', dateOfBirth: DateTime.now(), username: '', password: '');
-  static UserProfilModel userProfil = const UserProfilModel(uuid: '', firstname: '', lastname: '', username: '', followers: [], following: [], pfpPath: '');
+  static UserProfilModel userProfil = const UserProfilModel(uuid: '', firstname: '', lastname: '', username: '', followers: [], following: [], pfpPath: '', bannerPath: '');
 
   // UserProfil
 

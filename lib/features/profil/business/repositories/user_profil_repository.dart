@@ -40,6 +40,11 @@ abstract class UserProfilRepository {
     required File image,
   });
 
+  Future<Either<Failure, bool>> changeProfilBanner({
+    required String uuid,
+    required File image,
+  });
+
   Future<Either<Failure, bool>> block({
     required String uuid,
   });

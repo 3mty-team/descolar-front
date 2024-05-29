@@ -17,6 +17,8 @@ abstract class UserProfilRemoteDataSource {
 
   Future<bool> changeProfilPicture({required String uuid, required File image});
 
+  Future<bool> changeBannerPicture({required String uuid, required File image});
+
   Future<bool> block({required String uuid});
 
   Future<bool> unblock({required String uuid});
@@ -114,15 +116,19 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
   }
 
   @override
-  Future<bool> changeProfilPicture(
-      {required String uuid, required File image,}) async {
+  Future<bool> changeProfilPicture({
+    required String uuid,
+    required File image,
+  }) async {
     final responseMedia = await dio.post(
       '$baseDescolarApi/media',
       options: _getRequestOptions(),
       data: FormData.fromMap({
-        'image[]': await MultipartFile.fromFile(image.path,
-            filename: FileUtils.getFileName(image.path),
-            contentType: FileUtils.getMediaType('image', image.path),),
+        'image[]': await MultipartFile.fromFile(
+          image.path,
+          filename: FileUtils.getFileName(image.path),
+          contentType: FileUtils.getMediaType('image', image.path),
+        ),
       }),
     );
 
@@ -191,6 +197,40 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
 
     if (response.statusCode == 200) {
       return true;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> changeBannerPicture({required String uuid, required File image}) async {
+    final responseMedia = await dio.post(
+      '$baseDescolarApi/media',
+      options: _getRequestOptions(),
+      data: FormData.fromMap({
+        'image[]': await MultipartFile.fromFile(
+          image.path,
+          filename: FileUtils.getFileName(image.path),
+          contentType: FileUtils.getMediaType('image', image.path),
+        ),
+      }),
+    );
+
+    if (responseMedia.statusCode == 200) {
+      final responseEditProfil = await dio.put(
+        '$baseDescolarApi/user',
+        options: _getRequestOptions(),
+        data: FormData.fromMap({
+          'banner_path': responseMedia.data['medias'][0]['path'],
+          'send_timestamp': 20,
+        }),
+      );
+
+      if (responseEditProfil.statusCode == 200) {
+        return true;
+      } else {
+        throw ServerException();
+      }
     } else {
       throw ServerException();
     }

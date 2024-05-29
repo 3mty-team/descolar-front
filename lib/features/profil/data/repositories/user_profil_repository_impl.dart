@@ -29,8 +29,7 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }) async {
     if (await networkInfo.isConnected!) {
       try {
-        UserProfilModel userProfil =
-            await remoteDataSource.getUserProfil(uuid: uuid);
+        UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
         return Right(userProfil);
       } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'Utilisateur indisponible'));
@@ -75,8 +74,10 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> changeProfilPicture(
-      {required String uuid, required File image,}) async {
+  Future<Either<Failure, bool>> changeProfilPicture({
+    required String uuid,
+    required File image,
+  }) async {
     if (await networkInfo.isConnected!) {
       try {
         await remoteDataSource.changeProfilPicture(uuid: uuid, image: image);
@@ -114,8 +115,7 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
         return const Right(true);
       } on NotExistsException {
         return Left(NotExistsFailure(errorMessage: 'L\'utilisateur n\'est pas bloqué'));
-      }
-      on ServerException {
+      } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));
       }
     } else {
@@ -128,6 +128,23 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
     if (await networkInfo.isConnected!) {
       try {
         await remoteDataSource.report(params: params);
+        return const Right(true);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'This is a server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> changeProfilBanner({required String uuid, required File image}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        await remoteDataSource.changeBannerPicture(uuid: uuid, image: image);
+        UserProfilModel userProfil = await remoteDataSource.getUserProfil(uuid: uuid);
+        await localDataSource.cacheUserProfil(userProfil: userProfil);
+        UserInfo.setUserInfo();
         return const Right(true);
       } on ServerException {
         return Left(ServerFailure(errorMessage: 'This is a server exception'));

@@ -6,7 +6,7 @@ class UserProfilEntity {
   final List<UserProfilEntity> followers; // users that follows this
   final List<UserProfilEntity> following; // users that this follows
   final String? pfpPath;
-  // final Image bg;
+  final String? bannerPath;
 
   const UserProfilEntity({
     required this.uuid,
@@ -16,5 +16,6 @@ class UserProfilEntity {
     required this.followers,
     required this.following,
     this.pfpPath,
+    this.bannerPath,
   });
 }

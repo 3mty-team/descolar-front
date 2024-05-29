@@ -9,6 +9,7 @@ class UserProfilModel extends UserProfilEntity {
     required List<UserProfilEntity> followers,
     required List<UserProfilEntity> following,
     required String? pfpPath,
+    required String? bannerPath,
   }) : super(
           uuid: uuid,
           firstname: firstname,
@@ -17,6 +18,7 @@ class UserProfilModel extends UserProfilEntity {
           followers: followers,
           following: following,
           pfpPath: pfpPath,
+          bannerPath: bannerPath,
         );
 
   factory UserProfilModel.fromJson({required Map<String, dynamic> json}) {
@@ -35,7 +37,8 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
-          pfpPath : f['pfpPath'],
+          pfpPath: f['pfpPath'],
+          bannerPath: f['bannerPath'],
         ),
       );
     }
@@ -49,7 +52,8 @@ class UserProfilModel extends UserProfilEntity {
           username: f['username'] ?? '-',
           followers: [],
           following: [],
-          pfpPath : f['pfpPath'],
+          pfpPath: f['pfpPath'],
+          bannerPath: f['bannerPath'],
         ),
       );
     }
@@ -61,7 +65,8 @@ class UserProfilModel extends UserProfilEntity {
       username: json['username'] ?? '-',
       followers: followers,
       following: following,
-      pfpPath : json['pfpPath'],
+      pfpPath: json['pfpPath'],
+      bannerPath: json['bannerPath'],
     );
   }
 
@@ -78,6 +83,7 @@ class UserProfilModel extends UserProfilEntity {
         'followers': [],
         'following': [],
         'pfpPath': f.pfpPath,
+        'bannerPath': f.bannerPath,
       });
     }
 
@@ -90,6 +96,7 @@ class UserProfilModel extends UserProfilEntity {
         'followers': [],
         'following': [],
         'pfpPath': f.pfpPath,
+        'bannerPath': f.bannerPath,
       });
     }
 
@@ -101,6 +108,7 @@ class UserProfilModel extends UserProfilEntity {
       'followers': jsonFollowers,
       'following': jsonFollowings,
       'pfpPath': pfpPath,
+      'bannerPath': bannerPath,
     };
   }
 }

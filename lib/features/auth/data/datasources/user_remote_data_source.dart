@@ -103,6 +103,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
             followers: [],
             following: [],
             pfpPath: response.data['pfpPath'],
+            bannerPath: response.data['bannerPath'],
           ),
         );
         // Remember me

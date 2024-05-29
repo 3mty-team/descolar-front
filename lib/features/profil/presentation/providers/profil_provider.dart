@@ -9,6 +9,7 @@ import 'package:descolar_front/features/post/business/usecases/get_all_post_in_r
 import 'package:descolar_front/features/post/business/usecases/get_all_report_categories.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/business/usecases/block_user_profil.dart';
+import 'package:descolar_front/features/profil/business/usecases/change_banner_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/change_profil_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/follow_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/report_user_profil.dart';
@@ -23,6 +24,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ProfilProvider extends ChangeNotifier {
   bool isChangingPfp = false;
+  bool isChangingBanner = false;
   UserProfilEntity? userProfil;
   Failure? failure;
   bool isMyUserProfil = false;
@@ -48,12 +50,9 @@ class ProfilProvider extends ChangeNotifier {
 
   void follow() async {
     if (!isMyUserProfil) {
-      UserProfilRepository repository =
-          await UserProfilRepository.getUserProfilRepository();
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
-      final failureOrFollow =
-          await FollowUserProfil(userProfilRepository: repository)
-              .call(uuid: userProfil!.uuid);
+      final failureOrFollow = await FollowUserProfil(userProfilRepository: repository).call(uuid: userProfil!.uuid);
       failureOrFollow.fold(
         (Failure failure) {
           if (failure is AlreadyExistsFailure) {
@@ -70,12 +69,9 @@ class ProfilProvider extends ChangeNotifier {
 
   void unfollow() async {
     if (!isMyUserProfil) {
-      UserProfilRepository repository =
-          await UserProfilRepository.getUserProfilRepository();
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
-      final failureOrUnfollow =
-          await UnfollowUserProfil(userProfilRepository: repository)
-              .call(uuid: userProfil!.uuid);
+      final failureOrUnfollow = await UnfollowUserProfil(userProfilRepository: repository).call(uuid: userProfil!.uuid);
       failureOrUnfollow.fold(
         (Failure failure) {
           if (failure is AlreadyExistsFailure) {
@@ -97,8 +93,7 @@ class ProfilProvider extends ChangeNotifier {
     isChangingPfp = false;
     notifyListeners();
 
-    UserProfilRepository repository =
-        await UserProfilRepository.getUserProfilRepository();
+    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
 
     // Get User infos
     if (uuid == UserInfo.user.uuid) {
@@ -106,8 +101,7 @@ class ProfilProvider extends ChangeNotifier {
     } else {
       this.isMyUserProfil = false;
     }
-    final failureOrUserProfil =
-        await GetUserProfil(userProfilRepository: repository).call(uuid: uuid);
+    final failureOrUserProfil = await GetUserProfil(userProfilRepository: repository).call(uuid: uuid);
     failureOrUserProfil.fold(
       (Failure failure) {
         userProfil = null;
@@ -131,9 +125,7 @@ class ProfilProvider extends ChangeNotifier {
 
   void getUserPosts() async {
     PostRepository repository = await PostRepository.getPostRepository();
-    final failureOrPosts =
-        await GetAllPostInRangeWithUserUUID(postRepository: repository)
-            .call(range: 10, userUuid: userProfil!.uuid);
+    final failureOrPosts = await GetAllPostInRangeWithUserUUID(postRepository: repository).call(range: 10, userUuid: userProfil!.uuid);
     failureOrPosts.fold(
       (Failure failure) {},
       (List<PostEntity> userPosts) {
@@ -145,17 +137,33 @@ class ProfilProvider extends ChangeNotifier {
 
   void changeProfilPicture() async {
     if (this.isMyUserProfil) {
-      UserProfilRepository repository =
-          await UserProfilRepository.getUserProfilRepository();
-      final XFile? image =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
+      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null) {
         isChangingPfp = true;
         notifyListeners();
-        final failureOrPP =
-            await ChangeProfilPicture(userProfilRepository: repository)
-                .call(uuid: userProfil!.uuid, image: File(image.path));
+        final failureOrPP = await ChangeProfilPicture(userProfilRepository: repository).call(uuid: userProfil!.uuid, image: File(image.path));
         failureOrPP.fold(
+          (Failure failure) {},
+          (bool b) {},
+        );
+
+        // Refresh
+        this.getUserProfil(userProfil!.uuid);
+        notifyListeners();
+      }
+    }
+  }
+
+  void changeBannerPicture() async {
+    if (this.isMyUserProfil) {
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
+      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        isChangingBanner = true;
+        notifyListeners();
+        final failureOrBanner = await ChangeBannerPicture(userProfilRepository: repository).call(uuid: userProfil!.uuid, image: File(image.path));
+        failureOrBanner.fold(
           (Failure failure) {},
           (bool b) {},
         );
@@ -169,11 +177,8 @@ class ProfilProvider extends ChangeNotifier {
 
   void blockUser() async {
     if (!this.isMyUserProfil) {
-      UserProfilRepository repository =
-          await UserProfilRepository.getUserProfilRepository();
-      final failureOrBlock =
-          await BlockUserProfil(userProfilRepository: repository)
-              .call(uuid: userProfil!.uuid);
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
+      final failureOrBlock = await BlockUserProfil(userProfilRepository: repository).call(uuid: userProfil!.uuid);
       failureOrBlock.fold(
         (Failure failure) {},
         (bool b) {},
@@ -186,12 +191,13 @@ class ProfilProvider extends ChangeNotifier {
 
   void getAllReportCategories(BuildContext context) async {
     PostRepository repository = await PostRepository.getPostRepository();
-    final failureOrPost =
-        await GetAllReportCategories(postRepository: repository).call();
+    final failureOrPost = await GetAllReportCategories(postRepository: repository).call();
     failureOrPost.fold(
       (Failure failure) {
         SnackBars.failureSnackBar(
-            context: context, title: 'Une erreur est survenue.',);
+          context: context,
+          title: 'Une erreur est survenue.',
+        );
         reportCategories = null;
         notifyListeners();
       },
@@ -204,25 +210,24 @@ class ProfilProvider extends ChangeNotifier {
 
   void reportUser(BuildContext context, ReportUserParams params) async {
     if (!this.isMyUserProfil) {
-      UserProfilRepository repository =
-          await UserProfilRepository.getUserProfilRepository();
-      final failureOrReport =
-          await ReportUserProfil(userProfilRepository: repository)
-              .call(params: params);
+      UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
+      final failureOrReport = await ReportUserProfil(userProfilRepository: repository).call(params: params);
 
       failureOrReport.fold(
         (Failure failure) {
           SnackBars.failureSnackBar(
-              context: context, title: 'Une erreur est survenue.',);
+            context: context,
+            title: 'Une erreur est survenue.',
+          );
           notifyListeners();
         },
         (bool response) {
           Navigator.pop(context);
           reportController.clear();
           SnackBars.successSnackBar(
-              context: context,
-              title:
-                  'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.',);
+            context: context,
+            title: 'Merci pour votre signalement. L\'équipe de modération traitera celui-ci dans les meilleurs délais.',
+          );
           notifyListeners();
         },
       );

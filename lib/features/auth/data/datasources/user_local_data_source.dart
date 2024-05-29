@@ -81,6 +81,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
           followers: [],
           following: [],
           pfpPath: pfpPath,
+          bannerPath: null,
         ),
       );
     } else {
