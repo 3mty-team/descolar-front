@@ -262,10 +262,9 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     required String userUUID,
   }) async {
     final response = await dio.get(
-      '$baseDescolarApi/post/message/$userUUID/$range/20',
+      '$baseDescolarApi/post/message/$userUUID/$range',
       options: _getRequestOptions(),
     );
-
     List<PostModel> posts = [];
     for (dynamic postJson in response.data) {
       List<String> mediasPath = [];

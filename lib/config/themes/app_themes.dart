@@ -17,4 +17,19 @@ class AppTheme {
       ),
     );
   }
+  static ThemeData darkTheme() {
+    return ThemeData(
+      fontFamily: 'Helvetica',
+      scaffoldBackgroundColor: AppColors.black,
+      colorScheme: const ColorScheme.dark(
+        primary: AppColors.primary,
+        error: AppColors.error,
+      ),
+      textTheme: const TextTheme(
+        bodyMedium: TextStyle(
+          color: AppColors.white,
+        ),
+      ),
+    );
+  }
 }

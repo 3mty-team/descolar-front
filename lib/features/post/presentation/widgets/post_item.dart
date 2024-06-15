@@ -1,4 +1,5 @@
 import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
+import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';

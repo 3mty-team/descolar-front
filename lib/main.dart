@@ -1,9 +1,9 @@
-import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
-import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
+import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';
@@ -35,19 +35,24 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProfilProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider()), // Ajout du ThemeProvider
       ],
-      child: MaterialApp(
-        // change to false for release
-        debugShowCheckedModeBanner: false,
-        // /!\ MAYBE USELESS WITH PROVIDERS /!\
-        onGenerateRoute: AppRoutes.onGenerateRoutes,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('fr', 'FR')],
-        title: 'Descolar',
-        theme: AppTheme.theme(),
-        home: const SplashScreen(),
+      child: Consumer<SettingsProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: AppRoutes.onGenerateRoutes,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('fr', 'FR')],
+            title: 'Descolar',
+            theme: AppTheme.theme(),
+            darkTheme: AppTheme.darkTheme(),
+            themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

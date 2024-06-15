@@ -1,8 +1,5 @@
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
-
+import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
@@ -10,6 +7,10 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/cgu_text.dart';
 import 'package:descolar_front/features/post/presentation/providers/get_post_provider.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -77,6 +78,13 @@ class _HomePageState extends State<Home> {
               'Paramètres',
               style: TextStyle(color: AppColors.white, fontSize: 24),
             ),
+          ),
+          SwitchListTile(
+            title: const Text('Mode sombre'),
+            value: Provider.of<SettingsProvider>(context).isDarkMode,
+            onChanged: (bool value) {
+              Provider.of<SettingsProvider>(context, listen: false).toggleTheme();
+            },
           ),
           ListTile(
             title: const Text('Comptes bloqués'),
