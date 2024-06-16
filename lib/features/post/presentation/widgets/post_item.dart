@@ -1,9 +1,9 @@
-import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
-import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/post/presentation/widgets/quoted_post_item.dart';
-import 'package:provider/provider.dart';
+import 'package:descolar_front/features/post/presentation/widgets/post_media_display.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
@@ -93,7 +93,7 @@ class _PostItemState extends State<PostItem> {
                       ),
                       Visibility(
                         visible: widget.post.mediasPath != null && widget.post.mediasPath!.isNotEmpty,
-                        child: PostImageDisplay(mediasPath: widget.post.mediasPath),//s
+                        child: PostImageDisplay(mediasPath: widget.post.mediasPath), //s
                       ),
                       Visibility(
                         visible: widget.post.repostedPost != null,

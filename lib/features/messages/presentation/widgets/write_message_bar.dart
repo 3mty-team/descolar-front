@@ -23,7 +23,6 @@ class _WriteMessageBarState extends State<WriteMessageBar> {
         child: Container(
           height: 45,
           decoration: BoxDecoration(
-            color: AppColors.white,
             border: Border.all(
               color: AppColors.lightGray,
             ),

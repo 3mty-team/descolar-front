@@ -24,7 +24,6 @@ class _ConversationBarState extends State<ConversationBar> {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-          color: AppColors.white,
           border: Border.all(
             color: AppColors.lightGray,
           ),
