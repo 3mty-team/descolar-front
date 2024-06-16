@@ -17,6 +17,7 @@ class AppTheme {
       ),
     );
   }
+
   static ThemeData darkTheme() {
     return ThemeData(
       fontFamily: 'Helvetica',

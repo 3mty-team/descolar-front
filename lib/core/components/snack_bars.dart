@@ -13,7 +13,6 @@ class SnackBars {
       SnackBar(
         content: Text(title),
         duration: const Duration(seconds: duration),
-        backgroundColor: AppColors.black,
       ),
     );
   }

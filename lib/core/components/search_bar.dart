@@ -8,7 +8,7 @@ class DescolarSearchBar {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-          color: AppColors.white,
+
           border: Border.all(
             color: AppColors.lightGray,
           ),

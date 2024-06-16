@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/providers/action_post_provider.dart';
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
 
 class PostPopMenu extends StatefulWidget {
@@ -24,7 +23,6 @@ class _PostPopMenuState extends State<PostPopMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
-      color: AppColors.white,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: const Icon(Icons.more_horiz, size: 20),

@@ -223,7 +223,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                   // Abonnées
                                   RichText(
                                     text: TextSpan(
-                                      style: const TextStyle(color: AppColors.black, fontSize: 16),
+                                      style: const TextStyle(color: AppColors.gray, fontSize: 16),
                                       children: [
                                         TextSpan(
                                           text: provider.userProfil != null ? '${provider.userProfil!.followers.length} ' : '- ',
@@ -244,7 +244,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                   // Abonnements
                                   RichText(
                                     text: TextSpan(
-                                      style: const TextStyle(color: AppColors.black, fontSize: 16),
+                                      style: const TextStyle(color: AppColors.gray, fontSize: 16),
                                       children: [
                                         TextSpan(
                                           text: provider.userProfil != null ? '${provider.userProfil!.following.length} ' : '- ',

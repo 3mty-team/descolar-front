@@ -71,8 +71,7 @@ class _SearchPageState extends State<SearchPage> {
                       : ListView.builder(
                           itemCount: provider.users!.length,
                           itemBuilder: (context, index) {
-                            final user = provider
-                                .users![provider.users!.length - 1 - index];
+                            final user = provider.users![provider.users!.length - 1 - index];
                             return UserResultItem(user: user);
                           },
                         ),
@@ -86,8 +85,7 @@ class _SearchPageState extends State<SearchPage> {
                       : ListView.builder(
                           itemCount: provider.posts!.length,
                           itemBuilder: (context, index) {
-                            final post = provider
-                                .posts![provider.posts!.length - 1 - index];
+                            final post = provider.posts![provider.posts!.length - 1 - index];
                             return PostItem(post: post);
                           },
                         ),
