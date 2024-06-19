@@ -25,17 +25,6 @@ class _MessagesMenuState extends State<MessagesMenu> {
             child: ListView(
               children: [
                 ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
-                ConversationItem(receiver: receiver, messagePreview: 'messagePreview', time: '5 min'),
               ],
             ),
           ),
