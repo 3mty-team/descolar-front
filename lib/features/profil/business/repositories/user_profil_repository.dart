@@ -27,6 +27,10 @@ abstract class UserProfilRepository {
     required String uuid,
   });
 
+  Future<Either<Failure, List<String>>> getAllDiplomas();
+
+  Future<Either<Failure, List<String>>> getFormationsByDiploma({required int diplomaId});
+
   Future<Either<Failure, bool>> follow({
     required String uuid,
   });
@@ -56,5 +60,4 @@ abstract class UserProfilRepository {
   Future<Either<Failure, bool>> report({
     required ReportUserParams params,
   });
-
 }

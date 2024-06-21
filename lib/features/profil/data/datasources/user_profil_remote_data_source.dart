@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/constants/constants.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/core/utils/file_utils.dart';
+import 'package:descolar_front/features/auth/data/datasources/user_local_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserProfilRemoteDataSource {
   Future<UserProfilModel> getUserProfil({required String uuid});
@@ -24,6 +27,10 @@ abstract class UserProfilRemoteDataSource {
   Future<bool> unblock({required String uuid});
 
   Future<bool> report({required ReportUserParams params});
+
+  Future<List<String>> getAllDiplomas();
+
+  Future<List<String>> getFormationsByDiploma({required int diplomaId});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -55,29 +62,20 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
         options: _getRequestOptions(),
       );
 
-      if (responseBlocked.statusCode == 200) {
-        if (responseBlocked.data['result'] == false) {
-          // Get followers/following
-          final responseFollowers = await dio.get(
-            '$baseDescolarApi/user/$uuid/followers',
-            options: _getRequestOptions(),
-          );
-          final responseFollowing = await dio.get(
-            '$baseDescolarApi/user/$uuid/following',
-            options: _getRequestOptions(),
-          );
+      // Get followers/following
+      final responseFollowers = await dio.get(
+        '$baseDescolarApi/user/$uuid/followers',
+        options: _getRequestOptions(),
+      );
+      final responseFollowing = await dio.get(
+        '$baseDescolarApi/user/$uuid/following',
+        options: _getRequestOptions(),
+      );
+      Map<String, dynamic> json = responseUser.data;
+      json['followers'] = responseFollowers.data['users'];
+      json['following'] = responseFollowing.data['users'];
 
-          Map<String, dynamic> json = responseUser.data;
-          json['followers'] = responseFollowers.data['users'];
-          json['following'] = responseFollowing.data['users'];
-
-          return UserProfilModel.fromJson(json: json);
-        } else {
-          throw BlockedException();
-        }
-      } else {
-        throw BlockedException();
-      }
+      return UserProfilModel.fromJson(json: json);
     } else if (responseUser.statusCode == 400 || responseUser.statusCode == 404) {
       throw NotExistsException();
     } else {
@@ -231,6 +229,42 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
       } else {
         throw ServerException();
       }
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<String>> getAllDiplomas() async {
+    final response = await dio.get(
+      '$baseDescolarApi/institution/diplomas',
+    );
+    if (response.statusCode == 200) {
+      final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      List<String> diplomaDescriptions = response.data['diplomas'].map<String>((diploma) => '${diploma['id']} - ${diploma['name']}').toList();
+      for (var description in diplomaDescriptions) {
+        local.addToDiplomasList(diploma: description);
+      }
+      return CachedPost.diplomas;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<String>> getFormationsByDiploma({required int diplomaId}) async {
+    final response = await dio.get(
+      '$baseDescolarApi/institution/formations',
+    );
+    if (response.statusCode == 200) {
+      final UserLocalDataSourceImpl local = UserLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance());
+      CachedPost.formations.clear();
+      for (var formation in response.data['formations']) {
+        if (formation['diploma']['id'] == diplomaId) {
+          local.addToFormationsList(formation: '${formation['id']} - ${formation['name']}');
+        }
+      }
+      return CachedPost.formations;
     } else {
       throw ServerException();
     }

@@ -36,7 +36,6 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
       }),
       options: _getRequestOptions(),
     );
-
     if (response.statusCode == 200) {
       List<PostModel> searchResults = [];
       for (var post in response.data['posts']) {

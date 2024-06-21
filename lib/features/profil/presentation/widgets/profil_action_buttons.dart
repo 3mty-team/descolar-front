@@ -16,11 +16,6 @@ class ProfilActionButtons extends StatefulWidget {
 class _ProfilActionButtonsState extends State<ProfilActionButtons> {
   @override
   Widget build(BuildContext context) {
-    if (widget.provider.userProfil == null ||
-        widget.provider.isMyUserProfil == true) {
-      return const SizedBox();
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
