@@ -9,6 +9,7 @@ import 'package:descolar_front/features/auth/presentation/widgets/checkbox_cgu_i
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
+import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,27 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  String? selectedDiploma;
+  String? selectedFormation;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    ProfilProvider profilProvider = Provider.of<ProfilProvider>(context, listen: false);
+    await profilProvider.getAllDiplomas(context);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   List<Step> getSteps() {
     SignupProvider provider = Provider.of<SignupProvider>(context, listen: false);
+    ProfilProvider profilProvider = Provider.of<ProfilProvider>(context, listen: false);
     return [
       Step(
         title: const Text('Coordonnées'),
@@ -88,9 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider
-                      .of<LoginProvider>(context, listen: false)
-                      .reset,
+                  action: Provider.of<LoginProvider>(context, listen: false).reset,
                 ),
               ],
             ),
@@ -123,6 +141,56 @@ class _SignupPageState extends State<SignupPage> {
                   controller: provider.controllers[SignupInputName.username],
                   errorText: provider.errors[SignupInputName.username],
                   maxLength: 20,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DropdownButtonFormField<String>(
+                  value: selectedDiploma,
+                  hint: const Text('Diplôme préparé'),
+                  onChanged: (String? newValue) async {
+                    await profilProvider.getFormationsByDiploma(context, int.parse(newValue![0]));
+                    setState(() {
+                      selectedDiploma = newValue;
+                      provider.controllers[SignupInputName.diploma]!.text = selectedDiploma!;
+                      selectedFormation = null;
+                      provider.controllers[SignupInputName.formation]!.text = '';
+                    });
+                  },
+                  items: profilProvider.diplomasList!.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    errorText: provider.errors[SignupInputName.diploma],
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DropdownButtonFormField<String>(
+                  value: selectedFormation,
+                  hint: const Text('Formation préparée'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedFormation = newValue;
+                      provider.controllers[SignupInputName.formation]!.text = selectedFormation!;
+                    });
+                  },
+                  items: profilProvider.formationList?.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(value),
+                      ),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    errorText: provider.errors[SignupInputName.formation],
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
@@ -167,7 +235,12 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CGUText(),));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CGUText(),
+                                  ),
+                                );
                               },
                           ),
                           const TextSpan(
@@ -186,9 +259,7 @@ class _SignupPageState extends State<SignupPage> {
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider
-                      .of<LoginProvider>(context, listen: false)
-                      .reset,
+                  action: Provider.of<LoginProvider>(context, listen: false).reset,
                 ),
               ],
             ),

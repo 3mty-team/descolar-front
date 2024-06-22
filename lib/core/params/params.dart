@@ -12,6 +12,8 @@ class UserParams {
   final String dateOfBirth;
   final String username;
   final String password;
+  final String diploma;
+  final String formation;
 
   const UserParams({
     required this.email,
@@ -20,6 +22,8 @@ class UserParams {
     required this.dateOfBirth,
     required this.username,
     required this.password,
+    required this.diploma,
+    required this.formation,
   });
 }
 

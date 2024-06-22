@@ -71,7 +71,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                           ),
                           const SizedBox(height: 20),
                           Center(
-                            child: DropdownButton<String>(
+                            child: DropdownButtonFormField<String>(
                               value: selectedDiploma,
                               hint: const Text('Choisissez le diplôme que vous préparez'),
                               onChanged: (String? newValue) {
@@ -90,7 +90,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          DropdownButton<String>(
+                          DropdownButtonFormField<String>(
                             value: selectedFormation,
                             hint: const Text('Choisissez votre formation'),
                             onChanged: (String? newValue) {
