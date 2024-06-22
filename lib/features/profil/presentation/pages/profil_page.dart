@@ -157,7 +157,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               if (provider.isMyUserProfil)
                                 TextButton(
                                   onPressed: () {
-                                    provider.changeProfilPicture();
+                                    provider.changeProfilPicture(context);
                                   },
                                   child: provider.isChangingPfp
                                       ? Center(
@@ -189,14 +189,21 @@ class _ProfilPageState extends State<ProfilPage> {
                                   imagePath: provider.userProfil?.pfpPath,
                                   borderWidth: 4,
                                 ),
-                              if (provider.isMyUserProfil) const EditProfilButton() else ProfilActionButtons(provider: provider),
+                              if (provider.isMyUserProfil)
+                                EditProfilButton(
+                                  args: UserProfilArguments(
+                                    widget.args.uuid,
+                                  ),
+                                )
+                              else
+                                ProfilActionButtons(provider: provider),
                             ],
                           ),
                         ),
 
                         // User Info
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -214,6 +221,28 @@ class _ProfilPageState extends State<ProfilPage> {
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.secondary,
                                   fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '📝 ${provider.userProfil?.biography ?? '-'}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                provider.userProfil != null ? '🎓 ${provider.userProfil!.diploma} - ${provider.userProfil!.formation}' : '- -',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.secondary,
+                                  fontSize: 14,
                                 ),
                               ),
                               const SizedBox(
@@ -267,7 +296,13 @@ class _ProfilPageState extends State<ProfilPage> {
                             ],
                           ),
                         ),
-
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Divider(
+                          height: 10,
+                          color: AppColors.gray,
+                        ),
                         // Posts
                         if (provider.posts == null)
                           // Spinner

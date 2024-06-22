@@ -12,8 +12,6 @@ import 'package:descolar_front/features/profil/business/usecases/block_user_prof
 import 'package:descolar_front/features/profil/business/usecases/change_banner_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/change_profil_picture.dart';
 import 'package:descolar_front/features/profil/business/usecases/follow_user_profil.dart';
-import 'package:descolar_front/features/profil/business/usecases/get_all_diplomas.dart';
-import 'package:descolar_front/features/profil/business/usecases/get_formations_by_diploma.dart';
 import 'package:descolar_front/features/profil/business/usecases/report_user_profil.dart';
 import 'package:descolar_front/features/profil/business/usecases/unfollow_user_profil.dart';
 
@@ -33,12 +31,7 @@ class ProfilProvider extends ChangeNotifier {
   bool isFollower = false;
   List<PostEntity>? posts;
   List<String>? reportCategories;
-  List<String>? diplomasList;
-  List<String>? formationList;
   TextEditingController reportController = TextEditingController();
-  TextEditingController diplomaController = TextEditingController();
-  TextEditingController formationController = TextEditingController();
-  TextEditingController biographyController = TextEditingController();
 
   ProfilProvider({
     this.userProfil,
@@ -142,7 +135,7 @@ class ProfilProvider extends ChangeNotifier {
     );
   }
 
-  void changeProfilPicture() async {
+  void changeProfilPicture(BuildContext context) async {
     if (this.isMyUserProfil) {
       UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
       final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -151,7 +144,10 @@ class ProfilProvider extends ChangeNotifier {
         notifyListeners();
         final failureOrPP = await ChangeProfilPicture(userProfilRepository: repository).call(uuid: userProfil!.uuid, image: File(image.path));
         failureOrPP.fold(
-          (Failure failure) {},
+          (Failure failure) {
+            SnackBars.failureSnackBar(context: context, title: 'La mise à jour de votre photo de profil a échouée.');
+            notifyListeners();
+          },
           (bool b) {},
         );
 
@@ -239,35 +235,5 @@ class ProfilProvider extends ChangeNotifier {
         },
       );
     }
-  }
-
-  Future<void> getAllDiplomas(BuildContext context) async {
-    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
-    final failureOrPost = await GetAllDiplomas(userProfilRepository: repository).call();
-    failureOrPost.fold(
-      (Failure failure) {
-        SnackBars.failureSnackBar(context: context, title: 'Une erreur est survenue.');
-        notifyListeners();
-      },
-      (List<String> diplomas) {
-        diplomasList = diplomas;
-        notifyListeners();
-      },
-    );
-  }
-
-  Future<void> getFormationsByDiploma(BuildContext context, int diplomaId) async {
-    UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
-    final failureOrPost = await GetFormationsByDiploma(userProfilRepository: repository).call(diplomaId: diplomaId);
-    failureOrPost.fold(
-      (Failure failure) {
-        SnackBars.failureSnackBar(context: context, title: 'Une erreur est survenue.');
-        notifyListeners();
-      },
-      (List<String> formations) {
-        formationList = formations;
-        notifyListeners();
-      },
-    );
   }
 }

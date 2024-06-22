@@ -1,43 +1,50 @@
-import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
-import 'package:descolar_front/features/settings/presentation/widgets/user_blocked_detail.dart';
+import 'package:descolar_front/core/arguments/arguments.dart';
+import 'package:descolar_front/features/profil/presentation/providers/edit_profil_provider.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:descolar_front/core/components/buttons.dart';
-import 'package:descolar_front/core/components/app_bars.dart';
+
+import '../../../../core/resources/app_assets.dart';
 
 class EditProfilPage extends StatefulWidget {
-  const EditProfilPage({
-    super.key,
-  });
+  final UserProfilArguments args;
+
+  const EditProfilPage({super.key, required this.args});
 
   @override
   State<StatefulWidget> createState() => _EditProfilPageState();
 }
 
 class _EditProfilPageState extends State<EditProfilPage> {
-  String? selectedDiploma;
-  String? selectedFormation;
-
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      ProfilProvider provider = Provider.of<ProfilProvider>(context, listen: false);
+      EditProfilProvider provider = Provider.of<EditProfilProvider>(context, listen: false);
       provider.getAllDiplomas(context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    ProfilProvider provider = Provider.of<ProfilProvider>(context);
-    TextEditingController diplomaController = provider.diplomaController;
-    TextEditingController formationController = provider.formationController;
-    TextEditingController biographyController = provider.formationController;
+    EditProfilProvider provider = Provider.of<EditProfilProvider>(context);
 
     return Scaffold(
-      appBar: AppBars.closeIconAppBar(context, diplomaController),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            provider.reset();
+            Navigator.pop(context);
+          },
+        ),
+        title: AppAssets.descolarLogoSvg,
+      ),
       body: provider.diplomasList == null
           ? const Padding(
               padding: EdgeInsets.only(top: 64),
@@ -50,12 +57,6 @@ class _EditProfilPageState extends State<EditProfilPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Afficher Utilistaeur
-                    UserBlockedDetails(user: provider.userProfil!),
-                    const Divider(
-                      height: 10,
-                      color: Colors.grey,
-                    ),
                     const SizedBox(height: 15),
                     Padding(
                       padding: const EdgeInsets.only(right: 14, left: 14),
@@ -69,52 +70,57 @@ class _EditProfilPageState extends State<EditProfilPage> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 40),
                           Center(
-                            child: DropdownButtonFormField<String>(
-                              value: selectedDiploma,
-                              hint: const Text('Choisissez le diplôme que vous préparez'),
+                            child: DropdownSearch<String>(
+                              items: provider.diplomasList!,
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  labelText: '🎓 Diplôme préparé',
+                                  errorText: provider.errors[EditProfilInputName.diploma],
+                                ),
+                              ),
                               onChanged: (String? newValue) {
-                                provider.getFormationsByDiploma(context, int.parse(newValue![0]));
-                                setState(() {
-                                  selectedDiploma = newValue;
-                                  selectedFormation = null;
-                                });
+                                if (newValue != null) {
+                                  provider.getFormationsByDiploma(context, int.parse(newValue[0]));
+                                  setState(() {
+                                    provider.controllers[EditProfilInputName.diploma]?.text = newValue;
+                                    provider.controllers[EditProfilInputName.formation]?.text = '';
+                                  });
+                                }
                               },
-                              items: provider.diplomasList!.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                              popupProps: const PopupProps.menu(
+                                showSearchBox: true,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          DropdownButtonFormField<String>(
-                            value: selectedFormation,
-                            hint: const Text('Choisissez votre formation'),
+                          const SizedBox(height: 20),
+                          DropdownSearch<String>(
+                            items: provider.formationList == null ? [] : provider.formationList!,
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: '🎓 Formation préparée',
+                                errorText: provider.errors[EditProfilInputName.formation],
+                              ),
+                            ),
                             onChanged: (String? newValue) {
                               setState(() {
-                                selectedFormation = newValue;
+                                provider.controllers[EditProfilInputName.formation]?.text = newValue!;
                               });
                             },
-                            items: provider.formationList?.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.8,
-                                  child: Text(value),
-                                ),
-                              );
-                            }).toList(),
+                            popupProps: const PopupProps.menu(
+                              showSearchBox: true,
+                            ),
                           ),
                           const SizedBox(height: 25),
                           Center(
                             child: TextField(
-                              controller: biographyController,
+                              controller: provider.controllers[EditProfilInputName.biography],
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: "Écrivez ici une rapide présentation de vous et de vos centres d'intérêts...",
+                                hintText: "📝 Écrivez ici une rapide présentation de vous et de vos centres d'intérêts...",
                               ),
                               maxLines: 4,
                             ),
@@ -122,7 +128,11 @@ class _EditProfilPageState extends State<EditProfilPage> {
                           const SizedBox(height: 25),
                           PrimaryTextButton(
                             text: 'Mettre à jour votre profil',
-                            onTap: () {},
+                            onTap: () {
+                              if (provider.validateForm()) {
+                                provider.updateProfil(context, widget.args.uuid);
+                              }
+                            },
                           ),
                         ],
                       ),

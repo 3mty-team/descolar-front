@@ -27,6 +27,11 @@ abstract class UserProfilRepository {
     required String uuid,
   });
 
+  Future<Either<Failure, bool>> editProfil({
+    required int formationId,
+    required String biography,
+  });
+
   Future<Either<Failure, List<String>>> getAllDiplomas();
 
   Future<Either<Failure, List<String>>> getFormationsByDiploma({required int diplomaId});

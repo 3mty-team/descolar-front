@@ -31,6 +31,8 @@ abstract class UserProfilRemoteDataSource {
   Future<List<String>> getAllDiplomas();
 
   Future<List<String>> getFormationsByDiploma({required int diplomaId});
+
+  Future<bool> editProfil({required EditProfilParams params});
 }
 
 class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
@@ -62,20 +64,29 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
         options: _getRequestOptions(),
       );
 
-      // Get followers/following
-      final responseFollowers = await dio.get(
-        '$baseDescolarApi/user/$uuid/followers',
-        options: _getRequestOptions(),
-      );
-      final responseFollowing = await dio.get(
-        '$baseDescolarApi/user/$uuid/following',
-        options: _getRequestOptions(),
-      );
-      Map<String, dynamic> json = responseUser.data;
-      json['followers'] = responseFollowers.data['users'];
-      json['following'] = responseFollowing.data['users'];
+      if (responseBlocked.statusCode == 200) {
+        if (responseBlocked.data['result'] == false) {
+          // Get followers/following
+          final responseFollowers = await dio.get(
+            '$baseDescolarApi/user/$uuid/followers',
+            options: _getRequestOptions(),
+          );
+          final responseFollowing = await dio.get(
+            '$baseDescolarApi/user/$uuid/following',
+            options: _getRequestOptions(),
+          );
 
-      return UserProfilModel.fromJson(json: json);
+          Map<String, dynamic> json = responseUser.data;
+          json['followers'] = responseFollowers.data['users'];
+          json['following'] = responseFollowing.data['users'];
+
+          return UserProfilModel.fromJson(json: json);
+        } else {
+          throw BlockedException();
+        }
+      } else {
+        throw BlockedException();
+      }
     } else if (responseUser.statusCode == 400 || responseUser.statusCode == 404) {
       throw NotExistsException();
     } else {
@@ -265,6 +276,23 @@ class UserProfilRemoteDataSourceImpl implements UserProfilRemoteDataSource {
         }
       }
       return CachedPost.formations;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> editProfil({required EditProfilParams params}) async {
+    final response = await dio.put(
+      '$baseDescolarApi/user',
+      options: _getRequestOptions(),
+      data: FormData.fromMap({
+        'formation_id': params.formationId,
+        'biography': params.biography,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return true;
     } else {
       throw ServerException();
     }

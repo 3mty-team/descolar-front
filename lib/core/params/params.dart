@@ -124,3 +124,13 @@ class ReportUserParams {
     required this.date,
   });
 }
+
+class EditProfilParams {
+  final int formationId;
+  final String biography;
+
+  const EditProfilParams({
+    required this.formationId,
+    required this.biography,
+  });
+}

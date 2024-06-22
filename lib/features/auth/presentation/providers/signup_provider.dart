@@ -115,12 +115,12 @@ class SignupProvider extends ChangeNotifier {
       isValid = _validateLastname() && isValid;
       isValid = _validateFirstname() && isValid;
       isValid = _validateDate() && isValid;
+      isValid = _validateDiploma() && isValid;
+      isValid = _validateFormation() && isValid;
     } else if (currentStep == 1) {
       isValid = _validateUsername() && isValid;
       isValid = _validatePassword() && isValid;
       isValid = _validateConfirmPassword() && isValid;
-      isValid = _validateDiploma() && isValid;
-      isValid = _validateFormation() && isValid;
       isValid = _validateCGU() && isValid;
     }
     return isValid;

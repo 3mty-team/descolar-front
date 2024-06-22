@@ -44,14 +44,15 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => ViewPostPage(post: post));
       case '/profil':
         final args = settings.arguments as UserProfilArguments;
-        return MaterialPageRoute(builder: (_) => ProfilPage(args: args,));
+        return MaterialPageRoute(builder: (_) => ProfilPage(args: args));
       case '/report-user':
         final args = settings.arguments as UserProfilArguments;
-        return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args,));
+        return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args));
       case '/messages':
         return _materialRoute(const MessagesMenu());
       case '/editProfil':
-        return _materialRoute(const EditProfilPage());
+        final args = settings.arguments as UserProfilArguments;
+        return MaterialPageRoute(builder: (_) => EditProfilPage(args: args));
       case '/settings':
         return _materialRoute(const Home());
       case '/blocked-users':

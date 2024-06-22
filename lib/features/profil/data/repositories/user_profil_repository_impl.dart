@@ -181,4 +181,18 @@ class UserProfilRepositoryImpl implements UserProfilRepository {
       return Left(ServerFailure(errorMessage: 'No connection'));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> editProfil({required int formationId, required String biography}) async {
+    if (await networkInfo.isConnected!) {
+      try {
+        bool response = await remoteDataSource.editProfil(params: EditProfilParams(formationId: formationId, biography: biography));
+        return Right(response);
+      } on ServerException {
+        return Left(ServerFailure(errorMessage: 'Server exception'));
+      }
+    } else {
+      return Left(ServerFailure(errorMessage: 'No connection'));
+    }
+  }
 }
