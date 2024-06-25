@@ -4,7 +4,7 @@ import 'package:descolar_front/features/messages/business/repositories/message_r
 import 'package:descolar_front/core/errors/failure.dart';
 
 class DeleteMessage {
-  final MessageRepository messageRepository;
+  final MessagesRepository messageRepository;
 
   DeleteMessage({required this.messageRepository});
 

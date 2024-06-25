@@ -11,19 +11,19 @@ import 'package:provider/provider.dart';
 
 import 'package:descolar_front/core/components/app_bars.dart';
 
-class ConversationPage extends StatefulWidget {
+class MessagesPage extends StatefulWidget {
   final UserProfilEntity receiver;
 
-  const ConversationPage({
+  const MessagesPage({
     super.key,
     required this.receiver,
   });
 
   @override
-  State<StatefulWidget> createState() => _ConversationPageState();
+  State<StatefulWidget> createState() => _MessagesPageState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
     MessageProvider provider = Provider.of<MessageProvider>(context);

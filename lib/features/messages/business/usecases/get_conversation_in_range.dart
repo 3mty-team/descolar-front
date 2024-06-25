@@ -5,7 +5,7 @@ import 'package:descolar_front/features/messages/business/repositories/message_r
 import 'package:descolar_front/core/errors/failure.dart';
 
 class GetConversationInRange {
-  final MessageRepository messageRepository;
+  final MessagesRepository messageRepository;
 
   GetConversationInRange({required this.messageRepository});
 

@@ -1,5 +1,6 @@
-import 'package:descolar_front/features/messages/presentation/pages/conversation_page.dart';
+import 'package:descolar_front/features/messages/presentation/pages/messages_page.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
@@ -25,7 +26,7 @@ class _ConversationItemState extends State<ConversationItem> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ConversationPage(
+        builder: (context) => MessagesPage(
           receiver: widget.receiver,
         ),
       ),
@@ -40,7 +41,11 @@ class _ConversationItemState extends State<ConversationItem> {
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            const Icon(Icons.account_circle_rounded, size: 50),
+            ProfilPicture(
+              radius: 25,
+              imagePath: widget.receiver.pfpPath,
+              borderWidth: 2,
+            ),
             const SizedBox(width: 7),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

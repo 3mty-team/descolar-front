@@ -14,7 +14,7 @@ import 'package:descolar_front/features/post/presentation/pages/view_post_page.d
 import 'package:descolar_front/features/profil/presentation/pages/report_profil_page.dart';
 import 'package:descolar_front/features/settings/presentation/pages/blocked_users_page.dart';
 import 'package:descolar_front/screens/feed_page.dart';
-import 'package:descolar_front/features/messages/presentation/pages/messages_menu_page.dart';
+import 'package:descolar_front/features/messages/presentation/pages/conversations_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
 import 'package:descolar_front/features/profil/presentation/pages/profil_page.dart';
 import 'package:descolar_front/features/search/presentation/pages/search_page.dart';
@@ -48,7 +48,7 @@ class AppRoutes {
         final args = settings.arguments as UserProfilArguments;
         return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args,));
       case '/messages':
-        return _materialRoute(const MessagesMenu());
+        return _materialRoute(const ConversationsPage());
       case '/settings':
         return _materialRoute(const Home());
       case '/blocked-users':

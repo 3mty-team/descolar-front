@@ -1,12 +1,14 @@
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
-import 'package:descolar_front/features/messages/presentation/pages/conversation_page.dart';
+import 'package:descolar_front/features/messages/presentation/pages/messages_page.dart';
+import 'package:descolar_front/features/messages/presentation/provider/message_provider.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:flutter/material.dart';
 
 class MessageButton extends StatelessWidget {
   final ProfilProvider profilProvider;
+  // final MessageProvider messageProvider;
 
   const MessageButton({super.key, required this.profilProvider});
 
@@ -17,10 +19,13 @@ class MessageButton extends StatelessWidget {
       height: 42,
       child: TextButton(
         onPressed: () async {
+          // Cache conversation
+
+          // Go to conversation page
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ConversationPage(
+              builder: (context) => MessagesPage(
                 receiver: profilProvider.userProfil!,
               ),
             ),

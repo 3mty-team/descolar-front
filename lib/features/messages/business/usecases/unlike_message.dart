@@ -4,7 +4,7 @@ import 'package:descolar_front/features/messages/business/repositories/message_r
 import 'package:descolar_front/core/errors/failure.dart';
 
 class UnlikeMessage {
-  final MessageRepository messageRepository;
+  final MessagesRepository messageRepository;
 
   UnlikeMessage({required this.messageRepository});
 
