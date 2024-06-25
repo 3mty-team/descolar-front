@@ -48,7 +48,13 @@ class _HomePageState extends State<Home> {
               data = json.decode(data);
               if (data['message'] != null) {
                 // Check if message is send or received by uuid
-                messageProvider.sendMessage(data['message'], data['fromUUID'] == UserInfo.user.uuid);
+                bool isMessageSent = data['fromUUID'] == UserInfo.user.uuid;
+                if (isMessageSent) {
+                  messageProvider.sendMessage(data['message'], data['toUUID'], isMessageSent);
+                }
+                else {
+                  messageProvider.sendMessage(data['message'], data['fromUUID'], isMessageSent);
+                }
               }
             },
             onDone: () {
@@ -152,6 +158,7 @@ class _HomePageState extends State<Home> {
               UserRepository repository = await UserRepository.getUserRepository();
               final failureOrSignout = await SignOut(userRepository: repository).call();
               Provider.of<LoginProvider>(context, listen: false).reset();
+              WebSocket.disconnect();
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),

@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 
 class MessageProvider extends ChangeNotifier {
   final ScrollController scrollController = ScrollController();
-  List<MessageItem> messages = [];
+  Map<String, List<MessageItem>> messages = {};
 
-  void sendMessage(String message, bool isSentByCurrentUser) {
+  void sendMessage(String message, String receiverUUID, bool isSentByCurrentUser) {
     MessageItem msgItem = MessageItem(messageText: message, isSentByCurrentUser: isSentByCurrentUser);
-    messages.add(msgItem);
+
+    if (!messages.containsKey(receiverUUID)) {
+      messages[receiverUUID] = [];
+    }
+
+    messages[receiverUUID]?.add(msgItem);
+
     scrollController.animateTo(
       scrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
+
     notifyListeners();
   }
 }

@@ -39,8 +39,8 @@ class _ConversationPageState extends State<ConversationPage> {
               child: ListView.builder(
                 shrinkWrap: true,
                 controller: provider.scrollController,
-                itemCount: provider.messages.length,
-                itemBuilder: (context, index) => provider.messages[index],
+                itemCount: provider.messages[widget.receiver.uuid]?.length,
+                itemBuilder: (context, index) => provider.messages[widget.receiver.uuid]?[index],
               ),
             ),
           ),
