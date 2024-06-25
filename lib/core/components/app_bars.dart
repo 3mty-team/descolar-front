@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/resources/app_assets.dart';
@@ -108,11 +109,15 @@ class AppBars {
     );
   }
 
-  static AppBar conversationAppBar(BuildContext context, UserModel receiver) {
+  static AppBar conversationAppBar(BuildContext context, UserProfilEntity receiver) {
     return blankAppBar(
       title: Row(
         children: [
-          const Icon(Icons.account_circle_rounded, size: 40),
+          ProfilPicture(
+            radius: 20,
+            imagePath: receiver.pfpPath,
+            borderWidth: 2,
+          ),
           const SizedBox(width: 10),
           Text(
             '${receiver.firstname} ${receiver.lastname}',

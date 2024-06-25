@@ -1,5 +1,6 @@
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/follow_user_profil_button.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/message_button.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/other_action_user_profil_button.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/unfollow_user_profil_button.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class _ProfilActionButtonsState extends State<ProfilActionButtons> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        MessageButton(profilProvider: widget.provider),
+        const SizedBox(width: 8,),
         widget.provider.isFollower == true
             ? UnfollowUserProfilButton(profilProvider: widget.provider)
             : FollowUserProfilButton(profilProvider: widget.provider),

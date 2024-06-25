@@ -1,10 +1,11 @@
 import 'package:descolar_front/features/messages/presentation/pages/conversation_page.dart';
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 class ConversationItem extends StatefulWidget {
-  final UserModel receiver;
+  final UserProfilEntity receiver;
   final String messagePreview;
   final String time;
 

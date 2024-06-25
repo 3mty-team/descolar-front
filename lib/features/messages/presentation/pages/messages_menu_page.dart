@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/components/app_bars.dart';
@@ -15,7 +16,15 @@ class MessagesMenu extends StatefulWidget {
 class _MessagesMenuState extends State<MessagesMenu> {
   @override
   Widget build(BuildContext context) {
-    UserModel receiver = UserModel(uuid: 'uuid', email: 'email', lastname: 'Nom', firstname: 'Prénom', dateOfBirth: DateTime.now(), username: 'Pseudo', password: 'password');
+    // TODO : Récupérer les conversations depuis le cache et
+    UserProfilEntity receiver = const UserProfilEntity(
+      uuid: 'uuid',
+      lastname: 'Nom',
+      firstname: 'Prénom',
+      username: 'Pseudo',
+      followers: [],
+      following: [],
+    );
     return Scaffold(
       appBar: AppBars.backAppBar(context),
       body: Column(
