@@ -59,7 +59,6 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
     int coversationsLength = provider.conversations.length;
 
-
     return Scaffold(
       appBar: AppBars.backAppBar(context),
       body: Column(

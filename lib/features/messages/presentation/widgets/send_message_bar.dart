@@ -42,6 +42,7 @@ class _SendMessageBarState extends State<SendMessageBar> {
                 'message': widget.controller.text,
               }),
             );
+            widget.controller.clear();
           },),
         ],
       ),

@@ -19,6 +19,7 @@ class MessageProvider extends ChangeNotifier {
   final ScrollController scrollController = ScrollController();
   Map<String, List<MessageItem>> messages = {};
   List<ConversationEntity> conversations = [];
+  bool isMessagesLoaded = false;
 
   void sendMessage(String message, String otherUserUUID, bool isSentByCurrentUser, int iat) async {
     MessagesRepository messageRepository = await MessagesRepository.getMessagesRepository();
@@ -31,11 +32,7 @@ class MessageProvider extends ChangeNotifier {
 
     messages[otherUserUUID]?.add(msgItem);
 
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn,
-    );
+    notifyListeners();
 
     // Create message in db
     if (isSentByCurrentUser) {
@@ -47,7 +44,6 @@ class MessageProvider extends ChangeNotifier {
         ),
       );
     }
-
 
     // Cache conversation
     final failureOrUserProfilEntity = await GetUserProfil(userProfilRepository: userProfilRepository).call(uuid: otherUserUUID);
@@ -66,12 +62,14 @@ class MessageProvider extends ChangeNotifier {
       },
     );
 
+    // 2 times because 1 time does not refresh the UI for some fucking reason
     await getConversationFromCache();
-
+    await getConversationFromCache();
     notifyListeners();
   }
 
   void getMessagesFromDB(String receiverUUID) async {
+    isMessagesLoaded = false;
     MessagesRepository repository = await MessagesRepository.getMessagesRepository();
 
     final failureOrMessages = await GetMessagesInRange(messageRepository: repository).call(userUuid: receiverUUID, range: 100);
@@ -81,10 +79,6 @@ class MessageProvider extends ChangeNotifier {
         print('FAIL GET MESSAGES FROM DB');
       },
       (List<MessageEntity> messagesEntity) {
-        for (MessageEntity m in messagesEntity) {
-          print('${m.sender.username} --> ${m.receiver.username} : ${m.content}');
-          print('${m.sender.uuid} : ${UserInfo.user.uuid}');
-        }
         messages[receiverUUID] = messagesEntity
             .map(
               (messageEntity) => MessageItem(
@@ -97,11 +91,7 @@ class MessageProvider extends ChangeNotifier {
       },
     );
 
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn,
-    );
+    isMessagesLoaded = true;
 
     notifyListeners();
   }
@@ -111,7 +101,7 @@ class MessageProvider extends ChangeNotifier {
 
     final failureOrConversations = await GetConversations(messageRepository: repository).call();
 
-    await failureOrConversations.fold(
+    failureOrConversations.fold(
       (Failure failure) {
         print('FAIL GET CONVERSATIONS FROM CACHE');
       },
@@ -120,6 +110,7 @@ class MessageProvider extends ChangeNotifier {
         notifyListeners();
       },
     );
+    this.conversations = List.from(this.conversations);
     notifyListeners();
   }
 }

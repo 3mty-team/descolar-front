@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/messages/presentation/pages/messages_page.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
@@ -23,14 +24,7 @@ class ConversationItem extends StatefulWidget {
 
 class _ConversationItemState extends State<ConversationItem> {
   void _viewConversation(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MessagesPage(
-          receiver: widget.receiver,
-        ),
-      ),
-    );
+    Navigator.pushNamed(context, '/message', arguments: MessageProfilArguments(receiver: widget.receiver));
   }
 
   @override
