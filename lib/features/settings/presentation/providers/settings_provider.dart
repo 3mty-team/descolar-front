@@ -1,3 +1,4 @@
+import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
 import 'package:descolar_front/features/profil/business/usecases/unblock_user_profil.dart';
@@ -6,6 +7,7 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/settings/business/usecases/get_blocked_users.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SettingsProvider extends ChangeNotifier {
   List<UserProfilEntity>? blockedUsers;
@@ -50,6 +52,22 @@ class SettingsProvider extends ChangeNotifier {
 
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
+    if (_isDarkMode) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: AppColors.primaryDark,
+          statusBarColor: Colors.transparent,
+        ),
+      );
+    }
+    else {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: AppColors.primary,
+          statusBarColor: Colors.transparent,
+        ),
+      );
+    }
     notifyListeners();
   }
 }

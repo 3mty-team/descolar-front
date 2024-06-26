@@ -43,10 +43,10 @@ class _BannerPictureState extends State<BannerPicture> {
             )
           : GestureDetector(
               child: Container(
-                color: AppColors.primary,
-                child: const Icon(
+                color: Theme.of(context).colorScheme.primary,
+                child: Icon(
                   Icons.image,
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),

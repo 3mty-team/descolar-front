@@ -56,9 +56,9 @@ class _NewPostState extends State<NewPost> {
                             selectedImages.remove(image);
                           });
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.cancel,
-                          color: AppColors.black,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                         ),
                       ),
                     ),

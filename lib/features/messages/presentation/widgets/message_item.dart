@@ -26,7 +26,7 @@ class _MessageItemState extends State<MessageItem> {
           Flexible(
             child: Container(
               decoration: BoxDecoration(
-                color: widget.isSentByCurrentUser ? AppColors.primary : AppColors.lightGray,
+                color: widget.isSentByCurrentUser ? Theme.of(context).colorScheme.primary : AppColors.lightGray,
                 borderRadius: BorderRadius.circular(18),
               ),
               padding: const EdgeInsets.all(10),

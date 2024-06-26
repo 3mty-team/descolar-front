@@ -20,7 +20,7 @@ class FollowUserProfilButton extends StatelessWidget {
             vertical: 8,
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(AppColors.primary),
+        backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(36),

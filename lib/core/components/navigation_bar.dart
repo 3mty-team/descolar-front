@@ -12,7 +12,7 @@ class DescolarNavigationBar {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        backgroundColor: AppColors.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         items: [
           BottomNavigationBarItem(
             icon: AppAssets.homeIcon,

@@ -58,7 +58,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                             ),
                           ),
                           backgroundColor:
-                              MaterialStateProperty.all(AppColors.secondary),
+                              MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(36),

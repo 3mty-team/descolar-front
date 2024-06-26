@@ -39,10 +39,10 @@ class _TextInputState extends State<TextInput> {
               width: 4,
             ),
             if (widget.required)
-              const Text(
+              Text(
                 '*',
                 style: TextStyle(
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
           ],
@@ -55,7 +55,9 @@ class _TextInputState extends State<TextInput> {
             counter: const Offstage(),
             hintText: widget.hint,
             helperText: widget.help,
-            border: const OutlineInputBorder(),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red)
+            ),
             errorText: widget.errorText,
             errorMaxLines: 2,
             isDense: true,

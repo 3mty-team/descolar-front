@@ -39,10 +39,10 @@ class _PasswordInputState extends State<PasswordInput> {
               width: 4,
             ),
             if (widget.required)
-              const Text(
+              Text(
                 '*',
                 style: TextStyle(
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
           ],

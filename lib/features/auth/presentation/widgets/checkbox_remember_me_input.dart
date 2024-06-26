@@ -29,10 +29,10 @@ class _CheckboxRememberMeInputState extends State<CheckboxRememberMeInput> {
           Row(
             children: [
               if (widget.required)
-                const Text(
+                Text(
                   '*',
                   style: TextStyle(
-                    color: AppColors.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               Checkbox(

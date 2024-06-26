@@ -36,10 +36,10 @@ class _DateInputState extends State<DateInput> {
               width: 4,
             ),
             if (widget.required)
-              const Text(
+              Text(
                 '*',
                 style: TextStyle(
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
           ],

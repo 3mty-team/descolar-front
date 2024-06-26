@@ -30,17 +30,17 @@ class EditProfilButton extends StatelessWidget {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(36),
-            side: const BorderSide(
-              color: AppColors.primary,
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.primary,
               width: 2,
             ),
           ),
         ),
       ),
-      child: const Text(
+      child: Text(
         'Éditer le profil',
         style: TextStyle(
-          color: AppColors.primary,
+          color: Theme.of(context).colorScheme.primary,
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),

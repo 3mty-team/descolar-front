@@ -65,9 +65,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Theme(
         data: ThemeData(
-          primaryColor: AppColors.primary,
-          colorScheme: const ColorScheme.light(
-            primary: AppColors.primary,
+          primaryColor: Theme.of(context).colorScheme.primary,
+          colorScheme: ColorScheme.light(
+            primary: Theme.of(context).colorScheme.primary,
           ),
         ),
         child: Center(
@@ -77,11 +77,11 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Connexion',
                   style: TextStyle(
                     fontSize: 32,
-                    color: AppColors.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const SizedBox(

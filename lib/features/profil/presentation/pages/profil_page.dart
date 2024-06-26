@@ -217,10 +217,10 @@ class _ProfilPageState extends State<ProfilPage> {
                               ),
                               Text(
                                 provider.userProfil != null ? '@${provider.userProfil!.username}' : '@-',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.secondary,
+                                  color: Theme.of(context).colorScheme.secondary,
                                   fontSize: 20,
                                 ),
                               ),
@@ -239,9 +239,9 @@ class _ProfilPageState extends State<ProfilPage> {
                               ),
                               Text(
                                 provider.userProfil != null ? '🎓 ${provider.userProfil!.diploma} - ${provider.userProfil!.formation}' : '- -',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.secondary,
+                                  color: Theme.of(context).colorScheme.secondary,
                                   fontSize: 14,
                                 ),
                               ),

@@ -25,7 +25,7 @@ class SnackBars {
       SnackBar(
         content: Text(title),
         duration: const Duration(seconds: duration),
-        backgroundColor: AppColors.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

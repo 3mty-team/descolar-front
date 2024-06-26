@@ -10,10 +10,10 @@ import 'package:descolar_front/features/profil/presentation/widgets/profil_actio
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 
 class AppBars {
-  static AppBar blankAppBar({Widget? leading, Widget? title}) {
+  static AppBar blankAppBar({required BuildContext context, Widget? leading, Widget? title}) {
     return AppBar(
       toolbarHeight: 60,
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.elliptical(900, 50),
@@ -26,12 +26,12 @@ class AppBars {
     );
   }
 
-  static SliverAppBar blankSliverAppBar({Widget? leading, Widget? title}) {
+  static SliverAppBar blankSliverAppBar({required BuildContext context, Widget? leading, Widget? title}) {
     return SliverAppBar(
       floating: true,
       snap: true,
       toolbarHeight: 70,
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.elliptical(900, 50),
@@ -46,6 +46,7 @@ class AppBars {
 
   static SliverAppBar homeSliverAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
     return blankSliverAppBar(
+      context: context,
       leading: IconButton(
         icon: AppAssets.optionsIcon,
         onPressed: () {
@@ -57,6 +58,7 @@ class AppBars {
 
   static SliverAppBar profilSliverAppBar(BuildContext context, ProfilProvider profilProvider) {
     return blankSliverAppBar(
+      context: context,
       leading: IconButton(
         icon: AppAssets.backIcon,
         onPressed: () {
@@ -83,6 +85,7 @@ class AppBars {
 
   static AppBar backAppBar(BuildContext context) {
     return blankAppBar(
+      context: context,
       leading: IconButton(
         icon: AppAssets.backIcon,
         onPressed: () {
@@ -112,6 +115,7 @@ class AppBars {
 
   static AppBar conversationAppBar(BuildContext context, UserProfilEntity receiver) {
     return blankAppBar(
+      context: context,
       title: Row(
         children: [
           GestureDetector(

@@ -54,7 +54,7 @@ class _PostItemState extends State<PostItem> {
               bottom: 0,
               child: Container(
                 width: 2,
-                color: AppColors.primary,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Row(

@@ -23,7 +23,7 @@ class PrimaryTextButton extends StatelessWidget {
         },
       },
       style: ButtonStyle(
-        backgroundColor: this.isActive ? MaterialStateProperty.all(AppColors.primary) : MaterialStateProperty.all(AppColors.gray),
+        backgroundColor: this.isActive ? MaterialStateProperty.all(Theme.of(context).colorScheme.primary) : MaterialStateProperty.all(AppColors.gray),
       ),
       child: Text(text,
         style: const TextStyle(

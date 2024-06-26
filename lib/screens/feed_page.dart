@@ -17,6 +17,7 @@ import 'package:descolar_front/features/post/presentation/widgets/post_item.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -32,12 +33,12 @@ class _HomePageState extends State<Home> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       // POSTS
-      final postProvider = Provider.of<GetPostProvider>(context, listen: false);
+      final postProvider = Provider.of<GetPostProvider>(context as BuildContext, listen: false);
       postProvider.getLikedPost();
       postProvider.addPostsToFeed();
 
       // WEB SOCKET
-      MessageProvider messageProvider = Provider.of<MessageProvider>(context, listen: false);
+      MessageProvider messageProvider = Provider.of<MessageProvider>(context as BuildContext, listen: false);
       WebSocket.connect();
       WebSocket.channel.ready.then(
             (value) {
@@ -90,16 +91,16 @@ class _HomePageState extends State<Home> {
         headerSliverBuilder: (context, _) => [
           AppBars.homeSliverAppBar(context, scaffoldKey),
         ],
-        body: _buildPostFeed(provider),
+        body: _buildPostFeed(context, provider),
       ),
       bottomNavigationBar: DescolarNavigationBar.mainNavBar(context),
       drawer: _buildDrawer(context),
     );
   }
 
-  Widget _buildPostFeed(GetPostProvider provider) {
+  Widget _buildPostFeed(BuildContext context, GetPostProvider provider) {
     return RefreshIndicator(
-      color: AppColors.primary,
+      color: Theme.of(context).colorScheme.primary,
       onRefresh: () async {
         provider.getLikedPost();
         provider.addPostsToFeed();
@@ -119,11 +120,11 @@ class _HomePageState extends State<Home> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            child: Text(
+            child: const Text(
               'Paramètres',
               style: TextStyle(color: AppColors.white, fontSize: 24),
             ),
@@ -156,10 +157,10 @@ class _HomePageState extends State<Home> {
             },
           ),
           ListTile(
-            title: const Text(
+            title: Text(
               'Se déconnecter',
               style: TextStyle(
-                color: AppColors.error,
+                color: Theme.of(context).colorScheme.error,
               ),
             ),
             onTap: () async {

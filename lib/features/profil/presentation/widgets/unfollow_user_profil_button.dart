@@ -20,14 +20,14 @@ class UnfollowUserProfilButton extends StatelessWidget {
             vertical: 8,
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(AppColors.secondary),
+        backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(36),
           ),
         ),
       ),
-      child: const Text(
+      child: Text(
         'Abonné',
         style: TextStyle(
           color: AppColors.white,
