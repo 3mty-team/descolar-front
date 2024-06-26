@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 
 import 'package:descolar_front/core/components/buttons.dart';
 
-import '../../../../core/resources/app_assets.dart';
+import 'package:descolar_front/core/resources/app_assets.dart';
 
 class EditProfilPage extends StatefulWidget {
-  final UserProfilArguments args;
+  final UserEditProfilArguments args;
 
   const EditProfilPage({super.key, required this.args});
 
@@ -31,6 +31,8 @@ class _EditProfilPageState extends State<EditProfilPage> {
   @override
   Widget build(BuildContext context) {
     EditProfilProvider provider = Provider.of<EditProfilProvider>(context);
+
+    provider.controllers[EditProfilInputName.biography]?.text = widget.args.biography ?? '';
 
     return Scaffold(
       appBar: AppBar(
@@ -62,8 +64,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                       padding: const EdgeInsets.only(right: 14, left: 14),
                       child: Column(
                         children: [
-                          const Text(
-                            'Vous pouvez modifier, ci-dessous, votre formation universitaire et votre biographie.',
+                          const Text('Vous pouvez modifier, ci-dessous, votre formation universitaire et votre biographie.',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
@@ -118,7 +119,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                           Center(
                             child: TextField(
                               controller: provider.controllers[EditProfilInputName.biography],
-                              decoration: const InputDecoration(
+                              decoration:  const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: "📝 Écrivez ici une rapide présentation de vous et de vos centres d'intérêts...",
                               ),

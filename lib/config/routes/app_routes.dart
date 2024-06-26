@@ -51,7 +51,7 @@ class AppRoutes {
         final args = settings.arguments as MessageProfilArguments;
         return MaterialPageRoute(builder: (_) => MessagesPage(receiver: args.receiver,));
       case '/editProfil':
-        final args = settings.arguments as UserProfilArguments;
+        final args = settings.arguments as UserEditProfilArguments;
         return MaterialPageRoute(builder: (_) => EditProfilPage(args: args));
       case '/settings':
         return _materialRoute(const Home());

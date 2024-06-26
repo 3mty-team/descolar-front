@@ -110,6 +110,7 @@ linter:
     empty_statements: true
     unnecessary_statements: true
     prefer_expression_function_bodies: false
+    always_use_package_imports: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

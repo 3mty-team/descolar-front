@@ -191,8 +191,9 @@ class _ProfilPageState extends State<ProfilPage> {
                                 ),
                               if (provider.isMyUserProfil)
                                 EditProfilButton(
-                                  args: UserProfilArguments(
-                                    widget.args.uuid,
+                                  args: UserEditProfilArguments(
+                                    uuid: widget.args.uuid,
+                                    biography: provider.userProfil?.biography,
                                   ),
                                 )
                               else
@@ -230,7 +231,6 @@ class _ProfilPageState extends State<ProfilPage> {
                                 '📝 ${provider.userProfil?.biography ?? '-'}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.black,
                                   fontSize: 14,
                                 ),
                               ),

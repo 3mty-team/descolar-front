@@ -3,7 +3,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilButton extends StatelessWidget {
-  final UserProfilArguments args;
+  final UserEditProfilArguments args;
 
   const EditProfilButton({super.key, required this.args});
 
@@ -14,8 +14,9 @@ class EditProfilButton extends StatelessWidget {
         Navigator.pushNamed(
           context,
           '/editProfil',
-          arguments: UserProfilArguments(
-            this.args.uuid,
+          arguments: UserEditProfilArguments(
+            uuid: this.args.uuid,
+            biography: this.args.biography,
           ),
         );
       },
@@ -26,7 +27,6 @@ class EditProfilButton extends StatelessWidget {
             vertical: 8,
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(AppColors.white),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(36),
