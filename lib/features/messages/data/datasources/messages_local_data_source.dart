@@ -34,10 +34,10 @@ class MessagesLocalDataSourceImpl implements MessagesLocalDataSource {
     final jsonStringList = sharedPreferences.getStringList(cachedConversations);
 
     if (jsonStringList != null) {
-      jsonStringList.forEach((jsonString) {
+      for (var jsonString in jsonStringList) {
         final data = json.decode(jsonString);
         conversations.add(ConversationModel.fromJson(json: data));
-      });
+      }
     }
 
     return Future(() => conversations);

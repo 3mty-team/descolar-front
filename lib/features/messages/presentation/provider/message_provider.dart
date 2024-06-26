@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/errors/failure.dart';
@@ -47,7 +46,7 @@ class MessageProvider extends ChangeNotifier {
 
     // Cache conversation
     final failureOrUserProfilEntity = await GetUserProfil(userProfilRepository: userProfilRepository).call(uuid: otherUserUUID);
-    await failureOrUserProfilEntity.fold(
+    failureOrUserProfilEntity.fold(
       (Failure failure) {
         print('FAIL USER PROFIL ');
       },
@@ -74,7 +73,7 @@ class MessageProvider extends ChangeNotifier {
 
     final failureOrMessages = await GetMessagesInRange(messageRepository: repository).call(userUuid: receiverUUID, range: 100);
 
-    await failureOrMessages.fold(
+    failureOrMessages.fold(
       (Failure failure) {
         print('FAIL GET MESSAGES FROM DB');
       },

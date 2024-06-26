@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:descolar_front/core/components/buttons.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/messages/presentation/widgets/write_message_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SendMessageBar extends StatefulWidget {

@@ -1,8 +1,5 @@
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/auth/data/models/user_model.dart';
 import 'package:descolar_front/features/messages/presentation/pages/messages_page.dart';
-import 'package:descolar_front/features/messages/presentation/provider/message_provider.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +11,7 @@ class MessageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 42,
       height: 42,
       child: TextButton(

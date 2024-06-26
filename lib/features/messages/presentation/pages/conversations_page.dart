@@ -1,11 +1,8 @@
-import 'package:descolar_front/features/messages/business/entities/conversation_entity.dart';
 import 'package:descolar_front/features/messages/presentation/provider/message_provider.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/features/messages/presentation/widgets/conversation_bar.dart';
-import 'package:descolar_front/features/auth/data/models/user_model.dart';
 import 'package:descolar_front/features/messages/presentation/widgets/conversation_item.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';

@@ -9,7 +9,6 @@ import 'package:descolar_front/features/messages/business/repositories/message_r
 import 'package:descolar_front/features/messages/data/datasources/messages_local_data_source.dart';
 import 'package:descolar_front/features/messages/data/datasources/messages_remote_data_source.dart';
 import 'package:descolar_front/features/messages/data/models/conversation_model.dart';
-import 'package:descolar_front/features/messages/presentation/widgets/conversation_item.dart';
 
 class MessagesRepositoryImpl implements MessagesRepository {
   final MessagesLocalDataSource localDataSource;
@@ -26,7 +25,7 @@ class MessagesRepositoryImpl implements MessagesRepository {
   Future<Either<Failure, void>> createMessage({required CreateMessageParams params}) async {
     try {
       await remoteDataSource.createMessage(params: params);
-      return Right(true);
+      return const Right(true);
     } on Exception {
       return Left(ServerFailure(errorMessage: 'Erreur serveur'));
     }

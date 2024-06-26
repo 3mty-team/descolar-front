@@ -9,7 +9,6 @@ import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/features/messages/data/datasources/messages_local_data_source.dart';
 import 'package:descolar_front/features/messages/data/datasources/messages_remote_data_source.dart';
 import 'package:descolar_front/features/messages/data/repositories/messages_repository_impl.dart';
-import 'package:descolar_front/features/messages/presentation/widgets/conversation_item.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -40,7 +40,7 @@ class _HomePageState extends State<Home> {
       WebSocket.connect();
       WebSocket.channel.ready.then(
             (value) {
-          debugPrint("CHANNEL READY");
+          debugPrint('CHANNEL READY');
           // Listen answers
           WebSocket.channel.stream.listen(
                 (data) {

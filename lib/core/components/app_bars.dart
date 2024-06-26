@@ -6,7 +6,6 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
-import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 class AppBars {
   static AppBar blankAppBar({Widget? leading, Widget? title}) {
