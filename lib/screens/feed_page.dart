@@ -5,6 +5,7 @@ import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/core/constants/websocket.dart';
 import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
+import 'package:descolar_front/features/messages/presentation/provider/message_provider.dart';
 import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';

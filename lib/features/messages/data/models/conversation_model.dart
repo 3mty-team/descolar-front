@@ -30,6 +30,7 @@ class ConversationModel extends ConversationEntity {
       followers: receiver.followers,
       following: receiver.following,
       pfpPath: receiver.pfpPath,
+      bannerPath: receiver.bannerPath,
     );
     return {
       'receiver': userProfilModel.toJson(),
