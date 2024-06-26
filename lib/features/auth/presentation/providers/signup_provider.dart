@@ -18,6 +18,8 @@ enum SignupInputName {
   firstname,
   date,
   username,
+  diploma,
+  formation,
   password,
   confirmpassword,
   cgu,
@@ -32,6 +34,8 @@ class SignupProvider extends ChangeNotifier {
     SignupInputName.firstname: TextEditingController(),
     SignupInputName.date: TextEditingController(),
     SignupInputName.username: TextEditingController(),
+    SignupInputName.diploma: TextEditingController(),
+    SignupInputName.formation: TextEditingController(),
     SignupInputName.password: TextEditingController(),
     SignupInputName.confirmpassword: TextEditingController(),
   };
@@ -43,6 +47,8 @@ class SignupProvider extends ChangeNotifier {
     SignupInputName.username: null,
     SignupInputName.password: null,
     SignupInputName.confirmpassword: null,
+    SignupInputName.diploma: null,
+    SignupInputName.formation: null,
     SignupInputName.cgu: null,
   };
 
@@ -57,6 +63,8 @@ class SignupProvider extends ChangeNotifier {
       SignupInputName.username: TextEditingController(),
       SignupInputName.password: TextEditingController(),
       SignupInputName.confirmpassword: TextEditingController(),
+      SignupInputName.diploma: TextEditingController(),
+      SignupInputName.formation: TextEditingController(),
       SignupInputName.cgu: TextEditingController(),
     };
     errors = {
@@ -67,6 +75,8 @@ class SignupProvider extends ChangeNotifier {
       SignupInputName.username: null,
       SignupInputName.password: null,
       SignupInputName.confirmpassword: null,
+      SignupInputName.diploma: null,
+      SignupInputName.formation: null,
       SignupInputName.cgu: null,
     };
     notifyListeners();
@@ -105,6 +115,8 @@ class SignupProvider extends ChangeNotifier {
       isValid = _validateLastname() && isValid;
       isValid = _validateFirstname() && isValid;
       isValid = _validateDate() && isValid;
+      isValid = _validateDiploma() && isValid;
+      isValid = _validateFormation() && isValid;
     } else if (currentStep == 1) {
       isValid = _validateUsername() && isValid;
       isValid = _validatePassword() && isValid;
@@ -275,6 +287,32 @@ class SignupProvider extends ChangeNotifier {
     return true;
   }
 
+  bool _validateDiploma() {
+    String value = controllers[SignupInputName.diploma]!.text;
+    if (value.isEmpty) {
+      changeError(
+        SignupInputName.diploma,
+        'Veuillez renseigner le diplôme préparé',
+      );
+      return false;
+    }
+    removeError(SignupInputName.diploma);
+    return true;
+  }
+
+  bool _validateFormation() {
+    String value = controllers[SignupInputName.formation]!.text;
+    if (value.isEmpty) {
+      changeError(
+        SignupInputName.formation,
+        'Veuillez renseigner la formation préparée',
+      );
+      return false;
+    }
+    removeError(SignupInputName.formation);
+    return true;
+  }
+
   bool _validateCGU() {
     bool? value = checkboxCGU;
     if (value == false) {
@@ -305,6 +343,8 @@ class SignupProvider extends ChangeNotifier {
         dateOfBirth: controllers[SignupInputName.date]!.text,
         username: controllers[SignupInputName.username]!.text,
         password: controllers[SignupInputName.password]!.text,
+        diploma: controllers[SignupInputName.diploma]!.text,
+        formation: controllers[SignupInputName.formation]!.text,
       ),
     );
 

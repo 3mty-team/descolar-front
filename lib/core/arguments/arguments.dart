@@ -2,6 +2,7 @@ import 'package:descolar_front/features/profil/business/entities/user_profil_ent
 
 class UserProfilArguments {
   final String uuid;
+
   UserProfilArguments(this.uuid);
 }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:descolar_front/core/constants/cached_posts.dart';
 import 'package:descolar_front/core/constants/user_info.dart';
 import 'package:descolar_front/features/auth/data/datasources/user_remote_data_source.dart';
 import 'package:descolar_front/features/profil/data/datasources/user_profil_local_data_source.dart';
@@ -17,6 +18,10 @@ abstract class UserLocalDataSource {
   UserModel? getRememberUser();
 
   UserModel? signOut();
+
+  Future<void> addToDiplomasList({required String diploma});
+
+  Future<void> addToFormationsList({required String formation});
 }
 
 const cachedUser = 'CACHED_USER';
@@ -78,6 +83,9 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
           firstname: user.firstname,
           lastname: user.lastname,
           username: user.username,
+          diploma: 'TODO',
+          formation: 'TODO',
+          biography: 'TODO',
           followers: [],
           following: [],
           pfpPath: pfpPath,
@@ -104,5 +112,19 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       throw CacheException();
     }
     return user;
+  }
+
+  @override
+  Future<void> addToDiplomasList({required String diploma}) async {
+    if (!CachedPost.diplomaAlreadyCached(diploma)) {
+      CachedPost.diplomas.add(diploma);
+    }
+  }
+
+  @override
+  Future<void> addToFormationsList({required String formation}) async {
+    if (!CachedPost.formationAlreadyCached(formation)) {
+      CachedPost.formations.add(formation);
+    }
   }
 }

@@ -53,7 +53,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         ),
         'username': params.username,
         'password': params.password,
-        'formation_id': '1',
+        'formation_id': params.formation.substring(0, 2),
       }),
       options: Options(
         followRedirects: false,
@@ -100,10 +100,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
             firstname: response.data['firstname'],
             lastname: response.data['lastname'],
             username: response.data['username'],
+            diploma: response.data['formation']['diploma']['name'],
+            formation: response.data['formation']['name'],
             followers: [],
             following: [],
             pfpPath: response.data['pfpPath'],
             bannerPath: response.data['bannerPath'],
+            biography: response.data['biography'],
           ),
         );
         // Remember me

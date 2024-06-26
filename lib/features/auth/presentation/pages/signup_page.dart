@@ -9,6 +9,8 @@ import 'package:descolar_front/features/auth/presentation/widgets/checkbox_cgu_i
 import 'package:descolar_front/features/auth/presentation/widgets/date_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
+import 'package:descolar_front/features/profil/presentation/providers/edit_profil_provider.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +23,14 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<Step> getSteps() {
     SignupProvider provider = Provider.of<SignupProvider>(context, listen: false);
+    EditProfilProvider profilProvider = Provider.of<EditProfilProvider>(context, listen: false);
     return [
       Step(
         title: const Text('Coordonnées'),
@@ -42,7 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 20,
                 ),
                 TextInput(
                   label: 'Email universitaire',
@@ -53,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
                   required: true,
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 10,
                 ),
                 TextInput(
                   label: 'Nom',
@@ -63,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                   maxLength: 50,
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 10,
                 ),
                 TextInput(
                   label: 'Prénom',
@@ -73,7 +81,7 @@ class _SignupPageState extends State<SignupPage> {
                   maxLength: 100,
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 10,
                 ),
                 DateInput(
                   label: 'Date de naissance',
@@ -82,15 +90,59 @@ class _SignupPageState extends State<SignupPage> {
                   errorText: provider.errors[SignupInputName.date],
                 ),
                 const SizedBox(
+                  height: 20,
+                ),
+                DropdownSearch<String>(
+                  items: profilProvider.diplomasList!,
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: '🎓 Diplôme préparé',
+                      errorText: provider.errors[SignupInputName.diploma],
+                    ),
+                  ),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      profilProvider.getFormationsByDiploma(context, int.parse(newValue[0]));
+                      setState(() {
+                        provider.controllers[SignupInputName.diploma]?.text = newValue;
+                        provider.controllers[SignupInputName.formation]?.text = '';
+                      });
+                    }
+                  },
+                  popupProps: const PopupProps.menu(
+                    showSearchBox: true,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                DropdownSearch<String>(
+                  items: profilProvider.formationList == null ? [] : profilProvider.formationList!,
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: '🎓 Formation préparée',
+                      errorText: provider.errors[SignupInputName.formation],
+                    ),
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      provider.controllers[SignupInputName.formation]?.text = newValue!;
+                    });
+                  },
+                  popupProps: const PopupProps.menu(
+                    showSearchBox: true,
+                  ),
+                ),
+                const SizedBox(
                   height: 16,
                 ),
                 AccountLink(
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider
-                      .of<LoginProvider>(context, listen: false)
-                      .reset,
+                  action: Provider.of<LoginProvider>(context, listen: false).reset,
                 ),
               ],
             ),
@@ -123,6 +175,9 @@ class _SignupPageState extends State<SignupPage> {
                   controller: provider.controllers[SignupInputName.username],
                   errorText: provider.errors[SignupInputName.username],
                   maxLength: 20,
+                ),
+                const SizedBox(
+                  height: 16,
                 ),
                 const SizedBox(
                   height: 16,
@@ -167,7 +222,12 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CGUText(),));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CGUText(),
+                                  ),
+                                );
                               },
                           ),
                           const TextSpan(
@@ -186,9 +246,7 @@ class _SignupPageState extends State<SignupPage> {
                   route: '/login',
                   text: 'Déjà un compte ? ',
                   linkText: 'Connectez-vous',
-                  action: Provider
-                      .of<LoginProvider>(context, listen: false)
-                      .reset,
+                  action: Provider.of<LoginProvider>(context, listen: false).reset,
                 ),
               ],
             ),

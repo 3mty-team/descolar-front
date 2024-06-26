@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/profil/presentation/providers/edit_profil_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/features/messages/presentation/provider/message_provider.dart';
@@ -68,6 +69,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
         ChangeNotifierProvider(create: (context) => MessageProvider()),
+        ChangeNotifierProvider(create: (context) => EditProfilProvider()),
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, themeProvider, child) {

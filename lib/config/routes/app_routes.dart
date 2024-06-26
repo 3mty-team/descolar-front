@@ -1,7 +1,3 @@
-/*
-  /!\ MAYBE USELESS WITH PROVIDERS /!\ 
-*/
-
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/auth/presentation/pages/login_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
@@ -12,6 +8,7 @@ import 'package:descolar_front/features/post/presentation/pages/new_comment_page
 import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_report_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/view_post_page.dart';
+import 'package:descolar_front/features/profil/presentation/pages/edit_profil_page.dart';
 import 'package:descolar_front/features/profil/presentation/pages/report_profil_page.dart';
 import 'package:descolar_front/features/settings/presentation/pages/blocked_users_page.dart';
 import 'package:descolar_front/screens/feed_page.dart';
@@ -44,15 +41,18 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => ViewPostPage(post: post));
       case '/profil':
         final args = settings.arguments as UserProfilArguments;
-        return MaterialPageRoute(builder: (_) => ProfilPage(args: args,));
+        return MaterialPageRoute(builder: (_) => ProfilPage(args: args));
       case '/report-user':
         final args = settings.arguments as UserProfilArguments;
-        return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args,));
+        return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args));
       case '/messages':
         return _materialRoute(const ConversationsPage());
       case '/message':
         final args = settings.arguments as MessageProfilArguments;
         return MaterialPageRoute(builder: (_) => MessagesPage(receiver: args.receiver,));
+      case '/editProfil':
+        final args = settings.arguments as UserProfilArguments;
+        return MaterialPageRoute(builder: (_) => EditProfilPage(args: args));
       case '/settings':
         return _materialRoute(const Home());
       case '/blocked-users':

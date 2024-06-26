@@ -6,6 +6,7 @@ import 'package:descolar_front/features/auth/presentation/widgets/account_link.d
 import 'package:descolar_front/features/auth/presentation/widgets/checkbox_remember_me_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/password_input.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/text_input.dart';
+import 'package:descolar_front/features/profil/presentation/providers/edit_profil_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    EditProfilProvider profilProvider = Provider.of<EditProfilProvider>(context, listen: false);
+    await profilProvider.getAllDiplomas(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     LoginProvider provider = Provider.of<LoginProvider>(context);

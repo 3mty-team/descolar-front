@@ -135,7 +135,7 @@ class ProfilProvider extends ChangeNotifier {
     );
   }
 
-  void changeProfilPicture() async {
+  void changeProfilPicture(BuildContext context) async {
     if (this.isMyUserProfil) {
       UserProfilRepository repository = await UserProfilRepository.getUserProfilRepository();
       final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -144,7 +144,10 @@ class ProfilProvider extends ChangeNotifier {
         notifyListeners();
         final failureOrPP = await ChangeProfilPicture(userProfilRepository: repository).call(uuid: userProfil!.uuid, image: File(image.path));
         failureOrPP.fold(
-          (Failure failure) {},
+          (Failure failure) {
+            SnackBars.failureSnackBar(context: context, title: 'La mise à jour de votre photo de profil a échouée.');
+            notifyListeners();
+          },
           (bool b) {},
         );
 

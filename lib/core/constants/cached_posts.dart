@@ -8,6 +8,8 @@ class CachedPost {
   static List<PostEntity> likedPost = [];
   static List<CommentModel> loadedComments = [];
   static List<String> reportCategories = [];
+  static List<String> diplomas = [];
+  static List<String> formations = [];
 
   static PostEntity? postAlreadyInFeed(PostEntity post) {
     for (var element in feed) {
@@ -39,6 +41,24 @@ class CachedPost {
   static bool categorieAlreadyCached(String categorie) {
     for (String element in reportCategories) {
       if (categorie == element) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static bool diplomaAlreadyCached(String diploma) {
+    for (String element in diplomas) {
+      if (diploma == element) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static bool formationAlreadyCached(String formation) {
+    for (String element in formations) {
+      if (formation == element) {
         return true;
       }
     }

@@ -5,6 +5,7 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/post/presentation/widgets/post_item.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/banner_picture.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/edit_profil_button.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +157,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               if (provider.isMyUserProfil)
                                 TextButton(
                                   onPressed: () {
-                                    provider.changeProfilPicture();
+                                    provider.changeProfilPicture(context);
                                   },
                                   child: provider.isChangingPfp
                                       ? Center(
@@ -188,14 +189,21 @@ class _ProfilPageState extends State<ProfilPage> {
                                   imagePath: provider.userProfil?.pfpPath,
                                   borderWidth: 4,
                                 ),
-                              ProfilActionButtons(provider: provider),
+                              if (provider.isMyUserProfil)
+                                EditProfilButton(
+                                  args: UserProfilArguments(
+                                    widget.args.uuid,
+                                  ),
+                                )
+                              else
+                                ProfilActionButtons(provider: provider),
                             ],
                           ),
                         ),
 
                         // User Info
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -213,6 +221,28 @@ class _ProfilPageState extends State<ProfilPage> {
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.secondary,
                                   fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '📝 ${provider.userProfil?.biography ?? '-'}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                provider.userProfil != null ? '🎓 ${provider.userProfil!.diploma} - ${provider.userProfil!.formation}' : '- -',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.secondary,
+                                  fontSize: 14,
                                 ),
                               ),
                               const SizedBox(
@@ -266,7 +296,13 @@ class _ProfilPageState extends State<ProfilPage> {
                             ],
                           ),
                         ),
-
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Divider(
+                          height: 10,
+                          color: AppColors.gray,
+                        ),
                         // Posts
                         if (provider.posts == null)
                           // Spinner
