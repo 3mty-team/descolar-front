@@ -29,7 +29,7 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
 
   @override
   Future<List<PostModel>> getPostsByContent({required String content}) async {
-    final response = await dio.get(
+    final response = await dio.post(
       '$baseDescolarApi/search/post',
       data: FormData.fromMap({
         'content': content,
