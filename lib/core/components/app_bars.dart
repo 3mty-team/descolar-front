@@ -1,4 +1,6 @@
+import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/resources/app_assets.dart';
@@ -112,10 +114,15 @@ class AppBars {
     return blankAppBar(
       title: Row(
         children: [
-          ProfilPicture(
-            radius: 20,
-            imagePath: receiver.pfpPath,
-            borderWidth: 2,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/profil', arguments: UserProfilArguments(receiver.uuid));
+            },
+            child: ProfilPicture(
+              radius: 20,
+              imagePath: receiver.pfpPath,
+              borderWidth: 2,
+            ),
           ),
           const SizedBox(width: 10),
           Text(
