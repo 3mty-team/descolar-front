@@ -14,18 +14,18 @@ class UserProfilModel extends UserProfilEntity {
     required String? bannerPath,
     required String? biography,
   }) : super(
-          uuid: uuid,
-          firstname: firstname,
-          lastname: lastname,
-          username: username,
-          diploma: diploma,
-          formation: formation,
-          followers: followers,
-          following: following,
-          pfpPath: pfpPath,
-          bannerPath: bannerPath,
-          biography: biography,
-        );
+    uuid: uuid,
+    firstname: firstname,
+    lastname: lastname,
+    username: username,
+    diploma: diploma,
+    formation: formation,
+    followers: followers,
+    following: following,
+    pfpPath: pfpPath,
+    bannerPath: bannerPath,
+    biography: biography,
+  );
 
   factory UserProfilModel.fromJson({required Map<String, dynamic> json}) {
     List<UserProfilEntity> followers = [];
@@ -73,13 +73,26 @@ class UserProfilModel extends UserProfilEntity {
       }
     }
 
+    // Json can be {diploma:'', formation:''} OR {formation:{name:'', diploma:{name:''}}}
+    String diploma = '';
+    String formation = '';
+    if (json.containsKey('diploma')) {
+      diploma = json['diploma'] ?? '';
+      formation = json['formation'] ?? '';
+    }
+    else {
+      diploma = json['formation'] != null ? json['formation']['diploma']['name'] : '';
+      formation = json['formation'] != null ? json['formation']['name'] : '';
+    }
+
+
     return UserProfilModel(
       uuid: json['uuid'] ?? '-',
       firstname: json['firstname'] ?? '-',
       lastname: json['lastname'] ?? '-',
       username: json['username'] ?? '-',
-      diploma: json['formation'] != null ? json['formation']['diploma']['name'] : '',
-      formation: json['formation'] != null ? json['formation']['name'] : '',
+      diploma: diploma,
+      formation: formation,
       followers: followers,
       following: following,
       pfpPath: json['pfpPath'],
