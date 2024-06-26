@@ -19,16 +19,6 @@ class MessagesLocalDataSourceImpl implements MessagesLocalDataSource {
 
   @override
   Future<List<ConversationModel>> getConversations() {
-    UserProfilEntity testReceiver = const UserProfilEntity(
-      uuid: 'f442c0bd-c321-4c26-b3c3-f8b074159c34',
-      firstname: 'Yohan',
-      lastname: 'Rudny',
-      username: 'Zakiryo',
-      followers: [],
-      following: [],
-      pfpPath: null,
-    );
-
     List<ConversationModel> conversations = [];
 
     final jsonStringList = sharedPreferences.getStringList(cachedConversations);

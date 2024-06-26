@@ -34,7 +34,10 @@ class MessageModel extends MessageEntity {
       followers: receiver.followers,
       following: receiver.following,
       pfpPath: receiver.pfpPath,
-      bannerPath: receiver.bannerPath
+      bannerPath: receiver.bannerPath,
+      diploma: receiver.diploma,
+      formation: receiver.formation,
+      biography: receiver.biography,
     );
     UserProfilModel authorModel = UserProfilModel(
       uuid: sender.uuid,
@@ -44,7 +47,10 @@ class MessageModel extends MessageEntity {
       followers: sender.followers,
       following: sender.following,
       pfpPath: sender.pfpPath,
-      bannerPath: sender.bannerPath
+      bannerPath: sender.bannerPath,
+      diploma: sender.diploma,
+      formation: sender.formation,
+      biography: sender.biography,
     );
     return {
       'author': authorModel.toJson(),
