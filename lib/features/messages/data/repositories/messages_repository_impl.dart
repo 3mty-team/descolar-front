@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
 import 'package:descolar_front/core/errors/exceptions.dart';
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/params/params.dart';
@@ -6,20 +7,29 @@ import 'package:descolar_front/features/messages/business/entities/conversation_
 import 'package:descolar_front/features/messages/business/entities/message_entity.dart';
 import 'package:descolar_front/features/messages/business/repositories/message_repository.dart';
 import 'package:descolar_front/features/messages/data/datasources/messages_local_data_source.dart';
+import 'package:descolar_front/features/messages/data/datasources/messages_remote_data_source.dart';
 import 'package:descolar_front/features/messages/data/models/conversation_model.dart';
 import 'package:descolar_front/features/messages/presentation/widgets/conversation_item.dart';
 
 class MessagesRepositoryImpl implements MessagesRepository {
   final MessagesLocalDataSource localDataSource;
+  final MessagesRemoteDataSource remoteDataSource;
+  final NetworkInfo networkInfo;
 
   MessagesRepositoryImpl({
     required this.localDataSource,
+    required this.remoteDataSource,
+    required this.networkInfo,
   });
 
   @override
-  Future<Either<Failure, MessageEntity>> createMessage({required CreateMessageParams params}) {
-    // TODO: implement createMessage
-    throw UnimplementedError();
+  Future<Either<Failure, void>> createMessage({required CreateMessageParams params}) async {
+    try {
+      await remoteDataSource.createMessage(params: params);
+      return Right(true);
+    } on Exception {
+      return Left(ServerFailure(errorMessage: 'Erreur serveur'));
+    }
   }
 
   @override
@@ -29,9 +39,13 @@ class MessagesRepositoryImpl implements MessagesRepository {
   }
 
   @override
-  Future<Either<Failure, List<MessageEntity>>> getConversationInRange({required String userUuid, required int range}) {
-    // TODO: implement getConversationInRange
-    throw UnimplementedError();
+  Future<Either<Failure, List<MessageEntity>>> getMessagesInRange({required String userUuid, required int range}) async {
+    try {
+      List<MessageEntity> messages = await remoteDataSource.getMessages(userUuid: userUuid, range: range,);
+      return Right(messages);
+    } on Exception {
+      return Left(ServerFailure(errorMessage: 'Erreur serveur'));
+    }
   }
 
   @override

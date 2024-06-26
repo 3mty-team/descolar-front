@@ -10,7 +10,7 @@ class CreateMessage {
 
   CreateMessage({required this.messageRepository});
 
-  Future<Either<Failure, MessageEntity>> call({
+  Future<Either<Failure, void>> call({
     required CreateMessageParams params,
   }) async {
     return await messageRepository.createMessage(params: params);

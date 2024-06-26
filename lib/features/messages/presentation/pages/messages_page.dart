@@ -6,6 +6,7 @@ import 'package:descolar_front/features/messages/presentation/widgets/send_messa
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,15 @@ class MessagesPage extends StatefulWidget {
 }
 
 class _MessagesPageState extends State<MessagesPage> {
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      MessageProvider provider = Provider.of<MessageProvider>(context, listen: false);
+      provider.getMessagesFromDB(widget.receiver.uuid);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MessageProvider provider = Provider.of<MessageProvider>(context);
