@@ -45,11 +45,14 @@ class MessagesLocalDataSourceImpl implements MessagesLocalDataSource {
 
   @override
   Future<bool> cacheConversation(ConversationModel conversation) async {
-    // TODO : Check if conversation already exist, if yes delete and add it at the end of the list
-    //  (and show the list in reverse on the page)
     List<ConversationModel> conversations = await getConversations();
+
+    conversations.removeWhere((c) => c.receiver.uuid == conversation.receiver.uuid);
+
     conversations.add(conversation);
+
     sharedPreferences.setStringList(cachedConversations, conversations.map((c) => json.encode(c.toJson())).toList());
+
     return true;
   }
 }

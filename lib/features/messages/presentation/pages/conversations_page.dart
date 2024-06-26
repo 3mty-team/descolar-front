@@ -18,7 +18,6 @@ class ConversationsPage extends StatefulWidget {
 }
 
 class _ConversationsPageState extends State<ConversationsPage> {
-
   @override
   void initState() {
     super.initState();
@@ -28,9 +27,38 @@ class _ConversationsPageState extends State<ConversationsPage> {
     });
   }
 
+  String getTimeString(int iat) {
+    if (iat == 0) return '';
+
+    DateTime today = DateTime.now();
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(iat, isUtc: true);
+    Duration current = today.difference(dateTime);
+
+    String suffix = 's';
+    int time = current.inSeconds;
+
+    if (current.inDays >= 1) {
+      suffix = 'j';
+      time = current.inDays;
+    }
+    else if (current.inHours >= 1) {
+      suffix = 'h';
+      time = current.inHours;
+    }
+    else if (current.inMinutes >= 1) {
+      suffix = 'm';
+      time = current.inMinutes;
+    }
+
+    return '${time.toString()}$suffix';
+  }
+
   @override
   Widget build(BuildContext context) {
     MessageProvider provider = Provider.of<MessageProvider>(context);
+
+    int coversationsLength = provider.conversations.length;
+
 
     return Scaffold(
       appBar: AppBars.backAppBar(context),
@@ -41,7 +69,11 @@ class _ConversationsPageState extends State<ConversationsPage> {
             child: ListView.builder(
               itemCount: provider.conversations.length,
               itemBuilder: (context, index) {
-                return ConversationItem(receiver: provider.conversations[index].receiver, messagePreview: '...', time: '...');
+                return ConversationItem(
+                  receiver: provider.conversations[coversationsLength - index - 1].receiver,
+                  messagePreview: provider.conversations[coversationsLength - index - 1].messagePreview ?? '',
+                  time: getTimeString(provider.conversations[coversationsLength - index - 1].iat ?? 0),
+                );
               },
             ),
           ),

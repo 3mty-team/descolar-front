@@ -50,10 +50,10 @@ class _HomePageState extends State<Home> {
                 // Check if message is send or received by uuid
                 bool isMessageSent = data['fromUUID'] == UserInfo.user.uuid;
                 if (isMessageSent) {
-                  messageProvider.sendMessage(data['message'], data['toUUID'], isMessageSent);
+                  messageProvider.sendMessage(data['message'], data['toUUID'], isMessageSent, int.parse(data['iat']));
                 }
                 else {
-                  messageProvider.sendMessage(data['message'], data['fromUUID'], isMessageSent);
+                  messageProvider.sendMessage(data['message'], data['fromUUID'], isMessageSent, int.parse(data['iat']));
                 }
               }
             },

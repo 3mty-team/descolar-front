@@ -13,7 +13,7 @@ class MessageProvider extends ChangeNotifier {
   Map<String, List<MessageItem>> messages = {};
   List<ConversationEntity> conversations = [];
 
-  void sendMessage(String message, String receiverUUID, bool isSentByCurrentUser) async {
+  void sendMessage(String message, String receiverUUID, bool isSentByCurrentUser, int iat) async {
     MessagesRepository repository = await MessagesRepository.getMessagesRepository();
     UserProfilRepository userProfilRepository = await UserProfilRepository.getUserProfilRepository();
     MessageItem msgItem = MessageItem(messageText: message, isSentByCurrentUser: isSentByCurrentUser);
@@ -32,33 +32,29 @@ class MessageProvider extends ChangeNotifier {
 
     // TODO : use endpoint to create msg to db
 
-    // TODO : set current conversation to cache
-    ConversationEntity? currentConversation;
-    for (ConversationEntity conversation in conversations) {
-      if (conversation.receiver.uuid == receiverUUID) {
-        currentConversation = conversation;
-        break;
-      }
-    }
+    // Cache conversation
+    final failureOrUserProfilEntity = await userProfilRepository.getUserProfil(uuid: receiverUUID);
+    await failureOrUserProfilEntity.fold(
+      (Failure failure) {
+        print('FAIL USER PROFIL ');
+      },
+      (UserProfilEntity userProfilEntity) {
+        repository.setConversationToCache(
+          ConversationEntity(
+            receiver: userProfilEntity,
+            messagePreview: message,
+            iat: iat,
+          ),
+        );
+      },
+    );
 
-    if (currentConversation == null) {
-      final failureOrUserProfilEntity = await userProfilRepository.getUserProfil(uuid: receiverUUID);
-      await failureOrUserProfilEntity.fold(
-        (Failure failure) {
-          print('FAIL USER PROFIL ');
-        },
-        (UserProfilEntity userProfilEntity) {
-          currentConversation = ConversationEntity(receiver: userProfilEntity);
-        },
-      );
-    }
-
-    repository.setConversationToCache(currentConversation!);
+    await getConversationFromCache();
 
     notifyListeners();
   }
 
-  void getConversationFromCache() async {
+  Future<void> getConversationFromCache() async {
     MessagesRepository repository = await MessagesRepository.getMessagesRepository();
 
     final failureOrConversations = await GetConversations(messageRepository: repository).call();
@@ -68,10 +64,8 @@ class MessageProvider extends ChangeNotifier {
         print('FAIL CONVERSATIONS CACHE');
       },
       (List<ConversationEntity> conversations) {
-        for (ConversationEntity conversation in conversations) {
-          print(conversation.receiver.username);
-        }
         this.conversations = conversations;
+        notifyListeners();
       },
     );
   }

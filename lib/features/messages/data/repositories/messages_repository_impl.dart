@@ -59,12 +59,15 @@ class MessagesRepositoryImpl implements MessagesRepository {
   @override
   Future<Either<Failure, void>> setConversationToCache(ConversationEntity conversation) async {
     try {
-      ConversationModel conversationModel = ConversationModel(receiver: conversation.receiver);
+      ConversationModel conversationModel = ConversationModel(
+        receiver: conversation.receiver,
+        messagePreview: conversation.messagePreview,
+        iat: conversation.iat,
+      );
       bool isOk = await localDataSource.cacheConversation(conversationModel);
       return Right(isOk);
     } on CacheException {
       return Left(CacheFailure(errorMessage: 'Erreur'));
     }
   }
-
 }
