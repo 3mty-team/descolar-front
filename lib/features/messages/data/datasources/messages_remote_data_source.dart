@@ -4,7 +4,7 @@ import 'package:descolar_front/core/params/params.dart';
 import 'package:descolar_front/features/messages/data/models/message_model.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../core/constants/user_info.dart';
+import 'package:descolar_front/core/constants/user_info.dart';
 
 abstract class MessagesRemoteDataSource {
   Future<void> createMessage({required CreateMessageParams params});

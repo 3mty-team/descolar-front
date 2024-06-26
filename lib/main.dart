@@ -7,8 +7,6 @@ import 'package:descolar_front/features/settings/presentation/providers/settings
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
-import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/features/search/presentation/providers/search_provider.dart';
 import 'package:descolar_front/config/routes/app_routes.dart';
 import 'package:descolar_front/config/themes/app_themes.dart';

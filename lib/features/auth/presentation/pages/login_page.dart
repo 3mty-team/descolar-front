@@ -1,5 +1,4 @@
 import 'package:descolar_front/core/components/buttons.dart';
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:descolar_front/features/auth/presentation/providers/signup_provider.dart';
 import 'package:descolar_front/features/auth/presentation/widgets/account_link.dart';

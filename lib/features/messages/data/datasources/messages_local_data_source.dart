@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:descolar_front/features/messages/data/models/conversation_model.dart';
-import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class MessagesLocalDataSource {

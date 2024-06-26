@@ -1,4 +1,3 @@
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/core/utils/date_converter.dart';
 import 'package:flutter/material.dart';
 

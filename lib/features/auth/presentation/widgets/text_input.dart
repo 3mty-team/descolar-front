@@ -1,4 +1,3 @@
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class TextInput extends StatefulWidget {
@@ -56,7 +55,7 @@ class _TextInputState extends State<TextInput> {
             hintText: widget.hint,
             helperText: widget.help,
             border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red)
+              borderSide: BorderSide(color: Colors.red),
             ),
             errorText: widget.errorText,
             errorMaxLines: 2,

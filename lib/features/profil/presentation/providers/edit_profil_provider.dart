@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/components/snack_bars.dart';
-import '../../../../core/connection/network_info.dart';
-import '../../../../core/errors/failure.dart';
-import '../../business/repositories/user_profil_repository.dart';
-import '../../business/usecases/get_all_diplomas.dart';
-import '../../business/usecases/get_formations_by_diploma.dart';
+import 'package:descolar_front/core/components/snack_bars.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/errors/failure.dart';
+import 'package:descolar_front/features/profil/business/repositories/user_profil_repository.dart';
+import 'package:descolar_front/features/profil/business/usecases/get_all_diplomas.dart';
+import 'package:descolar_front/features/profil/business/usecases/get_formations_by_diploma.dart';
 
 enum EditProfilInputName { diploma, formation, biography }
 

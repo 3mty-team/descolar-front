@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:descolar_front/core/resources/app_colors.dart';
 
 class SnackBars {
   static const int duration = 5;

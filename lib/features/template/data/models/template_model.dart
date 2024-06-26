@@ -1,5 +1,5 @@
-import '../../../../core/constants/constants.dart';
-import '../../business/entities/template_entity.dart';
+import 'package:descolar_front/core/constants/constants.dart';
+import 'package:descolar_front/features/template/business/entities/template_entity.dart';
 
 class TemplateModel extends TemplateEntity {
   const TemplateModel({

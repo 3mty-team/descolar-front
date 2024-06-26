@@ -1,4 +1,3 @@
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
 import 'package:flutter/material.dart';
 

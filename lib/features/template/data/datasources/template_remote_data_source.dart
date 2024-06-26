@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/params/params.dart';
-import '../models/template_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/features/template/data/models/template_model.dart';
 
 abstract class TemplateRemoteDataSource {
   Future<TemplateModel> getTemplate({required TemplateParams templateParams});

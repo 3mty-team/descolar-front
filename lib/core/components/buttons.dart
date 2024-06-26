@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../resources/app_colors.dart';
+import 'package:descolar_front/core/resources/app_colors.dart';
 
 class PrimaryTextButton extends StatelessWidget {
   final String text;

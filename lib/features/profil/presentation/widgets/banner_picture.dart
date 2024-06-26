@@ -1,4 +1,3 @@
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/post/presentation/pages/view_media.dart';
 import 'package:flutter/material.dart';
 

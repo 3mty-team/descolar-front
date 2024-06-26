@@ -27,7 +27,7 @@ class UnfollowUserProfilButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
+      child: const Text(
         'Abonné',
         style: TextStyle(
           color: AppColors.white,

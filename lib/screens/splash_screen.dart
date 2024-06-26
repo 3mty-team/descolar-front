@@ -1,6 +1,5 @@
 import 'package:descolar_front/core/errors/failure.dart';
 import 'package:descolar_front/core/resources/app_assets.dart';
-import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
 import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
 import 'package:descolar_front/features/auth/business/usecases/get_remember_user.dart';

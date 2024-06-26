@@ -8,8 +8,8 @@ import 'package:descolar_front/features/search/data/datasources/search_local_dat
 import 'package:descolar_front/features/search/data/datasources/search_remote_data_source.dart';
 import 'package:descolar_front/features/search/data/models/user_result_model.dart';
 
-import '../../../../core/errors/exceptions.dart';
-import '../../../post/data/models/post_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/post/data/models/post_model.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   final SearchRemoteDataSource remoteDataSource;

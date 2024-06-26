@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../models/template_model.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/features/settings/data/models/template_model.dart';
 
 abstract class SettingsLocalDataSource {
   Future<void> cacheTemplate({required TemplateModel? templateToCache});

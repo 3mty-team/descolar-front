@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/connection/network_info.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failure.dart';
-import '../../../../core/params/params.dart';
-import '../../business/repositories/template_repository.dart';
-import '../datasources/template_local_data_source.dart';
-import '../datasources/template_remote_data_source.dart';
-import '../models/template_model.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/core/errors/failure.dart';
+import 'package:descolar_front/core/params/params.dart';
+import 'package:descolar_front/features/template/business/repositories/template_repository.dart';
+import 'package:descolar_front/features/template/data/datasources/template_local_data_source.dart';
+import 'package:descolar_front/features/template/data/datasources/template_remote_data_source.dart';
+import 'package:descolar_front/features/template/data/models/template_model.dart';
 
 class TemplateRepositoryImpl implements TemplateRepository {
   final TemplateRemoteDataSource remoteDataSource;

@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:descolar_front/features/profil/data/models/user_profil_model.dart';
 
-import '../../../../core/connection/network_info.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failure.dart';
-import '../../business/repositories/settings_repository.dart';
-import '../datasources/settings_local_data_source.dart';
-import '../datasources/settings_remote_data_source.dart';
+import 'package:descolar_front/core/connection/network_info.dart';
+import 'package:descolar_front/core/errors/exceptions.dart';
+import 'package:descolar_front/core/errors/failure.dart';
+import 'package:descolar_front/features/settings/business/repositories/settings_repository.dart';
+import 'package:descolar_front/features/settings/data/datasources/settings_local_data_source.dart';
+import 'package:descolar_front/features/settings/data/datasources/settings_remote_data_source.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsRemoteDataSource remoteDataSource;

@@ -1,6 +1,5 @@
 import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/resources/app_assets.dart';
