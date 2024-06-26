@@ -17,7 +17,6 @@ import 'package:descolar_front/features/post/presentation/widgets/post_item.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -33,12 +32,12 @@ class _HomePageState extends State<Home> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       // POSTS
-      final postProvider = Provider.of<GetPostProvider>(context as BuildContext, listen: false);
+      final postProvider = Provider.of<GetPostProvider>(context, listen: false);
       postProvider.getLikedPost();
       postProvider.addPostsToFeed();
 
       // WEB SOCKET
-      MessageProvider messageProvider = Provider.of<MessageProvider>(context as BuildContext, listen: false);
+      MessageProvider messageProvider = Provider.of<MessageProvider>(context, listen: false);
       WebSocket.connect();
       WebSocket.channel.ready.then(
             (value) {
