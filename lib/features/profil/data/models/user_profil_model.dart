@@ -43,13 +43,13 @@ class UserProfilModel extends UserProfilEntity {
             firstname: f['firstname'] ?? '-',
             lastname: f['lastname'] ?? '-',
             username: f['username'] ?? '-',
-            diploma: f['formation']['diploma']['name'],
-            formation: f['formation']['name'],
+            diploma: '',
+            formation: '',
             followers: [],
             following: [],
             pfpPath: f['pfpPath'],
-            bannerPath: f['bannerPath'],
-            biography: f['biography'],
+            bannerPath: '',
+            biography: '',
           ),
         );
       }
@@ -61,13 +61,13 @@ class UserProfilModel extends UserProfilEntity {
             firstname: f['firstname'] ?? '-',
             lastname: f['lastname'] ?? '-',
             username: f['username'] ?? '-',
-            diploma: f['formation']['diploma']['name'],
-            formation: f['formation']['name'],
+            diploma: '',
+            formation: '',
             followers: [],
             following: [],
             pfpPath: f['pfpPath'],
-            bannerPath: f['bannerPath'],
-            biography: f['biography'],
+            bannerPath: '',
+            biography: '',
           ),
         );
       }
@@ -78,13 +78,13 @@ class UserProfilModel extends UserProfilEntity {
       firstname: json['firstname'] ?? '-',
       lastname: json['lastname'] ?? '-',
       username: json['username'] ?? '-',
-      diploma: json['formation']['diploma']['name'],
-      formation: json['formation']['name'],
+      diploma: json['formation'] != null ? json['formation']['diploma']['name'] : '',
+      formation: json['formation'] != null ? json['formation']['name'] : '',
       followers: followers,
       following: following,
       pfpPath: json['pfpPath'],
-      bannerPath: json['bannerPath'],
-      biography: json['biography'],
+      bannerPath: json['bannerPath'] ?? '',
+      biography: json['biography'] ?? '',
     );
   }
 
