@@ -59,7 +59,7 @@ class _MessagesPageState extends State<MessagesPage> {
             alignment: Alignment.bottomCenter,
             child: SendMessageBar(
               channel: WebSocket.channel,
-              controller: TextEditingController(),
+              controller: provider.textController,
               receiverUUID: widget.receiver.uuid,
             ),
           ),

@@ -15,6 +15,7 @@ import 'package:descolar_front/features/profil/business/usecases/get_user_profil
 import 'package:flutter/material.dart';
 
 class MessageProvider extends ChangeNotifier {
+  final TextEditingController textController = TextEditingController();
   final ScrollController scrollController = ScrollController();
   Map<String, List<MessageItem>> messages = {};
   List<ConversationEntity> conversations = [];
