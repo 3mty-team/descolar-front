@@ -1,10 +1,11 @@
-import 'package:descolar_front/features/messages/presentation/pages/conversation_page.dart';
+import 'package:descolar_front/core/arguments/arguments.dart';
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
+import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:descolar_front/core/resources/app_colors.dart';
-import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 class ConversationItem extends StatefulWidget {
-  final UserModel receiver;
+  final UserProfilEntity receiver;
   final String messagePreview;
   final String time;
 
@@ -21,14 +22,7 @@ class ConversationItem extends StatefulWidget {
 
 class _ConversationItemState extends State<ConversationItem> {
   void _viewConversation(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ConversationPage(
-          receiver: widget.receiver,
-        ),
-      ),
-    );
+    Navigator.pushNamed(context, '/message', arguments: MessageProfilArguments(receiver: widget.receiver));
   }
 
   @override
@@ -39,7 +33,11 @@ class _ConversationItemState extends State<ConversationItem> {
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            const Icon(Icons.account_circle_rounded, size: 50),
+            ProfilPicture(
+              radius: 25,
+              imagePath: widget.receiver.pfpPath,
+              borderWidth: 2,
+            ),
             const SizedBox(width: 7),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,15 +1,13 @@
-import 'package:descolar_front/features/auth/business/entities/user_entity.dart';
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 
 class MessageEntity {
-  final int messageId;
-  final UserEntity author;
-  final UserEntity receiver;
+  final UserProfilEntity sender;
+  final UserProfilEntity receiver;
   final String content;
   final DateTime date;
 
   const MessageEntity({
-    required this.messageId,
-    required this.author,
+    required this.sender,
     required this.receiver,
     required this.content,
     required this.date,

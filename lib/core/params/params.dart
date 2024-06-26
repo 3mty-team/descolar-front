@@ -66,13 +66,13 @@ class CreateCommentParams {
 class CreateMessageParams {
   final String receiverUuid;
   final String content;
-  final DateTime date;
+  final int iat;
   final List<XFile>? medias;
 
   const CreateMessageParams({
     required this.receiverUuid,
     required this.content,
-    required this.date,
+    required this.iat,
     this.medias,
   });
 }

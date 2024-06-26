@@ -1,4 +1,10 @@
 import 'package:descolar_front/features/auth/presentation/providers/login_provider.dart';
+import 'dart:convert';
+
+import 'package:descolar_front/core/constants/user_info.dart';
+import 'package:descolar_front/core/constants/websocket.dart';
+import 'package:descolar_front/features/auth/business/repositories/user_repository.dart';
+import 'package:descolar_front/features/auth/business/usecases/sign_out.dart';
 import 'package:descolar_front/features/settings/presentation/providers/settings_provider.dart';
 import 'package:descolar_front/core/components/app_bars.dart';
 import 'package:descolar_front/core/components/navigation_bar.dart';
@@ -24,9 +30,51 @@ class _HomePageState extends State<Home> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<GetPostProvider>(context, listen: false);
-      provider.getLikedPost();
-      provider.addPostsToFeed();
+      // POSTS
+      final postProvider = Provider.of<GetPostProvider>(context, listen: false);
+      postProvider.getLikedPost();
+      postProvider.addPostsToFeed();
+
+      // WEB SOCKET
+      MessageProvider messageProvider = Provider.of<MessageProvider>(context, listen: false);
+      WebSocket.connect();
+      WebSocket.channel.ready.then(
+            (value) {
+          debugPrint('CHANNEL READY');
+          // Listen answers
+          WebSocket.channel.stream.listen(
+                (data) {
+              debugPrint(data);
+              data = json.decode(data);
+              if (data['message'] != null) {
+                // Check if message is send or received by uuid
+                bool isMessageSent = data['fromUUID'] == UserInfo.user.uuid;
+                if (isMessageSent) {
+                  messageProvider.sendMessage(data['message'], data['toUUID'], isMessageSent, int.parse(data['iat']));
+                }
+                else {
+                  messageProvider.sendMessage(data['message'], data['fromUUID'], isMessageSent, int.parse(data['iat']));
+                }
+              }
+            },
+            onDone: () {
+              debugPrint('WS channel closed');
+            },
+            onError: (error) {
+              debugPrint('WS error $error');
+            },
+          );
+
+          // Connect to websocket channel
+          // Sender
+          WebSocket.channel.sink.add(
+            json.encode({
+              'method': 'register',
+              'userUUID': UserInfo.user.uuid,
+            }),
+          );
+        },
+      );
     });
   }
 
@@ -114,7 +162,10 @@ class _HomePageState extends State<Home> {
               ),
             ),
             onTap: () async {
+              UserRepository repository = await UserRepository.getUserRepository();
+              final failureOrSignout = await SignOut(userRepository: repository).call();
               Provider.of<LoginProvider>(context, listen: false).reset();
+              WebSocket.disconnect();
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),

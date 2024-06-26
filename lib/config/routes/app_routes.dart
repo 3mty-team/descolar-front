@@ -6,6 +6,7 @@ import 'package:descolar_front/core/arguments/arguments.dart';
 import 'package:descolar_front/features/auth/presentation/pages/login_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/signup_page.dart';
 import 'package:descolar_front/features/auth/presentation/pages/user_created_success.dart';
+import 'package:descolar_front/features/messages/presentation/pages/messages_page.dart';
 import 'package:descolar_front/features/post/business/entities/post_entity.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_comment_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_quote_page.dart';
@@ -14,7 +15,7 @@ import 'package:descolar_front/features/post/presentation/pages/view_post_page.d
 import 'package:descolar_front/features/profil/presentation/pages/report_profil_page.dart';
 import 'package:descolar_front/features/settings/presentation/pages/blocked_users_page.dart';
 import 'package:descolar_front/screens/feed_page.dart';
-import 'package:descolar_front/features/messages/presentation/pages/messages_menu_page.dart';
+import 'package:descolar_front/features/messages/presentation/pages/conversations_page.dart';
 import 'package:descolar_front/features/post/presentation/pages/new_post_page.dart';
 import 'package:descolar_front/features/profil/presentation/pages/profil_page.dart';
 import 'package:descolar_front/features/search/presentation/pages/search_page.dart';
@@ -48,7 +49,10 @@ class AppRoutes {
         final args = settings.arguments as UserProfilArguments;
         return MaterialPageRoute(builder: (_) => ReportProfilPage(args: args,));
       case '/messages':
-        return _materialRoute(const MessagesMenu());
+        return _materialRoute(const ConversationsPage());
+      case '/message':
+        final args = settings.arguments as MessageProfilArguments;
+        return MaterialPageRoute(builder: (_) => MessagesPage(receiver: args.receiver,));
       case '/settings':
         return _materialRoute(const Home());
       case '/blocked-users':

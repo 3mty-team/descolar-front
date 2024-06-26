@@ -1,3 +1,4 @@
+import 'package:descolar_front/features/profil/business/entities/user_profil_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:descolar_front/core/resources/app_assets.dart';
@@ -5,7 +6,6 @@ import 'package:descolar_front/core/resources/app_colors.dart';
 import 'package:descolar_front/features/profil/presentation/providers/profil_provider.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_action_buttons.dart';
 import 'package:descolar_front/features/profil/presentation/widgets/profil_picture.dart';
-import 'package:descolar_front/features/auth/data/models/user_model.dart';
 
 class AppBars {
   static AppBar blankAppBar({Widget? leading, Widget? title}) {
@@ -108,11 +108,15 @@ class AppBars {
     );
   }
 
-  static AppBar conversationAppBar(BuildContext context, UserModel receiver) {
+  static AppBar conversationAppBar(BuildContext context, UserProfilEntity receiver) {
     return blankAppBar(
       title: Row(
         children: [
-          const Icon(Icons.account_circle_rounded, size: 40),
+          ProfilPicture(
+            radius: 20,
+            imagePath: receiver.pfpPath,
+            borderWidth: 2,
+          ),
           const SizedBox(width: 10),
           Text(
             '${receiver.firstname} ${receiver.lastname}',

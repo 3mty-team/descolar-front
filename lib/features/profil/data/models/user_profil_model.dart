@@ -25,38 +25,40 @@ class UserProfilModel extends UserProfilEntity {
     List<UserProfilEntity> followers = [];
     List<UserProfilEntity> following = [];
 
-    List<dynamic> jsonFollowers = json['followers'] ?? [];
-    List<dynamic> jsonFollowing = json['following'] ?? [];
 
-    for (var f in jsonFollowers) {
-      followers.add(
-        UserProfilEntity(
-          uuid: f['uuid'],
-          firstname: f['firstname'] ?? '-',
-          lastname: f['lastname'] ?? '-',
-          username: f['username'] ?? '-',
-          followers: [],
-          following: [],
-          pfpPath: f['pfpPath'],
-          bannerPath: f['bannerPath'],
-        ),
-      );
+    if (json['followers'] is! int || json['following'] is! int ) {
+      List<dynamic> jsonFollowers = json['followers'] ?? [];
+      List<dynamic> jsonFollowing = json['following'] ?? [];
+
+      for (var f in jsonFollowers) {
+        followers.add(
+          UserProfilEntity(
+            uuid: f['uuid'],
+            firstname: f['firstname'] ?? '-',
+            lastname: f['lastname'] ?? '-',
+            username: f['username'] ?? '-',
+            followers: [],
+            following: [],
+            pfpPath : f['pfpPath'],
+          ),
+        );
+      }
+
+      for (var f in jsonFollowing) {
+        following.add(
+          UserProfilEntity(
+            uuid: f['uuid'] ?? '-',
+            firstname: f['firstname'] ?? '-',
+            lastname: f['lastname'] ?? '-',
+            username: f['username'] ?? '-',
+            followers: [],
+            following: [],
+            pfpPath : f['pfpPath'],
+          ),
+        );
+      }
     }
 
-    for (var f in jsonFollowing) {
-      following.add(
-        UserProfilEntity(
-          uuid: f['uuid'] ?? '-',
-          firstname: f['firstname'] ?? '-',
-          lastname: f['lastname'] ?? '-',
-          username: f['username'] ?? '-',
-          followers: [],
-          following: [],
-          pfpPath: f['pfpPath'],
-          bannerPath: f['bannerPath'],
-        ),
-      );
-    }
 
     return UserProfilModel(
       uuid: json['uuid'] ?? '-',
