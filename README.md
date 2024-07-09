@@ -1,31 +1,53 @@
-# descolar_front
+# descolar-front - Descolar Front
 
-A new Flutter project.
+
+## Description
+
+This is the frontend for the Descolar project.
+It is a mobile app compatible with IOS and Android versions.
+
+The App is built with Flutter.
+
 
 ## Getting Started
 
 Download links:
+- Space
+    - **SSH clone URL:**
+        - ```ssh://git@git.jetbrains.space/3mty/descolar/descolar_front.git```
+    - **HTTPS clone URL:**
+        - https://git.jetbrains.space/3mty/descolar/descolar_front.git
+- GitHub
+    - **SSH clone URL:**
+        - git@github.com:3mty-team/descolar-front.git
+    - **HTTPS clone URL:**
+        - https://github.com/3mty-team/descolar-front.git
 
-SSH clone URL: ssh://git@git.jetbrains.space/3mty/descolar/descolar-front.git
 
-HTTPS clone URL: <https://git.jetbrains.space/3mty/descolar/descolar-front.git>
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+What things you need to install the software and how to install them.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Look the setup markdown file located in `docs/setup`
 
-## Localization
 
-This project generates localized messages based on arb files found in
-the `lib/localization` directory.
+## Libraries & Tools
 
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+### Used Libraries
+
+1. Flutter https://flutter.dev/
+
+### Used Tools
+
+1. Android Studio  https://developer.android.com/studio
+2. Space https://www.jetbrains.com/space/
+
+
+## Contact
+
+This project is maintained by Descolar Team.
+
+> If you have any questions, please contact us at: [development@descolar.fr](mailto:development@descolar.fr)
